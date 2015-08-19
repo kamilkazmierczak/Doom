@@ -11,6 +11,8 @@ int main(int argc, char **argv)
 	
 	
 	cout << "Co tam ciekawego !!" << endl;
+	//wiecej zmian
+	//<ciczior>
 
 	GameManager *gameManager = &GameManager::getGameManager();
 	gameManager->runGameLoop();
