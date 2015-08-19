@@ -8,6 +8,9 @@ int main(int argc, char **argv)
 {
 
 	//nowe zmiany
+	
+	
+	cout << "Co tam ciekawego !!" << endl;
 
 	GameManager *gameManager = &GameManager::getGameManager();
 	gameManager->runGameLoop();
