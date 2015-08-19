@@ -1,1 +1,7 @@
 *.opensdf
+Debug/Doom.bsc
+Debug/Doom.exe
+Debug/Doom.ilk
+Debug/Doom.pdb
+Doom.sdf
+Doom.v12.suo
