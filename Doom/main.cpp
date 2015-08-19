@@ -14,6 +14,9 @@ int main(int argc, char **argv)
 	//wiecej zmian
 	//<ciczior>
 
+	//WIELKIE ZMIANY
+	//!!
+
 	GameManager *gameManager = &GameManager::getGameManager();
 	gameManager->runGameLoop();
 	GameManager::destroyGameManager();
