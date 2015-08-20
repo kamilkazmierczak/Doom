@@ -22,7 +22,7 @@ private:
 
 public:
 
-	void render(VertexBuffer *vertexBuffer, ShaderInterface *shader);
+	void render(VertexBuffer *vertexBuffer);
 	static RenderSystem& getRenderSystem();
 	static void destroyRenderSystem();
 

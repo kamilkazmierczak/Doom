@@ -22,7 +22,7 @@ ResourceManager::ResourceManager()
 
 	//VertexBuffers
 	_vertexBufferArray = new vector<VertexBuffer *>();
-	VertexBuffer *vertexBuffer = new VertexBuffer(vertices, sizeof(vertices), GL_TRIANGLES, 3, sizeof(GLfloat) * 3);
+	VertexBuffer *vertexBuffer = new VertexBuffer(vertices, sizeof(vertices), GL_TRIANGLES, 3, sizeof(GLfloat) * 3, _shaderArray->at(0));
 	_vertexBufferArray->push_back(vertexBuffer);
 
 }

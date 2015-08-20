@@ -1,7 +1,7 @@
 #include "RenderSystem.h"
 
 
-void RenderSystem::render(VertexBuffer *vertexBuffer, ShaderInterface *shader)
+void RenderSystem::render(VertexBuffer *vertexBuffer)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -24,12 +24,12 @@ void RenderSystem::render(VertexBuffer *vertexBuffer, ShaderInterface *shader)
 	//TU TEZ NIE POWINNO BYC ZERO (1arg)
 	//TYLKO //glGetUniformLocation(lightingShader.Program, "dirLight.direction")
 
-	shader->use();
+	(vertexBuffer->getShader())->use();
 
-	GLint uniformlocation = shader->getUniformLocation("uColor");
+	GLint uniformlocation = (vertexBuffer->getShader())->getUniformLocation("uColor");
 	glUniform4f(uniformlocation, 1.0f, 0.0f, 0.0f, 1.0f);
 
-	vertexBuffer->configureVertexAttributes(0);//vertexposition (layout =0 ) chyba tam sie VAO ustawia (ale bez bind!!?)
+	vertexBuffer->configureVertexAttributes();//vertexposition (layout =0 ) chyba tam sie VAO ustawia (ale bez bind!!?)
 
 	vertexBuffer->renderVertexBuffer();
 
