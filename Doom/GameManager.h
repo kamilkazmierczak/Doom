@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include "RenderSystem.h"
+#include "ResourceManager.h"
 #include <GLFW/glfw3.h>
 #include <GLUT/glut.h>
 using namespace std;
@@ -11,6 +12,7 @@ private:
 
 	bool _running;
 	RenderSystem *_renderSystem;
+	ResourceManager *_resourceManager;
 	GLFWwindow *_window;
 
 	VertexBuffer *vertexBuffer; //part9 19:09 TEMPORARY

@@ -10,7 +10,9 @@ GLfloat vertices[] = {
 };
 
 
-GameManager::GameManager(bool running) :_running(running), _window(glfwGetCurrentContext()), _renderSystem(&RenderSystem::getRenderSystem())
+GameManager::GameManager(bool running) 
+	:_running(running), _window(glfwGetCurrentContext()), _renderSystem(&RenderSystem::getRenderSystem()),
+	_resourceManager(&ResourceManager::getResourceManager())
 {
 	vertexBuffer = new VertexBuffer(vertices, sizeof(vertices), GL_TRIANGLES, 3, sizeof(GLfloat)*3);
 }
@@ -18,6 +20,7 @@ GameManager::GameManager(bool running) :_running(running), _window(glfwGetCurren
 
 GameManager::~GameManager()
 {
+	ResourceManager::destroyResourceManager();
 	RenderSystem::destroyRenderSystem();
 }
 
