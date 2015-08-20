@@ -3,21 +3,17 @@
 const GLuint WIDTH = 800, HEIGHT = 600;
 
 
-GLfloat vertices[] = {
-	-0.5f, -0.5f, 0.0f, // Left  
-	0.5f, -0.5f, 0.0f, // Right 
-	0.0f, 0.5f, 0.0f  // Top   
-};
-
-
-GameManager::GameManager(bool running) :_running(running), _window(glfwGetCurrentContext()), _renderSystem(&RenderSystem::getRenderSystem())
+GameManager::GameManager(bool running) 
+	:_running(running), _window(glfwGetCurrentContext()), _renderSystem(&RenderSystem::getRenderSystem()),
+	_resourceManager(&ResourceManager::getResourceManager())
 {
-	vertexBuffer = new VertexBuffer(vertices, sizeof(vertices), GL_TRIANGLES, 3, sizeof(GLfloat)*3);
+	
 }
 
 
 GameManager::~GameManager()
 {
+	ResourceManager::destroyResourceManager();
 	RenderSystem::destroyRenderSystem();
 }
 
@@ -28,7 +24,7 @@ void GameManager::runGameLoop()
 		
 		_running = !glfwWindowShouldClose(_window);
 
-		_renderSystem->render(vertexBuffer);
+		_renderSystem->render((_resourceManager->getVertexBufferArray())->at(0));
 
 		
 	}

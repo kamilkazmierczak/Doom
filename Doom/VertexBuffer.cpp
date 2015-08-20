@@ -1,8 +1,8 @@
 #include "VertexBuffer.h"
 
 
-VertexBuffer::VertexBuffer(const GLvoid *data, GLsizeiptr size, GLenum mode, GLsizei count, GLsizei stride)
-	:_mode(mode), _count(count), _stride(stride)
+VertexBuffer::VertexBuffer(const GLvoid *data, GLsizeiptr size, GLenum mode, GLsizei count, GLsizei stride, ShaderInterface *shader)
+	:_mode(mode), _count(count), _stride(stride), _shader(shader)
 {
 	glGenBuffers(1, &_vertexBufferID);
 	glBindBuffer(GL_ARRAY_BUFFER, _vertexBufferID);
@@ -23,17 +23,22 @@ GLuint VertexBuffer::getVertexBufferID()
 }
 
 
-void VertexBuffer::configureVertexAttributes(GLint vertexPosition)
+ShaderInterface* VertexBuffer::getShader()
+{
+	return _shader;
+}
+
+void VertexBuffer::configureVertexAttributes()
 {
 
 	
 	glGenVertexArrays(1, &VAO);
 	glBindVertexArray(VAO);
 
-	if (vertexPosition != -1)
+	if (_shader->get_aPositionVertex() != -1)
 	{
-		glEnableVertexAttribArray(vertexPosition);
-		glVertexAttribPointer(vertexPosition, 3, GL_FLOAT, GL_FLOAT, _stride, (GLvoid*)0);
+		glEnableVertexAttribArray(_shader->get_aPositionVertex());
+		glVertexAttribPointer(_shader->get_aPositionVertex(), 3, GL_FLOAT, GL_FLOAT, _stride, (GLvoid*)0);
 	}
 	glBindVertexArray(0);
 }

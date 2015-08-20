@@ -1,17 +1,17 @@
-﻿Build started 2015-08-20 01:36:21.
+﻿Build started 2015-08-20 23:49:54.
      1>Project "C:\Users\Kamil\Documents\Visual Studio 2013\Projects\DoomGit\Doom\Doom.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /FR"Debug\\" /Gd /TP /analyze- /errorReport:prompt main.cpp
-         main.cpp
-     1>c:\program files (x86)\windows kits\8.1\include\shared\minwindef.h(130): warning C4005: 'APIENTRY' : macro redefinition
-                 c:\users\kamil\desktop\opengl libraries\includes\glfw\glfw3.h(85) : see previous definition of 'APIENTRY'
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /FR"Debug\\" /Gd /TP /analyze- /errorReport:prompt ResourceManager.cpp
+         ResourceManager.cpp
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Kamil\Documents\Visual Studio 2013\Projects\DoomGit\Debug\Doom.exe" /INCREMENTAL /NOLOGO freeglut.lib assimpd.lib SOIL.lib glew32s.lib opengl32.lib glfw3.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Kamil\Documents\Visual Studio 2013\Projects\DoomGit\Debug\Doom.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Kamil\Documents\Visual Studio 2013\Projects\DoomGit\Debug\Doom.lib" /MACHINE:X86 Debug\GameManager.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Kamil\Documents\Visual Studio 2013\Projects\DoomGit\Debug\Doom.exe" /INCREMENTAL /NOLOGO freeglut.lib assimpd.lib SOIL.lib glew32s.lib opengl32.lib glfw3.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Kamil\Documents\Visual Studio 2013\Projects\DoomGit\Debug\Doom.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Kamil\Documents\Visual Studio 2013\Projects\DoomGit\Debug\Doom.lib" /MACHINE:X86 Debug\Doom.res
+         Debug\GameManager.obj
          Debug\main.obj
          Debug\RenderSystem.obj
+         Debug\ResourceManager.obj
          Debug\ShaderInterface.obj
+         Debug\Vector3.obj
          Debug\VertexBuffer.obj
-         LINK : C:\Users\Kamil\Documents\Visual Studio 2013\Projects\DoomGit\Debug\Doom.exe not found or not built by the last incremental link; performing full link
      1>LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
      1>GameManager.obj : warning LNK4217: locally defined symbol _glewInit@0 imported in function "public: static class GameManager & __cdecl GameManager::getGameManager(void)" (?getGameManager@GameManager@@SAAAV1@XZ)
      1>GameManager.obj : warning LNK4049: locally defined symbol _glewExperimental imported
@@ -33,9 +33,9 @@
      1>glew32s.lib(glew.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'glew32s.lib(glew.obj)' or at 'C:\Users\Kamil\Documents\Visual Studio 2013\Projects\DoomGit\Debug\vc120.pdb'; linking object as if no debug info
          Doom.vcxproj -> C:\Users\Kamil\Documents\Visual Studio 2013\Projects\DoomGit\Debug\Doom.exe
        BscMake:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\bscmake.exe /nologo /o"C:\Users\Kamil\Documents\Visual Studio 2013\Projects\DoomGit\Debug\Doom.bsc" /n Debug\GameManager.sbr Debug\main.sbr Debug\RenderSystem.sbr Debug\ShaderInterface.sbr Debug\VertexBuffer.sbr
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\bscmake.exe /nologo /o"C:\Users\Kamil\Documents\Visual Studio 2013\Projects\DoomGit\Debug\Doom.bsc" /n Debug\GameManager.sbr Debug\main.sbr Debug\RenderSystem.sbr Debug\ResourceManager.sbr Debug\ShaderInterface.sbr Debug\Vector3.sbr Debug\VertexBuffer.sbr
      1>Done Building Project "C:\Users\Kamil\Documents\Visual Studio 2013\Projects\DoomGit\Doom\Doom.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:04.58
+Time Elapsed 00:00:04.38
