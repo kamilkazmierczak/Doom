@@ -15,8 +15,6 @@ private:
 	ResourceManager *_resourceManager;
 	GLFWwindow *_window;
 
-	VertexBuffer *vertexBuffer; //part9 19:09 TEMPORARY
-
 	GameManager(bool running);
 	~GameManager();
 	//rutututu

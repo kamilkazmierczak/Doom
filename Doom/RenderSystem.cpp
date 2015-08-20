@@ -1,15 +1,17 @@
 #include "RenderSystem.h"
 
 
-void RenderSystem::render(VertexBuffer *vertexBuffer)
+void RenderSystem::render(VertexBuffer *vertexBuffer, ShaderInterface *shader)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 
 	//shaderArray->at(0)->//tu zrob metode RUN co odpali USE
 	//glUseProgram(0); //WTF
-	
-	shaderArray->at(0)->use();
+	//_resourceManager->getVertexBufferArray())->at(0)
+	//ResourceManager::getShaderArray();
+
+	//_shaderArray->at(0)->use();
 
 	/*ZAKAZANE ZAKAZANE ZAKAZANE
 	glLoadIdentity();
@@ -22,7 +24,9 @@ void RenderSystem::render(VertexBuffer *vertexBuffer)
 	//TU TEZ NIE POWINNO BYC ZERO (1arg)
 	//TYLKO //glGetUniformLocation(lightingShader.Program, "dirLight.direction")
 
-	GLint uniformlocation = shaderArray->at(0)->getUniformLocation("uColor");
+	shader->use();
+
+	GLint uniformlocation = shader->getUniformLocation("uColor");
 	glUniform4f(uniformlocation, 1.0f, 0.0f, 0.0f, 1.0f);
 
 	vertexBuffer->configureVertexAttributes(0);//vertexposition (layout =0 ) chyba tam sie VAO ustawia (ale bez bind!!?)
@@ -40,16 +44,13 @@ void RenderSystem::render(VertexBuffer *vertexBuffer)
 
 RenderSystem::RenderSystem() :_window(glfwGetCurrentContext())
 {
-	shaderArray = new vector < ShaderInterface *>;
-	ShaderInterface *shader = new ShaderInterface("ColorShader.vs", "ColorShader.frag");
-	shaderArray->push_back(shader);
+
 }
 
 
 RenderSystem::~RenderSystem()
 {
-	//delete shaderArray->at(0);
-	//delete shaderArray;
+
 }
 
 

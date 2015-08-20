@@ -1,4 +1,5 @@
 #include "ResourceManager.h"
+#include "TriangleVertices.h"
 
 vector<ShaderInterface *>* ResourceManager::getShaderArray()
 {
@@ -13,14 +14,31 @@ vector<VertexBuffer *>* ResourceManager::getVertexBufferArray()
 
 ResourceManager::ResourceManager()
 {
+	//Shaders
 	_shaderArray = new vector<ShaderInterface *>();
+	ShaderInterface *shader = new ShaderInterface("ColorShader.vs", "ColorShader.frag");
+	_shaderArray->push_back(shader);
+
+
+	//VertexBuffers
 	_vertexBufferArray = new vector<VertexBuffer *>();
+	VertexBuffer *vertexBuffer = new VertexBuffer(vertices, sizeof(vertices), GL_TRIANGLES, 3, sizeof(GLfloat) * 3);
+	_vertexBufferArray->push_back(vertexBuffer);
+
 }
 
 
 ResourceManager::~ResourceManager()
 {
+	for (vector<ShaderInterface *>::iterator iterator = _shaderArray->begin(); iterator != _shaderArray->end(); iterator++){
+		delete *iterator;
+	} 
 	delete _shaderArray;
+
+
+	for (vector<VertexBuffer *>::iterator iterator = _vertexBufferArray->begin(); iterator != _vertexBufferArray->end(); iterator++){
+		delete *iterator;
+	}
 	delete _vertexBufferArray;
 }
 
