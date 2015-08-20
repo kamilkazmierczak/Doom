@@ -27,7 +27,7 @@ GLint ShaderInterface::getUniformLocation(char* name)
 
 ShaderInterface::ShaderInterface(const GLchar *VS, const GLchar *FS)
 {
-	shader = new Shader("ColorShader.vs", "ColorShader.frag");
+	shader = new Shader(VS, FS);
 
 	_aPositionVertex = glGetAttribLocation(shader->Program, "aPositionVertex");
 	_uColor = glGetUniformLocation(shader->Program, "uColor");
