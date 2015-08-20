@@ -24,7 +24,7 @@ void GameManager::runGameLoop()
 		
 		_running = !glfwWindowShouldClose(_window);
 
-		_renderSystem->render((_resourceManager->getVertexBufferArray())->at(1));
+		_renderSystem->render((_resourceManager->getVertexBufferArray())->at(0));
 
 		
 	}

@@ -16,7 +16,7 @@ void RenderSystem::render(VertexBuffer *vertexBuffer)
 	/*ZAKAZANE ZAKAZANE ZAKAZANE
 	glLoadIdentity();
 	
-	gluLookAt(0.0f, 0.0f, -5.0f, 
+	gluLookAt(3.0f, 2.0f, -2.0f, 
 			  0.0f, 0.0f, 0.0f, 
 			  0.0f, 1.0f, 0.0f);
 	*/		  
