@@ -11,6 +11,7 @@ private:
 	Shader *shader;
 
 	GLint _aPositionVertex; //position (tutorial)
+	GLint _aPositionNormal;
 	GLint _uColor; //to  tyczy sie fragment shadera ale tylko "tego jednego"
 
 	char* _vertexShaderString;  //DEL?
@@ -23,6 +24,7 @@ public:
 
 	GLuint getProgramHandle();
 	GLint get_aPositionVertex();
+	GLint get_aPositionNormal();
 	GLint get_uColor();
 	void use();
 	GLint getUniformLocation(char* name);

@@ -65,6 +65,9 @@
     <ClInclude Include="TriangleVertices.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CubeVertices.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Doom.rc">

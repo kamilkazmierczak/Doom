@@ -15,13 +15,22 @@ private:
 	GLsizei _count; //do liczenia wierzczholkow (w sensie trojkat =3 ) //dla glDrawArrays
 	GLsizei _stride; //rozmiar wszystkich atrybutow (chyba) (chodzi i VAO)(chyba)
 	GLuint VAO;
+	GLvoid *_positionOffset;
+	GLvoid *_normalOffset;
 
 public:
 
 	GLuint getVertexBufferID();
 	ShaderInterface *getShader();
 
-	VertexBuffer(const GLvoid *data, GLsizeiptr size, GLenum mode, GLsizei count, GLsizei stride, ShaderInterface *shader);
+	VertexBuffer(const GLvoid *data, 
+				GLsizeiptr size, 
+				GLenum mode, 
+				GLsizei count, 
+				GLsizei stride, 
+				ShaderInterface *shader,
+				GLvoid *_positionOffset,
+				GLvoid *_normalOffset);
 	~VertexBuffer();
 
 	void configureVertexAttributes();//vertexPosiotion to layout (location = 0) //0
