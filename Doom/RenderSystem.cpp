@@ -1,5 +1,7 @@
 #include "RenderSystem.h"
+#include "Constants.h"
 
+using namespace glm;
 
 void RenderSystem::render(VertexBuffer *vertexBuffer)
 {
@@ -16,7 +18,7 @@ void RenderSystem::render(VertexBuffer *vertexBuffer)
 	/*ZAKAZANE ZAKAZANE ZAKAZANE
 	glLoadIdentity();
 	
-	gluLookAt(0.0f, 0.0f, -5.0f, 
+	gluLookAt(3.0f, 2.0f, -2.0f, 
 			  0.0f, 0.0f, 0.0f, 
 			  0.0f, 1.0f, 0.0f);
 	*/		  
@@ -26,11 +28,29 @@ void RenderSystem::render(VertexBuffer *vertexBuffer)
 
 	(vertexBuffer->getShader())->use();
 
-	GLint uniformlocation = (vertexBuffer->getShader())->getUniformLocation("uColor");
-	glUniform4f(uniformlocation, 1.0f, 0.0f, 0.0f, 1.0f);
+	//Transformacje
+	mat4 model;
+	mat4 view;
+	mat4 projection;				 //wzgledem osi x
+	model = rotate(model, (GLfloat)glfwGetTime() * 1.0f, vec3(1.0f, 0.0f, 0.0f));
+	view = translate(view, vec3(0.0f, 0.0f, -3.0f));
+	projection = perspective(radians(45.0f), (GLfloat)WIDTH / (GLfloat)HEIGHT, 0.1f, 100.0f);
+	//przekazanie do shadera
+	GLint modelLoc = (vertexBuffer->getShader())->getUniformLocation("model");
+	GLint viewLoc = (vertexBuffer->getShader())->getUniformLocation("view");
+	GLint projLoc = (vertexBuffer->getShader())->getUniformLocation("projection");
+	
+	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, value_ptr(model));
+	glUniformMatrix4fv(viewLoc, 1, GL_FALSE, value_ptr(view));
+	glUniformMatrix4fv(projLoc, 1, GL_FALSE, value_ptr(projection));
 
-	vertexBuffer->configureVertexAttributes();//vertexposition (layout =0 ) chyba tam sie VAO ustawia (ale bez bind!!?)
-
+	GLint uColorlocation = (vertexBuffer->getShader())->getUniformLocation("uColor");
+	if (uColorlocation != -1){
+		glUniform4f(uColorlocation, 1.0f, 0.0f, 0.0f, 1.0f);
+	}
+	
+	
+	//vertexBuffer->configureVertexAttributes();  przeniesiono do konstruktora w "VertexBuffer"
 	vertexBuffer->renderVertexBuffer();
 
 	//glDrawArrays(GL_TRIANGLES, 0, 3);
@@ -62,7 +82,7 @@ RenderSystem& RenderSystem::getRenderSystem()
 		renderSystem = new RenderSystem();
 		
 		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-
+		glEnable(GL_DEPTH_TEST);
 		/*CHYBA ZAKAZANE ZAKAZANE ZAKAZANE
 		glMatrixMode(GL_PROJECTION);
 		gluPerspective(75.0f, 800.0f / 600.0f, 1, 1000); //to bylo w tutorialu ale inna funkcja

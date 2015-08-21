@@ -1,6 +1,7 @@
 #include "GameManager.h"
+#include "Constants.h"
 // Window dimensions
-const GLuint WIDTH = 800, HEIGHT = 600;
+
 
 
 GameManager::GameManager(bool running) 
@@ -24,7 +25,7 @@ void GameManager::runGameLoop()
 		
 		_running = !glfwWindowShouldClose(_window);
 
-		_renderSystem->render((_resourceManager->getVertexBufferArray())->at(0));
+		_renderSystem->render((_resourceManager->getVertexBufferArray())->at(1));
 
 		
 	}
