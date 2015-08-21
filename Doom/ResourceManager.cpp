@@ -25,7 +25,8 @@ ResourceManager::ResourceManager()
 
 	//VertexBuffers
 	_vertexBufferArray = new vector<VertexBuffer *>();
-	VertexBuffer *vertexBuffer = new VertexBuffer(vertices, 
+
+			VertexBuffer *vertexBuffer = new VertexBuffer(vertices, 
 												  sizeof(vertices), 
 												  GL_TRIANGLES, 
 												  3, 
@@ -44,6 +45,9 @@ ResourceManager::ResourceManager()
 												  (GLvoid *)(offsetof(VertexDataPN, positionCoordinates)),
 												  (GLvoid *)(offsetof(VertexDataPN, normalCoordinates)));
 	_vertexBufferArray->push_back(cubeVertexBuffer);
+
+
+
 
 }
 

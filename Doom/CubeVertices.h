@@ -1,7 +1,7 @@
-#pragma once
 #include "VertexData.h"
 
 VertexDataPN cubeVertices[] = {
+	
 	0.5f, -0.5f, -0.5f,			1.0f, 0.0f, 0.0f, //B
 	0.5f, 0.5f, -0.5f,			1.0f, 0.0f, 0.0f, //C
 	0.5f, -0.5f, 0.5f,			1.0f, 0.0f, 0.0f, //Bb

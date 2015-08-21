@@ -40,6 +40,8 @@ void VertexBuffer::configureVertexAttributes()
 
 	
 	glGenVertexArrays(1, &VAO);
+
+	glBindBuffer(GL_ARRAY_BUFFER, _vertexBufferID);//zeby bral wlasciwe wierzcholki
 	glBindVertexArray(VAO);
 
 	if (_shader->get_aPositionVertex() != -1)
