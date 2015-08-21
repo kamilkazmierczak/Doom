@@ -14,7 +14,9 @@ VertexBuffer::VertexBuffer(const GLvoid *data,
 	glGenBuffers(1, &_vertexBufferID);
 	glBindBuffer(GL_ARRAY_BUFFER, _vertexBufferID);
 	glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
-	//glBindBuffer(GL_ARRAY_BUFFER, 0); ??
+	//glBindBuffer(GL_ARRAY_BUFFER, 0); //??
+	configureVertexAttributes(); //nie do konca jestem pewien czy to tu powinno byc, ale dziala
+								//nie moze byc w petli bo sie wykrzaczy
 }
 
 
@@ -37,26 +39,24 @@ ShaderInterface* VertexBuffer::getShader()
 
 void VertexBuffer::configureVertexAttributes()
 {
+		glGenVertexArrays(1, &VAO);
 
-	
-	glGenVertexArrays(1, &VAO);
+		glBindBuffer(GL_ARRAY_BUFFER, _vertexBufferID);//zeby bral wlasciwe wierzcholki
+		glBindVertexArray(VAO);
 
-	glBindBuffer(GL_ARRAY_BUFFER, _vertexBufferID);//zeby bral wlasciwe wierzcholki
-	glBindVertexArray(VAO);
+		if (_shader->get_aPositionVertex() != -1)
+		{
+			glEnableVertexAttribArray(_shader->get_aPositionVertex());
+			glVertexAttribPointer(_shader->get_aPositionVertex(), 3, GL_FLOAT, GL_FLOAT, _stride, _positionOffset);
+		}
 
-	if (_shader->get_aPositionVertex() != -1)
-	{
-		glEnableVertexAttribArray(_shader->get_aPositionVertex());
-		glVertexAttribPointer(_shader->get_aPositionVertex(), 3, GL_FLOAT, GL_FLOAT, _stride, _positionOffset);
-	}
+		if (_shader->get_aPositionNormal() != -1)
+		{
+			glEnableVertexAttribArray(_shader->get_aPositionNormal());
+			glVertexAttribPointer(_shader->get_aPositionNormal(), 3, GL_FLOAT, GL_FLOAT, _stride, _normalOffset);
+		}
 
-	if (_shader->get_aPositionNormal() != -1)
-	{
-		glEnableVertexAttribArray(_shader->get_aPositionNormal());
-		glVertexAttribPointer(_shader->get_aPositionNormal(), 3, GL_FLOAT, GL_FLOAT, _stride, _normalOffset);
-	}
-
-	glBindVertexArray(0);
+		glBindVertexArray(0);
 }
 
 

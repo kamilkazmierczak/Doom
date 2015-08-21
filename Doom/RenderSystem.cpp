@@ -50,7 +50,7 @@ void RenderSystem::render(VertexBuffer *vertexBuffer)
 	}
 	
 	
-	vertexBuffer->configureVertexAttributes();
+	//vertexBuffer->configureVertexAttributes();  przeniesiono do konstruktora w "VertexBuffer"
 	vertexBuffer->renderVertexBuffer();
 
 	//glDrawArrays(GL_TRIANGLES, 0, 3);
@@ -82,7 +82,7 @@ RenderSystem& RenderSystem::getRenderSystem()
 		renderSystem = new RenderSystem();
 		
 		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-
+		glEnable(GL_DEPTH_TEST);
 		/*CHYBA ZAKAZANE ZAKAZANE ZAKAZANE
 		glMatrixMode(GL_PROJECTION);
 		gluPerspective(75.0f, 800.0f / 600.0f, 1, 1000); //to bylo w tutorialu ale inna funkcja

@@ -32,8 +32,8 @@ ResourceManager::ResourceManager()
 												  3, 
 												  sizeof(GLfloat) * 3, 
 												  _shaderArray->at(0),
-												  NULL,
-												  NULL);
+												  (GLvoid*)0,
+												  (GLvoid*)0);
 	_vertexBufferArray->push_back(vertexBuffer);
 
 	VertexBuffer *cubeVertexBuffer = new VertexBuffer(cubeVertices, 
