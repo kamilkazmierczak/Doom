@@ -6,9 +6,9 @@ out vec4 oFinalVertexColor;
 
 //attribute vec3 aPositionVertex; //podobno to samo co in ale uzyl "_aPositionVertex = glGetAttribLocation(shader->Program, "aPositionVertex");"
 								//a to juz nie wiem czy zadziala jak wstawie in
-//uniform mat4 model;
-//uniform mat4 view;
-//uniform mat4 projection;
+uniform mat4 model;
+uniform mat4 view;
+uniform mat4 projection;
 
 void main()
 {
@@ -23,5 +23,6 @@ void main()
 									//jakis kolor (red)
 	oFinalVertexColor = dotProduct * vec4(1.0, 0.0, 0.0, 1.0);
 
-	gl_Position = vec4(aPositionVertex.x, aPositionVertex.y, aPositionVertex.z, 1.0);
+
+	gl_Position = projection * view * model * vec4(aPositionVertex, 1.0);
 } 

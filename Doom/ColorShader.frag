@@ -8,5 +8,6 @@ void main()
 	//color = vec4(0.1f, 0.2f, 0.4f, 1.0f);
 
 	//gl_FragColor = vec4(0.1f, 0.2f, 0.4f, 1.0f);
-	color = uColor; //wtf?
+	color = uColor;
+	
 }
