@@ -44,12 +44,27 @@ void RenderSystem::render(VertexBuffer *vertexBuffer)
 	glUniformMatrix4fv(viewLoc, 1, GL_FALSE, value_ptr(view));
 	glUniformMatrix4fv(projLoc, 1, GL_FALSE, value_ptr(projection));
 
+	//ZMIEN TO NA
+	// uColorlocation = (vertexBuffer->getShader())->get_uColor;
+	//ale wtedy nie zwraca -1 gdy nie istnieje
+	/*
 	GLint uColorlocation = (vertexBuffer->getShader())->getUniformLocation("uColor");
 	if (uColorlocation != -1){
 		glUniform4f(uColorlocation, 1.0f, 0.0f, 0.0f, 1.0f);
 	}
-	
-	
+	*/
+
+	glUniform4f((vertexBuffer->getShader())->get_uColor(), 
+		(vertexBuffer->getShaderData())->get_uColorValue().x, 
+		(vertexBuffer->getShaderData())->get_uColorValue().y,
+		(vertexBuffer->getShaderData())->get_uColorValue().z,
+		(vertexBuffer->getShaderData())->get_uColorValue().w);
+
+	glUniform3f((vertexBuffer->getShader())->get_uLightPosition(),
+		(vertexBuffer->getShaderData())->get_uLightPosition().x,
+		(vertexBuffer->getShaderData())->get_uLightPosition().y,
+		(vertexBuffer->getShaderData())->get_uLightPosition().z);
+
 	//vertexBuffer->configureVertexAttributes();  przeniesiono do konstruktora w "VertexBuffer"
 	vertexBuffer->renderVertexBuffer();
 

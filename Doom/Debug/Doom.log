@@ -1,22 +1,24 @@
-﻿Build started 2015-08-22 00:16:55.
+﻿Build started 2015-08-22 01:27:14.
      1>Project "C:\Users\Kamil\Documents\Visual Studio 2013\Projects\DoomGit\Doom\Doom.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /FR"Debug\\" /Gd /TP /analyze- /errorReport:prompt RenderSystem.cpp
-         RenderSystem.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /FR"Debug\\" /Gd /TP /analyze- /errorReport:prompt ResourceManager.cpp
+         ResourceManager.cpp
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Kamil\Documents\Visual Studio 2013\Projects\DoomGit\Debug\Doom.exe" /INCREMENTAL /NOLOGO freeglut.lib assimpd.lib SOIL.lib glew32s.lib opengl32.lib glfw3.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Kamil\Documents\Visual Studio 2013\Projects\DoomGit\Debug\Doom.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Kamil\Documents\Visual Studio 2013\Projects\DoomGit\Debug\Doom.lib" /MACHINE:X86 Debug\Doom.res
          Debug\GameManager.obj
          Debug\main.obj
          Debug\RenderSystem.obj
          Debug\ResourceManager.obj
+         Debug\ShaderData.obj
          Debug\ShaderInterface.obj
          Debug\Vector3.obj
+         Debug\Vector4.obj
          Debug\VertexBuffer.obj
          Doom.vcxproj -> C:\Users\Kamil\Documents\Visual Studio 2013\Projects\DoomGit\Debug\Doom.exe
        BscMake:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\bscmake.exe /nologo /o"C:\Users\Kamil\Documents\Visual Studio 2013\Projects\DoomGit\Debug\Doom.bsc" /n Debug\GameManager.sbr Debug\main.sbr Debug\RenderSystem.sbr Debug\ResourceManager.sbr Debug\ShaderInterface.sbr Debug\Vector3.sbr Debug\VertexBuffer.sbr
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\bscmake.exe /nologo /o"C:\Users\Kamil\Documents\Visual Studio 2013\Projects\DoomGit\Debug\Doom.bsc" /n Debug\GameManager.sbr Debug\main.sbr Debug\RenderSystem.sbr Debug\ResourceManager.sbr Debug\ShaderData.sbr Debug\ShaderInterface.sbr Debug\Vector3.sbr Debug\Vector4.sbr Debug\VertexBuffer.sbr
      1>Done Building Project "C:\Users\Kamil\Documents\Visual Studio 2013\Projects\DoomGit\Doom\Doom.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:03.77
+Time Elapsed 00:00:03.69
