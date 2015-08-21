@@ -32,7 +32,7 @@ void RenderSystem::render(VertexBuffer *vertexBuffer)
 	mat4 model;
 	mat4 view;
 	mat4 projection;				 //wzgledem osi x
-	model = rotate(model, (GLfloat)glfwGetTime() * 1.0f, vec3(1.0f, 0.0f, 0.0f));
+	model = rotate(model, (GLfloat)glfwGetTime() * 1.0f, vec3(1.0f, 0.0f, 1.0f));
 	view = translate(view, vec3(0.0f, 0.0f, -3.0f));
 	projection = perspective(radians(45.0f), (GLfloat)WIDTH / (GLfloat)HEIGHT, 0.1f, 100.0f);
 	//przekazanie do shadera
