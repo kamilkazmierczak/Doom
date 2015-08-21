@@ -81,6 +81,7 @@
     <ClCompile Include="VertexBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Constants.h" />
     <ClInclude Include="CubeVertices.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="RenderSystem.h" />

@@ -1,3 +1,4 @@
+#pragma once
 #include "VertexData.h"
 
 VertexDataPN cubeVertices[] = {

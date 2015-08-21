@@ -1,5 +1,7 @@
 #include "RenderSystem.h"
+#include "Constants.h"
 
+using namespace glm;
 
 void RenderSystem::render(VertexBuffer *vertexBuffer)
 {
@@ -26,11 +28,26 @@ void RenderSystem::render(VertexBuffer *vertexBuffer)
 
 	(vertexBuffer->getShader())->use();
 
-	GLint uniformlocation = (vertexBuffer->getShader())->getUniformLocation("uColor");
-	glUniform4f(uniformlocation, 1.0f, 0.0f, 0.0f, 1.0f);
+	//Transformacje
+	mat4 model;
+	mat4 view;
+	mat4 projection;				 //wzgledem osi x
+	model = rotate(model, -20.0f, vec3(1.0f, 0.0f, 0.0f));
+	view = translate(view, vec3(0.0f, 0.0f, -3.0f));
+	projection = perspective(radians(45.0f), (GLfloat)WIDTH / (GLfloat)HEIGHT, 0.1f, 100.0f);
+	//przekazanie do shadera
+	GLint modelLoc = (vertexBuffer->getShader())->getUniformLocation("model");
+	GLint viewLoc = (vertexBuffer->getShader())->getUniformLocation("view");
+	GLint projLoc = (vertexBuffer->getShader())->getUniformLocation("projection");
+	
+	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, value_ptr(model));
+	glUniformMatrix4fv(viewLoc, 1, GL_FALSE, value_ptr(view));
+	glUniformMatrix4fv(projLoc, 1, GL_FALSE, value_ptr(projection));
 
-	vertexBuffer->configureVertexAttributes();//vertexposition (layout =0 ) chyba tam sie VAO ustawia (ale bez bind!!?)
 
+	GLint uColorlocation = (vertexBuffer->getShader())->getUniformLocation("uColor");
+	glUniform4f(uColorlocation, 1.0f, 0.0f, 0.0f, 1.0f);
+	vertexBuffer->configureVertexAttributes();
 	vertexBuffer->renderVertexBuffer();
 
 	//glDrawArrays(GL_TRIANGLES, 0, 3);
