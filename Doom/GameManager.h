@@ -15,6 +15,8 @@ private:
 	ResourceManager *_resourceManager;
 	GLFWwindow *_window;
 
+	Entity *entity; //temporary
+
 	GameManager(bool running);
 	~GameManager();
 	//rutututu

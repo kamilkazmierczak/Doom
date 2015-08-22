@@ -1,6 +1,7 @@
 #include "ResourceManager.h"
 #include "TriangleVertices.h"
 #include "CubeVertices.h"
+#include "Entity.h"
 
 vector<ShaderInterface *>* ResourceManager::getShaderArray()
 {

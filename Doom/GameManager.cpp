@@ -8,7 +8,9 @@ GameManager::GameManager(bool running)
 	:_running(running), _window(glfwGetCurrentContext()), _renderSystem(&RenderSystem::getRenderSystem()),
 	_resourceManager(&ResourceManager::getResourceManager())
 {
-	
+	entity = new Entity(_resourceManager->getVertexBufferArray()->at(1), makeVector3(1.0f, 0.0f, -4.0f));
+	entity->setRotation(makeVector3(1.0f, 1.0f, 1.0f));//to jest kat o jaki obrocic, a nie jaka os
+	entity->setScale(makeVector3(1.2f, 1.0f, 1.0f));
 }
 
 
@@ -25,7 +27,7 @@ void GameManager::runGameLoop()
 		
 		_running = !glfwWindowShouldClose(_window);
 
-		_renderSystem->render((_resourceManager->getVertexBufferArray())->at(1));
+		_renderSystem->render(entity);
 
 		
 	}

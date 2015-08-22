@@ -51,23 +51,6 @@ ShaderInterface::~ShaderInterface()
 	//delete shader; //DANGER (moze nie funkcjonowac poprawnie z moim Shader.h
 }
 
-char *ShaderInterface::loadTextFromFile(char* file) //DEL?
-{
-	/*
-	FILE* currentFile = fopen(file, "rt");
-	fseek(currentFile, 0, SEEK_END);
-	int count = (int)ftell(currentFile);
-	rewind(currentFile);
-	char *data = (char*)malloc(sizeof(char)*(count + 1));
-	count = (int)fread(data, sizeof(char), count, currentFile);
-	data[count] = '\0';
-
-	fclose(currentFile);
-
-	return data;
-	*/
-	return NULL;
-}
 
 void ShaderInterface::use()
 {
