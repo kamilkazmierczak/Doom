@@ -42,10 +42,40 @@ void Entity::setRotation(Vector3 newRotation)
 	_rotation = newRotation;
 }
 
+Vector3 Entity::getVelocity()
+{
+	return _velocity;
+}
+
+void Entity::setVelocity(Vector3 newVelocity)
+{
+	_velocity = newVelocity;
+}
+
+Vector3 Entity::getScaleVelocity()
+{
+	return _scaleVelocity;
+}
+
+void Entity::setScaleVelocity(Vector3 newVelocity)
+{
+	_scaleVelocity = newVelocity;
+}
+
+Vector3 Entity::getRotationVelocity()
+{
+	return _rotationVelocity;
+}
+
+void Entity::setRotationVelocity(Vector3 newRotationVelocity)
+{
+	_rotationVelocity = newRotationVelocity;
+}
 
 Entity::Entity(VertexBuffer *vertexBuffer, Vector3 position)
 	:_vertexBuffer(vertexBuffer), _position(position), _scale(makeVector3(1.0f, 1.0f, 1.0f)),
-	_rotation(makeVector3(0.0f, 0.0f, 0.0f))
+	_rotation(makeVector3(0.0f, 0.0f, 0.0f)), _velocity(makeVector3(0.0f, 0.0f, 0.0f)),
+	_scaleVelocity(makeVector3(0.0f, 0.0f, 0.0f)), _rotationVelocity(makeVector3(0.0f, 0.0f, 0.0f))
 {
 }
 

@@ -75,6 +75,7 @@
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MovementSystem.cpp" />
     <ClCompile Include="RenderSystem.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="ShaderData.cpp" />
@@ -88,6 +89,7 @@
     <ClInclude Include="CubeVertices.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="GameManager.h" />
+    <ClInclude Include="MovementSystem.h" />
     <ClInclude Include="RenderSystem.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="Shader.h" />

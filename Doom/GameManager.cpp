@@ -6,11 +6,14 @@
 
 GameManager::GameManager(bool running) 
 	:_running(running), _window(glfwGetCurrentContext()), _renderSystem(&RenderSystem::getRenderSystem()),
-	_resourceManager(&ResourceManager::getResourceManager())
+	_resourceManager(&ResourceManager::getResourceManager()), _movementSystem(&MovementSystem::getMovementSystem())
 {
-	entity = new Entity(_resourceManager->getVertexBufferArray()->at(1), makeVector3(1.0f, 0.0f, -4.0f));
-	entity->setRotation(makeVector3(1.0f, 1.0f, 1.0f));//to jest kat o jaki obrocic, a nie jaka os
-	entity->setScale(makeVector3(1.2f, 1.0f, 1.0f));
+	entity = new Entity(_resourceManager->getVertexBufferArray()->at(1), makeVector3(0.0f, 0.0f, -4.0f));
+	entity->setRotation(makeVector3(30.0f, 15.0f, 1.0f));//to jest kat o jaki obrocic, a nie jaka os
+	entity->setScale(makeVector3(1.0f, 1.0f, 1.0f));
+	entity->setVelocity(makeVector3(0.0001f, 0.0f, 0.0f));
+	entity->setRotationVelocity(makeVector3(0.01f, 0.0f, 0.0f));
+	entity->setScaleVelocity(makeVector3(0.0001f, 0.0f, 0.0f));
 }
 
 
@@ -27,6 +30,7 @@ void GameManager::runGameLoop()
 		
 		_running = !glfwWindowShouldClose(_window);
 
+		_movementSystem->update(entity);
 		_renderSystem->render(entity);
 
 		

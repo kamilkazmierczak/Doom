@@ -25,10 +25,10 @@ void RenderSystem::render(Entity *entity)
 
 	
 	GLfloat time = (GLfloat)glfwGetTime();
-	model = rotate(model,  time * entity->getRotation().x, vec3(1.0f, 0.0f, 0.0f));
-	model = rotate(model,  time * entity->getRotation().y, vec3(0.0f, 1.0f, 0.0f));
-	model = rotate(model,  time * entity->getRotation().z, vec3(0.0f, 0.0f, 1.0f));
-
+	model = rotate(model,  /*time * */radians(entity->getRotation().x), vec3(1.0f, 0.0f, 0.0f));
+	model = rotate(model,  /*time * */radians(entity->getRotation().y), vec3(0.0f, 1.0f, 0.0f));
+	model = rotate(model,  /*time * */radians(entity->getRotation().z), vec3(0.0f, 0.0f, 1.0f));
+	
 	model = scale(model, vec3(entity->getScale().x, entity->getScale().y, entity->getScale().z));
 	view = translate(view, vec3(entity->getPosition().x, entity->getPosition().y, entity->getPosition().z));
 	projection = perspective(radians(45.0f), (GLfloat)WIDTH / (GLfloat)HEIGHT, 0.1f, 100.0f);
