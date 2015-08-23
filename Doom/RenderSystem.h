@@ -30,7 +30,10 @@ private:
 
 public:
 
-	void render(Entity *entity);
+	Entity *getCurrentCamera();
+	void setCurrentCamera(Entity *newCamera);
+
+	void render(vector<Entity *> *entityArray);
 	static RenderSystem& getRenderSystem();
 	static void destroyRenderSystem();
 

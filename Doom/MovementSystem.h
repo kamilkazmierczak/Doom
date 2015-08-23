@@ -13,6 +13,6 @@ public:
 	static MovementSystem& getMovementSystem();
 	static void destroyMovementSystem();
 
-	void update(Entity *entity);
+	void update(vector<Entity *> *entityArray);
 };
 
