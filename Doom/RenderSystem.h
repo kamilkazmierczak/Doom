@@ -6,6 +6,7 @@
 #include "ShaderInterface.h"
 #include "VertexBuffer.h"
 #include "ResourceManager.h"
+#include "Entity.h"
 // GLM Mathematics
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -26,7 +27,7 @@ private:
 
 public:
 
-	void render(VertexBuffer *vertexBuffer);
+	void render(Entity *entity);
 	static RenderSystem& getRenderSystem();
 	static void destroyRenderSystem();
 

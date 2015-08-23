@@ -5,31 +5,24 @@ class ShaderInterface
 {
 private:
 
-	//Ta klasa siê raczej do niczego nie przyda bo shadery mam ró¿ne i maj¹ ró¿ne atrybuty
-	//
-
 	Shader *shader;
 
-	GLint _aPositionVertex; //position (tutorial)
+	GLint _aPositionVertex; 
 	GLint _aPositionNormal;
-	GLint _uColor; //to  tyczy sie fragment shadera ale tylko "tego jednego"
-
-	char* _vertexShaderString;  //DEL?
-	char* _fragmentShaderString; //DEL?
-
-	char *loadTextFromFile(char *file);  //DEL?
-
+	GLint _uColor;
+	GLint _uLightPosition;
 
 public:
 
 	GLuint getProgramHandle();
 	GLint get_aPositionVertex();
-	GLint get_aPositionNormal();
+	GLint get_aPositionNormal();	
 	GLint get_uColor();
-	void use();
+	GLint get_uLightPosition();
 	GLint getUniformLocation(char* name);
+	void use();
 
-	ShaderInterface(const GLchar* VS, const GLchar* FS); //WARNING on mial char i specjalna funkcje do wczytywania tekstu co ominalem
+	ShaderInterface(const GLchar* VS, const GLchar* FS);
 	~ShaderInterface();
 };
 

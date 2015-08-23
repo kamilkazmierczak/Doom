@@ -1,6 +1,7 @@
 #include "ResourceManager.h"
 #include "TriangleVertices.h"
 #include "CubeVertices.h"
+#include "Entity.h"
 
 vector<ShaderInterface *>* ResourceManager::getShaderArray()
 {
@@ -23,6 +24,9 @@ ResourceManager::ResourceManager()
 	ShaderInterface *lightShader = new ShaderInterface("SimpleLightShader.vs", "SimpleLightShader.frag");
 	_shaderArray->push_back(lightShader);
 
+	shaderData = new ShaderData(makeVector4(0.0f, 0.0f, 1.0f, 1.0f), makeVector3(0.0f, 0.0f, 1.0f));
+
+
 	//VertexBuffers
 	_vertexBufferArray = new vector<VertexBuffer *>();
 
@@ -32,6 +36,7 @@ ResourceManager::ResourceManager()
 												  3, 
 												  sizeof(GLfloat) * 3, 
 												  _shaderArray->at(0),
+												  shaderData,
 												  (GLvoid*)0,
 												  (GLvoid*)0);
 	_vertexBufferArray->push_back(vertexBuffer);
@@ -42,6 +47,7 @@ ResourceManager::ResourceManager()
 												  36, 
 												  sizeof(VertexDataPN) , 
 												  _shaderArray->at(1),
+												  shaderData,
 												  (GLvoid *)(offsetof(VertexDataPN, positionCoordinates)),
 												  (GLvoid *)(offsetof(VertexDataPN, normalCoordinates)));
 	_vertexBufferArray->push_back(cubeVertexBuffer);
@@ -64,6 +70,8 @@ ResourceManager::~ResourceManager()
 		delete *iterator;
 	}
 	delete _vertexBufferArray;
+
+	delete shaderData;
 }
 
 

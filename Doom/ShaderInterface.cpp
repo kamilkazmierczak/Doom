@@ -23,6 +23,11 @@ GLint ShaderInterface::get_uColor()
 	return _uColor;
 }
 
+GLint ShaderInterface::get_uLightPosition()
+{
+	return _uLightPosition;
+}
+
 GLint ShaderInterface::getUniformLocation(char* name)
 {
 	return glGetUniformLocation(shader->Program, name);
@@ -37,6 +42,7 @@ ShaderInterface::ShaderInterface(const GLchar *VS, const GLchar *FS)
 	_aPositionVertex = glGetAttribLocation(shader->Program, "aPositionVertex");
 	_aPositionNormal = glGetAttribLocation(shader->Program, "aPositionNormal");
 	_uColor = glGetUniformLocation(shader->Program, "uColor");
+	_uLightPosition = glGetUniformLocation(shader->Program, "uLightPosition");
 }
 
 
@@ -45,23 +51,6 @@ ShaderInterface::~ShaderInterface()
 	//delete shader; //DANGER (moze nie funkcjonowac poprawnie z moim Shader.h
 }
 
-char *ShaderInterface::loadTextFromFile(char* file) //DEL?
-{
-	/*
-	FILE* currentFile = fopen(file, "rt");
-	fseek(currentFile, 0, SEEK_END);
-	int count = (int)ftell(currentFile);
-	rewind(currentFile);
-	char *data = (char*)malloc(sizeof(char)*(count + 1));
-	count = (int)fread(data, sizeof(char), count, currentFile);
-	data[count] = '\0';
-
-	fclose(currentFile);
-
-	return data;
-	*/
-	return NULL;
-}
 
 void ShaderInterface::use()
 {
