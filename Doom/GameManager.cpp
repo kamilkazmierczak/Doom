@@ -19,6 +19,12 @@ GameManager::GameManager(bool running)
 	camera = new Entity(NULL, makeVector3(1.0f, 1.0f, 2.0f));
 	camera->setEyeVector(makeVector3(0.0f, 0.0f, 0.0f));
 	camera->setUpVector(makeVector3(0.0f, 1.0f, 0.0f));
+
+	//camera->setVelocity(makeVector3(0.0f, 0.01f, 0.01f));
+	//to nic nie da bo to nie gluloolat tylko lookat gdzie tego bym dokonal
+	//jakbym zmienial 2 atrybut (pdf) czyli center gdzie tu interpretuje jako???
+	///to jednak chyba powinno normalnie dzialac bo to raczej to samo
+	
 	
 	
 	_cameraSystem->setCurrentCamera(camera);
@@ -48,6 +54,7 @@ void GameManager::runGameLoop()
 		while (deltaTime >= 1.0f){
 			_running = !glfwWindowShouldClose(_window);
 			_movementSystem->update(entity);
+			_movementSystem->update(camera);
 			--deltaTime;
 		}
 
