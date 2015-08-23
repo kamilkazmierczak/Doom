@@ -3,6 +3,7 @@
 #include "RenderSystem.h"
 #include "ResourceManager.h"
 #include "MovementSystem.h"
+#include "CameraSystem.h"
 #include <GLFW/glfw3.h>
 #include <GLUT/glut.h>
 using namespace std;
@@ -15,9 +16,11 @@ private:
 	RenderSystem *_renderSystem;
 	ResourceManager *_resourceManager;
 	MovementSystem *_movementSystem;
+	CameraSystem *_cameraSystem;
 	GLFWwindow *_window;
 
 	Entity *entity; //temporary
+	Entity *camera;
 
 	GameManager(bool running);
 	~GameManager();

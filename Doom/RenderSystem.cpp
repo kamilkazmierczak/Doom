@@ -7,31 +7,34 @@ void RenderSystem::render(Entity *entity)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	/*ZAKAZANE ZAKAZANE ZAKAZANE
-	glLoadIdentity();
-	
-	gluLookAt(3.0f, 2.0f, -2.0f, 
-			  0.0f, 0.0f, 0.0f, 
-			  0.0f, 1.0f, 0.0f);
-	*/		  
-
-
 	entity->getVertexBuffer()->getShader()->use();
+
+	//temporary
+	_currentCamera = _cameraSystem->getCurrentCamera();
 
 	//Transformacje
 	mat4 model;
 	mat4 view;
 	mat4 projection;				 
 
-	
 	//zeby sie rowno krecilo we wszystkie strony to rotate(mode,....,vec3(1.0f, 1.0f, 1.0f));
 	model = rotate(model, radians(entity->getRotation().x), vec3(1.0f, 0.0f, 0.0f));
 	model = rotate(model, radians(entity->getRotation().y), vec3(0.0f, 1.0f, 0.0f));
 	model = rotate(model, radians(entity->getRotation().z), vec3(0.0f, 0.0f, 1.0f));
 	
-
 	model = scale(model, vec3(entity->getScale().x, entity->getScale().y, entity->getScale().z));
 	view = translate(view, vec3(entity->getPosition().x, entity->getPosition().y, entity->getPosition().z));
+	//temporary
+	view = lookAt(vec3(_currentCamera->getPosition().x, _currentCamera->getPosition().y, _currentCamera->getPosition().z),
+				  vec3(_currentCamera->getEyeVector().x, _currentCamera->getEyeVector().y, _currentCamera->getEyeVector().z),
+				  vec3(_currentCamera->getUpVector().x, _currentCamera->getUpVector().y, _currentCamera->getUpVector().z));
+
+	/*
+	view = lookAt(vec3(1.0f, 1.0f, 2.0f),
+			      vec3(0.0f, 0.0f, 0.0f),
+				  vec3(0.0f, 1.0f, 0.0f));
+	*/
+
 	projection = perspective(radians(45.0f), (GLfloat)WIDTH / (GLfloat)HEIGHT, 0.1f, 100.0f);
 
 	
@@ -77,9 +80,9 @@ void RenderSystem::render(Entity *entity)
 }
 
 
-RenderSystem::RenderSystem() :_window(glfwGetCurrentContext())
+RenderSystem::RenderSystem() :_window(glfwGetCurrentContext()), _cameraSystem(&CameraSystem::getCameraSystem())
 {
-
+	
 }
 
 

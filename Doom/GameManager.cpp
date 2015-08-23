@@ -6,7 +6,8 @@
 
 GameManager::GameManager(bool running) 
 	:_running(running), _window(glfwGetCurrentContext()), _renderSystem(&RenderSystem::getRenderSystem()),
-	_resourceManager(&ResourceManager::getResourceManager()), _movementSystem(&MovementSystem::getMovementSystem())
+	_resourceManager(&ResourceManager::getResourceManager()), _movementSystem(&MovementSystem::getMovementSystem()),
+	_cameraSystem(&CameraSystem::getCameraSystem())
 {
 	entity = new Entity(_resourceManager->getVertexBufferArray()->at(1), makeVector3(0.0f, 0.0f, -4.0f));
 	entity->setRotation(makeVector3(0.0f, 0.0f, 0.0f));//to jest kat o jaki obrocic dla danej osi
@@ -14,12 +15,20 @@ GameManager::GameManager(bool running)
 	//entity->setVelocity(makeVector3(0.001f, 0.0f, 0.0f));
 	entity->setRotationVelocity(makeVector3(1.0f, 1.0f, 1.0f));
 	//entity->setScaleVelocity(makeVector3(0.001f, 0.0f, 0.0f));
+
+	camera = new Entity(NULL, makeVector3(1.0f, 1.0f, 2.0f));
+	camera->setEyeVector(makeVector3(0.0f, 0.0f, 0.0f));
+	camera->setUpVector(makeVector3(0.0f, 1.0f, 0.0f));
+	
+	
+	_cameraSystem->setCurrentCamera(camera);
 }
 
 
 GameManager::~GameManager()
 {
 	ResourceManager::destroyResourceManager();
+	CameraSystem::destroyCameraSystem();
 	RenderSystem::destroyRenderSystem();
 }
 

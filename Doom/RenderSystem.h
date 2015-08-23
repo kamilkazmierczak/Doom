@@ -7,6 +7,7 @@
 #include "VertexBuffer.h"
 #include "ResourceManager.h"
 #include "Entity.h"
+#include "CameraSystem.h"
 // GLM Mathematics
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -21,6 +22,8 @@ class RenderSystem
 private:
 
 	GLFWwindow *_window;
+	CameraSystem *_cameraSystem;
+	Entity *_currentCamera;
 
 	RenderSystem();
 	~RenderSystem();
