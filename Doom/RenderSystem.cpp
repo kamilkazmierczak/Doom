@@ -24,11 +24,12 @@ void RenderSystem::render(Entity *entity)
 	mat4 projection;				 
 
 	
-	GLfloat time = (GLfloat)glfwGetTime();
-	model = rotate(model,  /*time * */radians(entity->getRotation().x), vec3(1.0f, 0.0f, 0.0f));
-	model = rotate(model,  /*time * */radians(entity->getRotation().y), vec3(0.0f, 1.0f, 0.0f));
-	model = rotate(model,  /*time * */radians(entity->getRotation().z), vec3(0.0f, 0.0f, 1.0f));
+	//zeby sie rowno krecilo we wszystkie strony to rotate(mode,....,vec3(1.0f, 1.0f, 1.0f));
+	model = rotate(model, radians(entity->getRotation().x), vec3(1.0f, 0.0f, 0.0f));
+	model = rotate(model, radians(entity->getRotation().y), vec3(0.0f, 1.0f, 0.0f));
+	model = rotate(model, radians(entity->getRotation().z), vec3(0.0f, 0.0f, 1.0f));
 	
+
 	model = scale(model, vec3(entity->getScale().x, entity->getScale().y, entity->getScale().z));
 	view = translate(view, vec3(entity->getPosition().x, entity->getPosition().y, entity->getPosition().z));
 	projection = perspective(radians(45.0f), (GLfloat)WIDTH / (GLfloat)HEIGHT, 0.1f, 100.0f);

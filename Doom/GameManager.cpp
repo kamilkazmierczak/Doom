@@ -9,11 +9,11 @@ GameManager::GameManager(bool running)
 	_resourceManager(&ResourceManager::getResourceManager()), _movementSystem(&MovementSystem::getMovementSystem())
 {
 	entity = new Entity(_resourceManager->getVertexBufferArray()->at(1), makeVector3(0.0f, 0.0f, -4.0f));
-	entity->setRotation(makeVector3(30.0f, 15.0f, 1.0f));//to jest kat o jaki obrocic, a nie jaka os
+	entity->setRotation(makeVector3(0.0f, 0.0f, 0.0f));//to jest kat o jaki obrocic dla danej osi
 	entity->setScale(makeVector3(1.0f, 1.0f, 1.0f));
-	entity->setVelocity(makeVector3(0.0001f, 0.0f, 0.0f));
-	entity->setRotationVelocity(makeVector3(0.01f, 0.0f, 0.0f));
-	entity->setScaleVelocity(makeVector3(0.0001f, 0.0f, 0.0f));
+	//entity->setVelocity(makeVector3(0.001f, 0.0f, 0.0f));
+	entity->setRotationVelocity(makeVector3(1.0f, 1.0f, 1.0f));
+	//entity->setScaleVelocity(makeVector3(0.001f, 0.0f, 0.0f));
 }
 
 
@@ -26,13 +26,23 @@ GameManager::~GameManager()
 
 void GameManager::runGameLoop()
 {
+	// Deltatime
+	double lastTime = glfwGetTime(); 
+	double deltaTime = 0.0f; // Time between current frame and last frame
+
 	while (_running){
 		
-		_running = !glfwWindowShouldClose(_window);
+		double currentTime = glfwGetTime();
+		deltaTime += (currentTime - lastTime) * UpdatesPerSecond;
+		lastTime = currentTime;
 
-		_movementSystem->update(entity);
+		while (deltaTime >= 1.0f){
+			_running = !glfwWindowShouldClose(_window);
+			_movementSystem->update(entity);
+			--deltaTime;
+		}
+
 		_renderSystem->render(entity);
-
 		
 	}
 }

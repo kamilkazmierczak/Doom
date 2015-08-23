@@ -1,6 +1,7 @@
 #pragma once
 #include  <GLFW\glfw3.h>
 const GLuint WIDTH = 800, HEIGHT = 600;
+const GLfloat UpdatesPerSecond = 60.0f;
 
 
 /*
