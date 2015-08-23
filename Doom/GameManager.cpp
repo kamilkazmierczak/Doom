@@ -7,7 +7,7 @@
 GameManager::GameManager(bool running)
 	:_running(running), _window(glfwGetCurrentContext()), _renderSystem(&RenderSystem::getRenderSystem()),
 	_resourceManager(&ResourceManager::getResourceManager()), _movementSystem(&MovementSystem::getMovementSystem()),
-	_cameraSystem(&CameraSystem::getCameraSystem()), _scene(new Scene)
+	_cameraSystem(&CameraSystem::getCameraSystem()), _scene(new Scene), _playerInputSystem(&PlayerInputSystem::getPlayerInputSystem())
 {
 
 }
@@ -18,6 +18,7 @@ GameManager::~GameManager()
 	ResourceManager::destroyResourceManager();
 	CameraSystem::destroyCameraSystem();
 	RenderSystem::destroyRenderSystem();
+	PlayerInputSystem::destroyPlayerInputSystem();
 }
 
 
