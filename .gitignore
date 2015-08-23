@@ -5,3 +5,5 @@ Debug/Doom.ilk
 Debug/Doom.pdb
 Doom.sdf
 Doom.v12.suo
+Debug/*
+Doom/Debug/*
