@@ -4,6 +4,7 @@
 #include "ResourceManager.h"
 #include "MovementSystem.h"
 #include "CameraSystem.h"
+#include "Scene.h"
 #include <GLFW/glfw3.h>
 #include <GLUT/glut.h>
 using namespace std;
@@ -19,8 +20,7 @@ private:
 	CameraSystem *_cameraSystem;
 	GLFWwindow *_window;
 
-	Entity *entity; //temporary
-	Entity *camera;
+	Scene *_scene;
 
 	GameManager(bool running);
 	~GameManager();
