@@ -1,12 +1,7 @@
 #include "ShaderInterface.h"
-#include <stdio.h> //DEL?
-#include <stdlib.h>//DEL?
+#include <stdio.h> 
+#include <stdlib.h>
 
-GLuint ShaderInterface::getProgramHandle()
-{
-	//nie da sie w moim Shader class
-	return NULL;
-}
 
 GLint ShaderInterface::get_aPositionVertex()
 {
