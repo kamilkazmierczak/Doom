@@ -14,7 +14,6 @@ private:
 
 public:
 
-	GLuint getProgramHandle();
 	GLint get_aPositionVertex();
 	GLint get_aPositionNormal();	
 	GLint get_uColor();

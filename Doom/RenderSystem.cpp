@@ -29,10 +29,11 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 		model = scale(model, vec3(entity->getScale().x, entity->getScale().y, entity->getScale().z));
 		view = translate(view, vec3(entity->getPosition().x, entity->getPosition().y, entity->getPosition().z));
 		//temporary
+		
 		view = lookAt(vec3(_currentCamera->getPosition().x, _currentCamera->getPosition().y, _currentCamera->getPosition().z),
 			vec3(_currentCamera->getEyeVector().x, _currentCamera->getEyeVector().y, _currentCamera->getEyeVector().z),
 			vec3(_currentCamera->getUpVector().x, _currentCamera->getUpVector().y, _currentCamera->getUpVector().z));
-
+			
 		/*
 		view = lookAt(vec3(1.0f, 1.0f, 2.0f),
 		vec3(0.0f, 0.0f, 0.0f),
@@ -117,12 +118,6 @@ RenderSystem& RenderSystem::getRenderSystem()
 		
 		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 		glEnable(GL_DEPTH_TEST);
-		/*CHYBA ZAKAZANE ZAKAZANE ZAKAZANE
-		glMatrixMode(GL_PROJECTION);
-		gluPerspective(75.0f, 800.0f / 600.0f, 1, 1000); //to bylo w tutorialu ale inna funkcja
-		glViewport(0.0f, 0.0f, 800.0, 600.0f);
-		glMatrixMode(GL_MODELVIEW);
-		*/
 	}
 
 	return *renderSystem;
