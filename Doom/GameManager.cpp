@@ -4,23 +4,21 @@
 
 
 
-GameManager::GameManager(bool running) 
+GameManager::GameManager(bool running)
 	:_running(running), _window(glfwGetCurrentContext()), _renderSystem(&RenderSystem::getRenderSystem()),
-	_resourceManager(&ResourceManager::getResourceManager()), _movementSystem(&MovementSystem::getMovementSystem())
+	_resourceManager(&ResourceManager::getResourceManager()), _movementSystem(&MovementSystem::getMovementSystem()),
+	_cameraSystem(&CameraSystem::getCameraSystem()), _scene(new Scene), _playerInputSystem(&PlayerInputSystem::getPlayerInputSystem())
 {
-	entity = new Entity(_resourceManager->getVertexBufferArray()->at(1), makeVector3(0.0f, 0.0f, -4.0f));
-	entity->setRotation(makeVector3(0.0f, 0.0f, 0.0f));//to jest kat o jaki obrocic dla danej osi
-	entity->setScale(makeVector3(1.0f, 1.0f, 1.0f));
-	//entity->setVelocity(makeVector3(0.001f, 0.0f, 0.0f));
-	entity->setRotationVelocity(makeVector3(1.0f, 1.0f, 1.0f));
-	//entity->setScaleVelocity(makeVector3(0.001f, 0.0f, 0.0f));
+
 }
 
 
 GameManager::~GameManager()
 {
 	ResourceManager::destroyResourceManager();
+	CameraSystem::destroyCameraSystem();
 	RenderSystem::destroyRenderSystem();
+	PlayerInputSystem::destroyPlayerInputSystem();
 }
 
 
@@ -38,11 +36,13 @@ void GameManager::runGameLoop()
 
 		while (deltaTime >= 1.0f){
 			_running = !glfwWindowShouldClose(_window);
-			_movementSystem->update(entity);
+			_movementSystem->update(_scene->getChildren());
+			_playerInputSystem->update();
+
 			--deltaTime;
 		}
 
-		_renderSystem->render(entity);
+		_renderSystem->render(_scene->getChildren());
 		
 	}
 }
