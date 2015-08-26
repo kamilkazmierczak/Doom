@@ -24,7 +24,7 @@ enum Camera_Movement {
 // Default camera values
 const GLfloat YAW = -90.0f;
 const GLfloat PITCH = 0.0f;
-const GLfloat SPEED = 3.0f;
+const GLfloat SPEED = 5.0f;
 const GLfloat SENSITIVTY = 0.25f;
 const GLfloat ZOOM = 45.0f;
 
@@ -77,9 +77,16 @@ public:
 	{
 		GLfloat velocity = this->MovementSpeed * deltaTime;
 		if (direction == FORWARD)
+		{
+			this->Position.y += 0.1f;
 			this->Position += this->Front * velocity;
+		}
 		if (direction == BACKWARD)
+		{
 			this->Position -= this->Front * velocity;
+			//this->Position.y -= 1.0f*velocity;
+
+		}
 		if (direction == LEFT)
 			this->Position -= this->Right * velocity;
 		if (direction == RIGHT)
@@ -132,10 +139,26 @@ private:
 		front.x = cos(glm::radians(this->Yaw)) * cos(glm::radians(this->Pitch));
 		front.y = sin(glm::radians(this->Pitch));
 		front.z = sin(glm::radians(this->Yaw)) * cos(glm::radians(this->Pitch));
-		this->Front = glm::normalize(front)*CameraSpeed;
+		this->Front = glm::normalize(front);
 		// Also re-calculate the Right and Up vector
-		this->Right = glm::normalize(glm::cross(this->Front, this->WorldUp))*CameraSpeed;  // Normalize the vectors, because their length gets closer to 0 the more you look up or down which results in slower movement.
-		this->Up = glm::normalize(glm::cross(this->Right, this->Front))*CameraSpeed;
+		this->Right = glm::normalize(glm::cross(this->Front, this->WorldUp));  // Normalize the vectors, because their length gets closer to 0 the more you look up or down which results in slower movement.
+		this->Up = glm::normalize(glm::cross(this->Right, this->Front));
 	}
+
+	void jogging()
+	{
+		GLfloat lastTime = 0;
+		// Used to make us "jog" up and down as we move forward.
+		GLfloat joggingAngle = 0;
+		/*
+		function animate() {
+			var timeNow = new Date().getTime();
+			if (lastTime != 0) {
+				var elapsed = timeNow - lastTime;
+				*/
+	}
+
+
+
 };
 
