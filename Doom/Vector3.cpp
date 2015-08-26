@@ -75,25 +75,3 @@ GLfloat dotProductVector3(Vector3 vectorA, Vector3 vectorB)
 	return vectorA.x*vectorB.x + vectorA.y*vectorB.y + vectorA.z*vectorB.z;
 	//return dot(vec3(vectorA.x, vectorA.y, vectorA.z), vec3(vectorB.x, vectorB.y, vectorB.z));
 }
-
-
-
-Vector3 scalerMultiplyVector3(Vector3 vectorToMultiply, GLfloat scalerValue)
-{
-	Vector3 newVector;
-	newVector.x = vectorToMultiply.x * scalerValue;
-	newVector.y = vectorToMultiply.y * scalerValue;
-	newVector.z = vectorToMultiply.z * scalerValue;
-
-	return newVector;
-}
-
-Vector3 transformVector3(Vector3 vector, Matrix3 transformationMatrix)
-{//niby jako mnozenie macierzy dwoch przez siebie //wtf?
-	Vector3 newVector;
-	newVector.x = dotProductVector3(vector, makeVector3(transformationMatrix.m00, transformationMatrix.m10, transformationMatrix.m20));
-	newVector.y = dotProductVector3(vector, makeVector3(transformationMatrix.m01, transformationMatrix.m11, transformationMatrix.m21));
-	newVector.z = dotProductVector3(vector, makeVector3(transformationMatrix.m02, transformationMatrix.m12, transformationMatrix.m22));
-
-	return newVector;
-}

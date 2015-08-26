@@ -76,7 +76,6 @@
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Matrix3.cpp" />
     <ClCompile Include="MovementSystem.cpp" />
     <ClCompile Include="PlayerInputSystem.cpp" />
     <ClCompile Include="RenderSystem.cpp" />
@@ -84,7 +83,6 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="ShaderData.cpp" />
     <ClCompile Include="ShaderInterface.cpp" />
-    <ClCompile Include="Vector2.cpp" />
     <ClCompile Include="Vector3.cpp" />
     <ClCompile Include="Vector4.cpp" />
     <ClCompile Include="VertexBuffer.cpp" />
@@ -96,7 +94,6 @@
     <ClInclude Include="CubeVertices.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="GameManager.h" />
-    <ClInclude Include="Matrix3.h" />
     <ClInclude Include="MovementSystem.h" />
     <ClInclude Include="PlayerInputSystem.h" />
     <ClInclude Include="RenderSystem.h" />
@@ -106,7 +103,6 @@
     <ClInclude Include="ShaderData.h" />
     <ClInclude Include="ShaderInterface.h" />
     <ClInclude Include="TriangleVertices.h" />
-    <ClInclude Include="Vector2.h" />
     <ClInclude Include="Vector3.h" />
     <ClInclude Include="Vector4.h" />
     <ClInclude Include="VertexBuffer.h" />

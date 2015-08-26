@@ -78,7 +78,7 @@ public:
 		GLfloat velocity = this->MovementSpeed * deltaTime;
 		if (direction == FORWARD)
 		{
-			this->Position.y += 0.1f;
+			//this->Position.y += 0.1f;
 			this->Position += this->Front * velocity;
 		}
 		if (direction == BACKWARD)
