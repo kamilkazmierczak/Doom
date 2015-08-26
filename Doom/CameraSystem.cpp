@@ -12,12 +12,12 @@ CameraSystem::~CameraSystem()
 }
 
 
-Entity* CameraSystem::getCurrentCamera()
+Camera* CameraSystem::getCurrentCamera()
 {
 	return _currentCamera;
 }
 
-void CameraSystem::setCurrentCamera(Entity *newCamera)
+void CameraSystem::setCurrentCamera(Camera *newCamera)
 {
 	_currentCamera = newCamera;
 	RenderSystem *renderSystem = &RenderSystem::getRenderSystem();

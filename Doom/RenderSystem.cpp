@@ -1,6 +1,7 @@
 #include "RenderSystem.h"
 #include "Constants.h"
 
+
 using namespace glm;
 
 void RenderSystem::render(vector<Entity*> *entityArray)
@@ -27,20 +28,26 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 		model = rotate(model, radians(entity->getRotation().z), vec3(0.0f, 0.0f, 1.0f));
 
 		model = scale(model, vec3(entity->getScale().x, entity->getScale().y, entity->getScale().z));
+		//potrzebne?
 		view = translate(view, vec3(entity->getPosition().x, entity->getPosition().y, entity->getPosition().z));
+
+		view = _currentCamera->GetViewMatrix();
+
 		//temporary
-		
+		/*
 		view = lookAt(vec3(_currentCamera->getPosition().x, _currentCamera->getPosition().y, _currentCamera->getPosition().z),
 			vec3(_currentCamera->getEyeVector().x, _currentCamera->getEyeVector().y, _currentCamera->getEyeVector().z),
 			vec3(_currentCamera->getUpVector().x, _currentCamera->getUpVector().y, _currentCamera->getUpVector().z));
-			
+		*/
+
+
 		/*
 		view = lookAt(vec3(1.0f, 1.0f, 2.0f),
 		vec3(0.0f, 0.0f, 0.0f),
 		vec3(0.0f, 1.0f, 0.0f));
 		*/
 
-		projection = perspective(radians(45.0f), (GLfloat)WIDTH / (GLfloat)HEIGHT, 0.1f, 100.0f);
+		projection = perspective(radians(_currentCamera->Zoom), (GLfloat)WIDTH / (GLfloat)HEIGHT, 0.1f, 100.0f);
 
 
 		//przekazanie do shadera
@@ -98,12 +105,12 @@ RenderSystem::~RenderSystem()
 
 }
 
-Entity* RenderSystem::getCurrentCamera()
+Camera* RenderSystem::getCurrentCamera()
 {
 	return _currentCamera;
 }
 
-void RenderSystem::setCurrentCamera(Entity *newCamera)
+void RenderSystem::setCurrentCamera(Camera *newCamera)
 {
 	_currentCamera = newCamera;
 }

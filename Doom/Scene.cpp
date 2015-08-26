@@ -3,6 +3,8 @@
 #include "ResourceManager.h"
 #include "PlayerInputSystem.h"
 
+using namespace glm;
+
 Scene::Scene()
 {
 	_children = new vector<Entity *>();
@@ -17,6 +19,17 @@ Scene::Scene()
 
 	_children->push_back(entity);
 
+	
+	Camera *camera = new Camera(vec3(0.0f, 0.0f, 3.0f));
+	PlayerInputSystem *playerInputSystem = &PlayerInputSystem::getPlayerInputSystem();
+	playerInputSystem->setCurrentCamera(camera);
+
+	CameraSystem *cameraSystem = &CameraSystem::getCameraSystem();
+	cameraSystem->setCurrentCamera(camera);
+	
+
+
+	/*
 	Entity *camera = new Entity(NULL, makeVector3(1.0f, 1.0f, 2.0f));
 	camera->setEyeVector(normalizeVector3(makeVector3(-1.0f, -1.0f, -1.0f)));
 	camera->setUpVector(normalizeVector3(makeVector3(0.0f, 1.0f, 0.0f)));
@@ -25,15 +38,11 @@ Scene::Scene()
 	PlayerInputSystem *playerInputSystem = &PlayerInputSystem::getPlayerInputSystem();
 	playerInputSystem->setCurrentPlayer(camera);
 
-
-	//camera->setVelocity(makeVector3(0.0f, 0.01f, 0.01f));
-	//to nic nie da bo to nie gluloolat tylko lookat gdzie tego bym dokonal
-	//jakbym zmienial 2 atrybut (pdf) czyli center gdzie tu interpretuje jako???
-	///to jednak chyba powinno normalnie dzialac bo to raczej to samo
 	_children->push_back(camera);
 
 	CameraSystem *cameraSystem = &CameraSystem::getCameraSystem();
 	cameraSystem->setCurrentCamera(camera);
+	*/ //tu sie zrobil problem
 }
 
 
