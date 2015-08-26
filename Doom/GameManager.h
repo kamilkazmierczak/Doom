@@ -19,10 +19,17 @@ private:
 	ResourceManager *_resourceManager;
 	MovementSystem *_movementSystem;
 	CameraSystem *_cameraSystem;
-	PlayerInputSystem *_playerInputSystem;
 	GLFWwindow *_window;
 
+
+
+	PlayerInputSystem *_playerInputSystem;
+
+
 	Scene *_scene;
+
+
+	GLfloat _deltaTime;
 
 	GameManager(bool running);
 	~GameManager();
@@ -32,6 +39,7 @@ private:
 public:
 
 	void runGameLoop();
+	GLfloat getDeltaTime();
 
 	static GameManager& getGameManager();
 	static void destroyGameManager();

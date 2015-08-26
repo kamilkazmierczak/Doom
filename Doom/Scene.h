@@ -2,7 +2,9 @@
 #include "Entity.h"
 #include <vector>
 
-using namespace std;
+#include <GLFW/glfw3.h>
+
+
 
 class Scene
 {

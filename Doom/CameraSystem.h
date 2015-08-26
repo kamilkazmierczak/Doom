@@ -1,16 +1,17 @@
 #pragma once
 #include "Entity.h"
+#include "Camera.h"
 
 class CameraSystem
 {
 private:
-	Entity *_currentCamera;
+	Camera *_currentCamera;
 
 	CameraSystem();
 	~CameraSystem();
 public:
-	Entity *getCurrentCamera();
-	void setCurrentCamera(Entity *newCamera);
+	Camera *getCurrentCamera();
+	void setCurrentCamera(Camera *newCamera);
 
 	static CameraSystem& getCameraSystem();
 	static void destroyCameraSystem();

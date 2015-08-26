@@ -25,21 +25,21 @@ GameManager::~GameManager()
 void GameManager::runGameLoop()
 {
 	// Deltatime
-	double lastTime = glfwGetTime(); 
-	double deltaTime = 0.0f; // Time between current frame and last frame
+	GLfloat lastTime = glfwGetTime(); 
+	_deltaTime = 0.0f; // Time between current frame and last frame
 
 	while (_running){
 		
-		double currentTime = glfwGetTime();
-		deltaTime += (currentTime - lastTime) * UpdatesPerSecond;
+		GLfloat currentTime = glfwGetTime();
+		_deltaTime += (currentTime - lastTime) * UpdatesPerSecond;
 		lastTime = currentTime;
 
-		while (deltaTime >= 1.0f){
+		while (_deltaTime >= 1.0f){
 			_running = !glfwWindowShouldClose(_window);
 			_movementSystem->update(_scene->getChildren());
 			_playerInputSystem->update();
 
-			--deltaTime;
+			--_deltaTime;
 		}
 
 		_renderSystem->render(_scene->getChildren());
@@ -47,6 +47,11 @@ void GameManager::runGameLoop()
 	}
 }
 
+
+GLfloat GameManager::getDeltaTime()
+{
+	return _deltaTime;
+}
 
 
 GameManager& GameManager::getGameManager()

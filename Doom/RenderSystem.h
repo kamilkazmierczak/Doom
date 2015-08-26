@@ -23,15 +23,15 @@ private:
 
 	GLFWwindow *_window;
 	CameraSystem *_cameraSystem;
-	Entity *_currentCamera;
+	Camera *_currentCamera;
 
 	RenderSystem();
 	~RenderSystem();
 
 public:
 
-	Entity *getCurrentCamera();
-	void setCurrentCamera(Entity *newCamera);
+	Camera *getCurrentCamera();
+	void setCurrentCamera(Camera *newCamera);
 
 	void render(vector<Entity *> *entityArray);
 	static RenderSystem& getRenderSystem();
