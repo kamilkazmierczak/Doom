@@ -17,7 +17,7 @@ _shaderData(shaderData)
 	glBindBuffer(GL_ARRAY_BUFFER, _vertexBufferID);
 	glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
 	//glBindBuffer(GL_ARRAY_BUFFER, 0); //??
-	//configureVertexAttributes(); //nie do konca jestem pewien czy to tu powinno byc, ale dziala
+	configureVertexAttributes(); //nie do konca jestem pewien czy to tu powinno byc, ale dziala
 								//nie moze byc w petli bo sie wykrzaczy
 }
 

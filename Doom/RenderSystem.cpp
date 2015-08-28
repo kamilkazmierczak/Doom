@@ -6,24 +6,22 @@ using namespace glm;
 
 void RenderSystem::render(vector<Entity*> *entityArray)
 {
+	mat4 view;
+	mat4 model;
 	mat4 projection;
-	projection = perspective(radians(_currentCamera->Zoom), (GLfloat)WIDTH / (GLfloat)HEIGHT, 0.1f, 100.0f);
 
+	projection = perspective(radians(_currentCamera->Zoom), (GLfloat)WIDTH / (GLfloat)HEIGHT, 0.1f, 100.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	view = _currentCamera->GetViewMatrix();
 	for (vector<Entity *>::iterator iterator = entityArray->begin(); iterator != entityArray->end(); iterator++)
 	{
 
 		Entity *entity = *iterator;
 		if (entity->getVertexBuffer() != NULL)
 		{
-		
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
 		entity->getVertexBuffer()->getShader()->use();
 
-		//Transformacje
-		mat4 model;
-		mat4 view;
-	
 
 		//zeby sie rowno krecilo we wszystkie strony to rotate(mode,....,vec3(1.0f, 1.0f, 1.0f));
 		model = rotate(model, radians(entity->getRotation().x), vec3(1.0f, 0.0f, 0.0f));
@@ -31,10 +29,8 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 		model = rotate(model, radians(entity->getRotation().z), vec3(0.0f, 0.0f, 1.0f));
 
 		model = scale(model, vec3(entity->getScale().x, entity->getScale().y, entity->getScale().z));
-		//potrzebne?
 		view = translate(view, vec3(entity->getPosition().x, entity->getPosition().y, entity->getPosition().z));
 
-		//view = _currentCamera->GetViewMatrix();
 
 		//przekazanie do shadera
 		GLint modelLoc = (entity->getVertexBuffer()->getShader())->getUniformLocation("model");
@@ -45,7 +41,7 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, value_ptr(view));
 		glUniformMatrix4fv(projLoc, 1, GL_FALSE, value_ptr(projection));
 
-
+		
 
 		glUniform4f((entity->getVertexBuffer()->getShader())->get_uColor(),
 			entity->getVertexBuffer()->getShaderData()->get_uColorValue().x,
@@ -58,14 +54,15 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 			entity->getVertexBuffer()->getShaderData()->get_uLightPosition().y,
 			entity->getVertexBuffer()->getShaderData()->get_uLightPosition().z);
 
-		entity->getVertexBuffer()->configureVertexAttributes(); // przeniesiono do konstruktora w "VertexBuffer"
+			
+		//entity->getVertexBuffer()->configureVertexAttributes(); // przeniesiono do konstruktora w "VertexBuffer"
 		entity->getVertexBuffer()->renderVertexBuffer();	
 
-		glfwPollEvents();
-		glfwSwapBuffers(_window);
+		
 		}
 	}
-	//glfwPollEvents();
+	glfwSwapBuffers(_window);
+	glfwPollEvents();
 }
 
 
