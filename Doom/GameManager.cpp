@@ -33,7 +33,7 @@ void GameManager::runGameLoop()
 		GLfloat currentTime = glfwGetTime();
 		_deltaTime += (currentTime - lastTime) * UpdatesPerSecond;
 		lastTime = currentTime;
-
+		
 		while (_deltaTime >= 1.0f){
 			_running = !glfwWindowShouldClose(_window);
 			_movementSystem->update(_scene->getChildren());
@@ -72,7 +72,7 @@ GameManager& GameManager::getGameManager()
 		glfwWindowHint(GLFW_BLUE_BITS, 8);
 		glfwWindowHint(GLFW_ALPHA_BITS, 8);
 		glfwWindowHint(GLFW_SAMPLES, 16); //wygladzenie krawedzi
-
+		
 
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
