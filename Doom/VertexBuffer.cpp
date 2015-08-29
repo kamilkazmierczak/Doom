@@ -9,9 +9,11 @@ VertexBuffer::VertexBuffer(const GLvoid *data,
 						   ShaderInterface *shader,
 						   ShaderData *shaderData,
 						   GLvoid *positionOffset,
-						   GLvoid *normalOffset)
+						   GLvoid *normalOffset,
+						   GLvoid *textureOffset,
+						   TextureLoader *textureLoader)
 :_mode(mode), _count(count), _stride(stride), _shader(shader), _positionOffset(positionOffset), _normalOffset(normalOffset),
-_shaderData(shaderData)
+_textureOffset(textureOffset), _shaderData(shaderData), _textureLoader(textureLoader)
 {
 	glGenBuffers(1, &_vertexBufferID);
 	glBindBuffer(GL_ARRAY_BUFFER, _vertexBufferID);
@@ -63,14 +65,22 @@ void VertexBuffer::configureVertexAttributes()
 			glVertexAttribPointer(_shader->get_aPositionNormal(), 3, GL_FLOAT, GL_FLOAT, _stride, _normalOffset);
 		}
 
+		if (_shader->get_aTextureCoord() != -1)
+		{
+			glEnableVertexAttribArray(_shader->get_aTextureCoord());
+			glVertexAttribPointer(_shader->get_aTextureCoord(), 3, GL_FLOAT, GL_FLOAT, _stride, _textureOffset);
+		}
+
 		glBindVertexArray(0);
 }
 
 
 void VertexBuffer::renderVertexBuffer()
-{
+{	
+	if (_textureLoader != NULL)
+		_textureLoader->createTexture(_shader);
+
 	glBindVertexArray(VAO);
-	//glDrawArrays(GL_TRIANGLES, 0, 3);
 	glDrawArrays(_mode, 0, _count);
 	glBindVertexArray(0);
 	

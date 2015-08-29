@@ -4,6 +4,7 @@
 #include <GLFW/glfw3.h>
 #include "ShaderInterface.h"
 #include "ShaderData.h"
+#include "TextureLoader.h"
 #include <iostream>
 using namespace std;
 
@@ -13,12 +14,14 @@ private:
 	GLuint _vertexBufferID;
 	ShaderInterface *_shader;
 	ShaderData *_shaderData;
+	TextureLoader *_textureLoader;
 	GLenum _mode;
 	GLsizei _count; //do liczenia wierzczholkow (w sensie trojkat =3 ) //dla glDrawArrays
 	GLsizei _stride; // dla VAO
 	GLuint VAO;
 	GLvoid *_positionOffset;
 	GLvoid *_normalOffset;
+	GLvoid *_textureOffset;
 
 public:
 
@@ -34,7 +37,9 @@ public:
 				ShaderInterface *shader,
 				ShaderData *shaderData,
 				GLvoid *_positionOffset,
-				GLvoid *_normalOffset);
+				GLvoid *_normalOffset,
+				GLvoid *_textureOffset,
+				TextureLoader *textureLoader);
 	~VertexBuffer();
 
 	void configureVertexAttributes();//vertexPosiotion to layout (location = 0) //0

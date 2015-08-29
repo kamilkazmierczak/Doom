@@ -58,6 +58,9 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 		//entity->getVertexBuffer()->configureVertexAttributes(); // przeniesiono do konstruktora w "VertexBuffer"
 		entity->getVertexBuffer()->renderVertexBuffer();	
 
+
+		//troche to glupie ale nie mam pomyslu innego
+		view = translate(view, vec3(-entity->getPosition().x, -entity->getPosition().y, -entity->getPosition().z));
 		
 		}
 	}

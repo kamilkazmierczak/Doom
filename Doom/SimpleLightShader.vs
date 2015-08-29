@@ -1,6 +1,7 @@
 #version 330 core
 layout (location = 0) in vec3 aPositionVertex;
 layout (location = 1) in vec3 aPositionNormal;
+layout (location = 2) in vec2 aTextureCoord;
 
 //out vec4 oFinalVertexColor;
 
@@ -13,6 +14,7 @@ uniform mat4 projection;
 
 out vec3 Normal;
 out vec3 FragPos;
+out vec2 TextureCoord;
 
 void main()
 {
@@ -31,6 +33,7 @@ void main()
 	gl_Position = projection * view * model * vec4(aPositionVertex, 1.0);
 	FragPos = vec3(model* vec4(aPositionVertex, 1.0f));
 	Normal = mat3(transpose(inverse(model))) * aPositionNormal;
+	TextureCoord = vec2(aTextureCoord.x, 1.0 - aTextureCoord.y);
 	//Normal = aPositionNormal; //??? tez tak niby wg learnopengl
 	//Normal = projection * view * model * aPositionNormal; //niby wg tutoriala
 } 
