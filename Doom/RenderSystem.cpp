@@ -61,7 +61,7 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 
 		//troche to glupie ale nie mam pomyslu innego
 		view = translate(view, vec3(-entity->getPosition().x, -entity->getPosition().y, -entity->getPosition().z));
-		
+		model = mat4();
 		}
 	}
 	glfwSwapBuffers(_window);

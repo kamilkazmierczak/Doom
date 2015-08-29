@@ -20,18 +20,18 @@ Scene::Scene()
 	_children->push_back(entity);
 
 	
-	Entity *entity2 = new Entity(resourceManager->getVertexBufferArray()->at(0), makeVector3(0.0f, 1.5f, -5.0f));
-	entity2->setRotation(makeVector3(0.0f, 0.0f, 0.0f));//to jest kat o jaki obrocic dla danej osi
-	entity2->setScale(makeVector3(1.0f, 1.0f, 1.0f));
-	entity2->setRotationVelocity(makeVector3(1.0f, 1.0f, 1.0f));
-	_children->push_back(entity2);
+	entity = new Entity(resourceManager->getVertexBufferArray()->at(0), makeVector3(0.0f, 1.5f, -5.0f));
+	entity->setRotation(makeVector3(0.0f, 0.0f, 0.0f));//to jest kat o jaki obrocic dla danej osi
+	entity->setScale(makeVector3(1.0f, 1.0f, 1.0f));
+	entity->setRotationVelocity(makeVector3(1.0f, 1.0f, 1.0f));
+	_children->push_back(entity);
 
 
-	Entity *entity3 = new Entity(resourceManager->getVertexBufferArray()->at(2), makeVector3(0.0f, -1.5f, -5.0f));
-	//entity2->setRotation(makeVector3(45.0f, 0.0f, 0.0f));//to jest kat o jaki obrocic dla danej osi
-	entity3->setScale(makeVector3(1.0f, 1.0f, 1.0f));
+	entity = new Entity(resourceManager->getVertexBufferArray()->at(2), makeVector3(0.0f, -1.5f, -5.0f));
+	entity->setRotation(makeVector3(45.0f, 0.0f, 0.0f));//to jest kat o jaki obrocic dla danej osi
+	entity->setScale(makeVector3(1.0f, 1.0f, 1.0f));
 	//entity2->setRotationVelocity(makeVector3(0.0f, 0.0f, 0.0f));
-	_children->push_back(entity3);
+	_children->push_back(entity);
 
 
 	
