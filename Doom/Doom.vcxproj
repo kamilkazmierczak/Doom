@@ -104,6 +104,7 @@
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderData.h" />
     <ClInclude Include="ShaderInterface.h" />
+    <ClInclude Include="SkyboxVertices.h" />
     <ClInclude Include="TextureLoader.h" />
     <ClInclude Include="TriangleVertices.h" />
     <ClInclude Include="Vector2.h" />

@@ -28,6 +28,7 @@ public:
 	GLuint getVertexBufferID();
 	ShaderInterface *getShader();
 	ShaderData *getShaderData();
+	TextureLoader *getTextureLoader();
 
 	VertexBuffer(const GLvoid *data, 
 				GLsizeiptr size, 

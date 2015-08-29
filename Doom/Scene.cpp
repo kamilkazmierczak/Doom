@@ -11,7 +11,11 @@ Scene::Scene()
 
 	ResourceManager *resourceManager = &ResourceManager::getResourceManager();
 
-	Entity *entity = new Entity(resourceManager->getVertexBufferArray()->at(1), makeVector3(0.0f, 0.0f, -5.0f));
+	//skybox
+	Entity *entity = new Entity(resourceManager->getVertexBufferArray()->at(3), makeVector3(NULL, NULL, NULL));
+	_children->push_back(entity);
+
+	entity = new Entity(resourceManager->getVertexBufferArray()->at(1), makeVector3(0.0f, 0.0f, -5.0f));
 	entity->setRotation(makeVector3(0.0f, 0.0f, 0.0f));//to jest kat o jaki obrocic dla danej osi
 	entity->setScale(makeVector3(1.0f, 1.0f, 1.0f));
 	//entity->setVelocity(makeVector3(0.001f, 0.0f, 0.0f));

@@ -32,6 +32,16 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 		view = translate(view, vec3(entity->getPosition().x, entity->getPosition().y, entity->getPosition().z));
 
 
+			//SKYBOX
+			if (entity->getVertexBuffer()->getTextureLoader() != NULL &&
+				entity->getVertexBuffer()->getTextureLoader()->getTextureType() == TX_SKYBOX)
+			{
+				view = glm::mat4(mat3(view));
+				glDepthMask(GL_FALSE);
+			}
+		
+		
+
 		//przekazanie do shadera
 		GLint modelLoc = (entity->getVertexBuffer()->getShader())->getUniformLocation("model");
 		GLint viewLoc = (entity->getVertexBuffer()->getShader())->getUniformLocation("view");
@@ -57,6 +67,15 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 			
 		//entity->getVertexBuffer()->configureVertexAttributes(); // przeniesiono do konstruktora w "VertexBuffer"
 		entity->getVertexBuffer()->renderVertexBuffer();	
+
+
+		//SKYBOX
+		if (entity->getVertexBuffer()->getTextureLoader() != NULL &&
+			entity->getVertexBuffer()->getTextureLoader()->getTextureType() == TX_SKYBOX)
+		{
+			glDepthMask(GL_TRUE);
+			view = _currentCamera->GetViewMatrix();
+		}
 
 
 		//troche to glupie ale nie mam pomyslu innego

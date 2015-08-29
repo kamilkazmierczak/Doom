@@ -46,6 +46,11 @@ ShaderData* VertexBuffer::getShaderData()
 	return _shaderData;
 }
 
+TextureLoader* VertexBuffer::getTextureLoader()
+{
+	return _textureLoader;
+}
+
 void VertexBuffer::configureVertexAttributes()
 {
 		glGenVertexArrays(1, &VAO);
@@ -79,6 +84,8 @@ void VertexBuffer::renderVertexBuffer()
 {	
 	if (_textureLoader != NULL)
 		_textureLoader->createTexture(_shader);
+	
+	
 
 	glBindVertexArray(VAO);
 	glDrawArrays(_mode, 0, _count);

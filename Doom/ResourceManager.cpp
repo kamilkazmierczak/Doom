@@ -1,6 +1,7 @@
 #include "ResourceManager.h"
 #include "TriangleVertices.h"
 #include "CubeVertices.h"
+#include "SkyboxVertices.h"
 #include "Entity.h"
 
 vector<ShaderInterface *>* ResourceManager::getShaderArray()
@@ -24,6 +25,9 @@ ResourceManager::ResourceManager()
 	ShaderInterface *lightShader = new ShaderInterface("SimpleLightShader.vs", "SimpleLightShader.frag");
 	_shaderArray->push_back(lightShader);
 
+	ShaderInterface *skyboxShader = new ShaderInterface("skybox.vs", "skybox.frag");
+	_shaderArray->push_back(skyboxShader);
+
 	shaderData = new ShaderData(makeVector4(0.0f, 0.0f, 1.0f, 1.0f), makeVector3(0.0f, 0.0f, 1.0f));
 
 
@@ -40,17 +44,17 @@ ResourceManager::ResourceManager()
 												  sizeof(vertices), 
 												  GL_TRIANGLES, 
 												  3, 
-												  sizeof(GLfloat) * 3, 
+												  sizeof(VertexDataP),
 												  _shaderArray->at(0),
 												  shaderData,
 												  (GLvoid*)0,
-												  (GLvoid*)0,
-												  (GLvoid*)0,
+												  NULL,
+												  NULL,
 												  NULL);
 	_vertexBufferArray->push_back(vertexBuffer);
 
 	//container
-	textureLoader = new TextureLoader("container.png");
+	textureLoader = new TextureLoader("container.png",TX_TEXTURE);
 	VertexBuffer *cubeVertexBuffer = new VertexBuffer(cubeVertices, 
 												  sizeof(cubeVertices), 
 												  GL_TRIANGLES, 
@@ -65,7 +69,7 @@ ResourceManager::ResourceManager()
 	_vertexBufferArray->push_back(cubeVertexBuffer);
 
 	//container2
-	    textureLoader = new TextureLoader("container2.jpg");
+	    textureLoader = new TextureLoader("container2.jpg",TX_TEXTURE);
 		VertexBuffer *cubeVertexBuffer2 = new VertexBuffer(cubeVertices, 
 												  sizeof(cubeVertices), 
 												  GL_TRIANGLES, 
@@ -79,9 +83,24 @@ ResourceManager::ResourceManager()
 												  textureLoader);
 	_vertexBufferArray->push_back(cubeVertexBuffer2);
 
-
-
-
+	
+	//skybox
+	//if err ? moze tutaj new ale razem z * ?
+		   TextureLoader *textureLoader2 = new TextureLoader(NULL,TX_SKYBOX);
+			VertexBuffer *skyBox = new VertexBuffer(skyboxVertices,
+												  sizeof(skyboxVertices), 
+												  GL_TRIANGLES, 
+												  36, 
+												  sizeof(VertexDataP) , 
+												  _shaderArray->at(2),
+												  shaderData, //useless?
+												  (GLvoid *)0,
+												  NULL,
+												  NULL,
+												  textureLoader2);
+	_vertexBufferArray->push_back(skyBox);
+	
+	
 }
 
 
