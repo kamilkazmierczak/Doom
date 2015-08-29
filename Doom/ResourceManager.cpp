@@ -45,11 +45,11 @@ ResourceManager::ResourceManager()
 												  sizeof(cubeVertices), 
 												  GL_TRIANGLES, 
 												  36, 
-												  sizeof(VertexDataPN) , 
+												  sizeof(VertexDataPNT) , 
 												  _shaderArray->at(1),
 												  shaderData,
-												  (GLvoid *)(offsetof(VertexDataPN, positionCoordinates)),
-												  (GLvoid *)(offsetof(VertexDataPN, normalCoordinates)));
+												  (GLvoid *)(offsetof(VertexDataPNT, positionCoordinates)),
+												  (GLvoid *)(offsetof(VertexDataPNT, normalCoordinates)));
 	_vertexBufferArray->push_back(cubeVertexBuffer);
 
 
