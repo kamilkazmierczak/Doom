@@ -29,6 +29,9 @@ ResourceManager::ResourceManager()
 	ShaderInterface *skyboxShader = new ShaderInterface("skybox.vs", "skybox.frag");
 	_shaderArray->push_back(skyboxShader);
 
+	ShaderInterface *lampShader = new ShaderInterface("lamp.vs", "lamp.frag");
+	_shaderArray->push_back(lampShader);
+
 	shaderData = new ShaderData(makeVector4(0.0f, 0.0f, 1.0f, 1.0f), makeVector3(0.0f, 0.0f, 1.0f));
 
 
@@ -115,7 +118,19 @@ ResourceManager::ResourceManager()
 												  textureLoader);
 	_vertexBufferArray->push_back(floor);
 	
-	
+		//lamp
+	VertexBuffer *lamp = new VertexBuffer(cubeVertices, 
+												  sizeof(cubeVertices), 
+												  GL_TRIANGLES, 
+												  36, 
+												  sizeof(VertexDataPNT) , 
+												  _shaderArray->at(3),
+												  shaderData,
+												  (GLvoid *)(offsetof(VertexDataPNT, positionCoordinates)),
+												  (GLvoid *)(offsetof(VertexDataPNT, normalCoordinates)),
+												  (GLvoid *)(offsetof(VertexDataPNT, textureCoordinates)),
+												  NULL);
+	_vertexBufferArray->push_back(lamp);
 }
 
 
