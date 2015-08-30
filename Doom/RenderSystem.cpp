@@ -16,6 +16,7 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 	view = _currentCamera->GetViewMatrix();
 	for (vector<Entity *>::iterator iterator = entityArray->begin(); iterator != entityArray->end(); iterator++)
 	{
+		glEnable(GL_DEPTH_TEST); //tego tu nie powinno byc ale jakims cudem sie wylacza samo wiec trzeba wlaczac
 
 		Entity *entity = *iterator;
 		if (entity->getVertexBuffer() != NULL)

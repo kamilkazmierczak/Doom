@@ -15,6 +15,7 @@ Scene::Scene()
 	Entity *entity = new Entity(resourceManager->getVertexBufferArray()->at(3), makeVector3(NULL, NULL, NULL));
 	_children->push_back(entity);
 
+	//container1 //chyba
 	entity = new Entity(resourceManager->getVertexBufferArray()->at(1), makeVector3(0.0f, 0.0f, -5.0f));
 	entity->setRotation(makeVector3(0.0f, 0.0f, 0.0f));//to jest kat o jaki obrocic dla danej osi
 	entity->setScale(makeVector3(1.0f, 1.0f, 1.0f));
@@ -23,22 +24,25 @@ Scene::Scene()
 	//entity->setScaleVelocity(makeVector3(0.001f, 0.0f, 0.0f));
 	_children->push_back(entity);
 
-	
+	//triangle //chyba
 	entity = new Entity(resourceManager->getVertexBufferArray()->at(0), makeVector3(0.0f, 1.5f, -5.0f));
 	entity->setRotation(makeVector3(0.0f, 0.0f, 0.0f));//to jest kat o jaki obrocic dla danej osi
 	entity->setScale(makeVector3(1.0f, 1.0f, 1.0f));
 	entity->setRotationVelocity(makeVector3(1.0f, 1.0f, 1.0f));
 	_children->push_back(entity);
 
-
+	//container2 //chyba
 	entity = new Entity(resourceManager->getVertexBufferArray()->at(2), makeVector3(0.0f, -1.5f, -5.0f));
 	entity->setRotation(makeVector3(45.0f, 0.0f, 0.0f));//to jest kat o jaki obrocic dla danej osi
 	entity->setScale(makeVector3(1.0f, 1.0f, 1.0f));
 	//entity2->setRotationVelocity(makeVector3(0.0f, 0.0f, 0.0f));
 	_children->push_back(entity);
-
-
 	
+	//floor
+	entity = new Entity(resourceManager->getVertexBufferArray()->at(4), makeVector3(0.0f, -1.0f, 0.0f));
+	_children->push_back(entity);
+
+
 
 	Camera *camera = new Camera(vec3(0.0f, 0.0f, 3.0f));
 	PlayerInputSystem *playerInputSystem = &PlayerInputSystem::getPlayerInputSystem();

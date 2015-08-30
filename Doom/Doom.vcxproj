@@ -95,6 +95,7 @@
     <ClInclude Include="Constants.h" />
     <ClInclude Include="CubeVertices.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="FloorVertices.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="MovementSystem.h" />
     <ClInclude Include="PlayerInputSystem.h" />

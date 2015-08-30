@@ -2,6 +2,7 @@
 #include "TriangleVertices.h"
 #include "CubeVertices.h"
 #include "SkyboxVertices.h"
+#include "FloorVertices.h"
 #include "Entity.h"
 
 vector<ShaderInterface *>* ResourceManager::getShaderArray()
@@ -39,7 +40,7 @@ ResourceManager::ResourceManager()
 	TextureLoader *textureLoader; 
 	_vertexBufferArray = new vector<VertexBuffer *>();
 
-	//trojkat
+	//trojkat 
 			VertexBuffer *vertexBuffer = new VertexBuffer(vertices, 
 												  sizeof(vertices), 
 												  GL_TRIANGLES, 
@@ -85,20 +86,34 @@ ResourceManager::ResourceManager()
 
 	
 	//skybox
-	//if err ? moze tutaj new ale razem z * ?
-		   TextureLoader *textureLoader2 = new TextureLoader(NULL,TX_SKYBOX);
+		   textureLoader = new TextureLoader(NULL,TX_SKYBOX);
 			VertexBuffer *skyBox = new VertexBuffer(skyboxVertices,
 												  sizeof(skyboxVertices), 
 												  GL_TRIANGLES, 
 												  36, 
 												  sizeof(VertexDataP) , 
 												  _shaderArray->at(2),
-												  shaderData, //useless?
-												  (GLvoid *)0,
+												  shaderData, //useless ale inaczej bd bledy niepotrzebne, a nie chce mi sie zmieniac
+												  (GLvoid *)0,					
 												  NULL,
 												  NULL,
-												  textureLoader2);
+												  textureLoader);
 	_vertexBufferArray->push_back(skyBox);
+
+		//floor
+		   textureLoader = new TextureLoader("floor.png",TX_TEXTURE);
+			VertexBuffer *floor = new VertexBuffer(floorVertices,
+												  sizeof(floorVertices), 
+												  GL_TRIANGLES, 
+												  6, 
+												  sizeof(VertexDataPNT) , 
+												  _shaderArray->at(1),
+												  shaderData,
+												  (GLvoid *)(offsetof(VertexDataPNT, positionCoordinates)),
+												  (GLvoid *)(offsetof(VertexDataPNT, normalCoordinates)),
+												  (GLvoid *)(offsetof(VertexDataPNT, textureCoordinates)),
+												  textureLoader);
+	_vertexBufferArray->push_back(floor);
 	
 	
 }

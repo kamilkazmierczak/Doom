@@ -131,6 +131,9 @@
     <ClInclude Include="SkyboxVertices.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="FloorVertices.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Doom.rc">
