@@ -113,6 +113,7 @@
     <ClInclude Include="Vector4.h" />
     <ClInclude Include="VertexBuffer.h" />
     <ClInclude Include="VertexData.h" />
+    <ClInclude Include="WallVertices.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Doom.rc" />

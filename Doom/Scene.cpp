@@ -47,6 +47,11 @@ Scene::Scene()
 	entity->setScale(makeVector3(0.2f, 0.2f, 0.2f));
 	_children->push_back(entity);
 
+	//wall
+	entity = new Entity(resourceManager->getVertexBufferArray()->at(6), makeVector3(0.0f, 0.0f,8.0f));
+	entity->setRotation(makeVector3(90.0f, 0.0f, 0.0f));
+	_children->push_back(entity);
+
 
 
 	Camera *camera = new Camera(vec3(0.0f, 0.0f, 3.0f));

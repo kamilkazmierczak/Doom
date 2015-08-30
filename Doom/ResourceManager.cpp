@@ -3,6 +3,7 @@
 #include "CubeVertices.h"
 #include "SkyboxVertices.h"
 #include "FloorVertices.h"
+#include "WallVertices.h"
 #include "Entity.h"
 
 vector<ShaderInterface *>* ResourceManager::getShaderArray()
@@ -131,6 +132,21 @@ ResourceManager::ResourceManager()
 												  (GLvoid *)(offsetof(VertexDataPNT, textureCoordinates)),
 												  NULL);
 	_vertexBufferArray->push_back(lamp);
+
+			//wall
+	textureLoader = new TextureLoader("wall.jpg", TX_TEXTURE);
+	VertexBuffer *wall = new VertexBuffer(wallVertices, 
+												  sizeof(wallVertices), 
+												  GL_TRIANGLES, 
+												  6, 
+												  sizeof(VertexDataPNT) , 
+												  _shaderArray->at(1),
+												  shaderData,
+												  (GLvoid *)(offsetof(VertexDataPNT, positionCoordinates)),
+												  (GLvoid *)(offsetof(VertexDataPNT, normalCoordinates)),
+												  (GLvoid *)(offsetof(VertexDataPNT, textureCoordinates)),
+												  textureLoader);
+	_vertexBufferArray->push_back(wall);
 }
 
 
