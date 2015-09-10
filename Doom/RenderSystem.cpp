@@ -25,12 +25,15 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 
 
 		//zeby sie rowno krecilo we wszystkie strony to rotate(mode,....,vec3(1.0f, 1.0f, 1.0f));
+		model = translate(model, vec3(entity->getPosition().x, entity->getPosition().y, entity->getPosition().z));
+
 		model = rotate(model, radians(entity->getRotation().x), vec3(1.0f, 0.0f, 0.0f));
 		model = rotate(model, radians(entity->getRotation().y), vec3(0.0f, 1.0f, 0.0f));
 		model = rotate(model, radians(entity->getRotation().z), vec3(0.0f, 0.0f, 1.0f));
 
 		model = scale(model, vec3(entity->getScale().x, entity->getScale().y, entity->getScale().z));
-		view = translate(view, vec3(entity->getPosition().x, entity->getPosition().y, entity->getPosition().z));
+		
+		//view = translate(view, vec3(entity->getPosition().x, entity->getPosition().y, entity->getPosition().z));
 
 
 			//SKYBOX
@@ -80,7 +83,7 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 
 
 		//troche to glupie ale nie mam pomyslu innego
-		view = translate(view, vec3(-entity->getPosition().x, -entity->getPosition().y, -entity->getPosition().z));
+		//view = translate(view, vec3(-entity->getPosition().x, -entity->getPosition().y, -entity->getPosition().z));
 		model = mat4();
 		}
 	}

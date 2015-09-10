@@ -48,8 +48,8 @@ Scene::Scene()
 	_children->push_back(entity);
 
 	//wall
-	entity = new Entity(resourceManager->getVertexBufferArray()->at(6), makeVector3(0.0f, 0.0f,8.0f));
-	entity->setRotation(makeVector3(90.0f, 0.0f, 0.0f));
+	entity = new Entity(resourceManager->getVertexBufferArray()->at(6), makeVector3(0.0f, -1.0f, 8.0f));
+	entity->setRotation(makeVector3(-90.0f, 0.0f, 0.0f));
 	_children->push_back(entity);
 
 

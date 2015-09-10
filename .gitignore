@@ -7,3 +7,5 @@ Doom.sdf
 Doom.v12.suo
 Debug/*
 Doom/Debug/*
+Doom/Release/*
+Release/*
