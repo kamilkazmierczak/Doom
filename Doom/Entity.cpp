@@ -11,6 +11,19 @@ void Entity::setVertexBuffer(VertexBuffer *newVertexBuffer)
 	_vertexBuffer = newVertexBuffer;
 }
 
+
+IObject* Entity::getObject()
+{
+	return _object;
+}
+
+void Entity::setObject(IObject *newObject)
+{
+	_object = newObject;
+}
+
+
+
 Vector3 Entity::getPosition()
 {
 	return _position;
@@ -100,6 +113,13 @@ Entity::Entity(VertexBuffer *vertexBuffer, Vector3 position)
 {
 }
 
+Entity::Entity(IObject *object, Vector3 position)
+	:_object(object), _position(position), _scale(makeVector3(1.0f, 1.0f, 1.0f)),
+	_rotation(makeVector3(0.0f, 0.0f, 0.0f)), _velocity(makeVector3(0.0f, 0.0f, 0.0f)),
+	_scaleVelocity(makeVector3(0.0f, 0.0f, 0.0f)), _rotationVelocity(makeVector3(0.0f, 0.0f, 0.0f)),
+	_eyeVector(makeVector3(0.0f, 0.0f, 0.0f)), _upVector(makeVector3(0.0f, 0.0f, 0.0f))
+{
+}
 
 Entity::~Entity()
 {

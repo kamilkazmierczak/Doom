@@ -1,12 +1,14 @@
 #pragma once
 #include "VertexBuffer.h"
 #include "Vector3.h"
+#include "IObject.h"
 #include <vector>
 
 class Entity
 {
 private:
 	VertexBuffer *_vertexBuffer;
+	IObject *_object;
 	Vector3 _position;
 	Vector3 _scale;
 	Vector3 _rotation;
@@ -22,6 +24,9 @@ public:
 
 	VertexBuffer *getVertexBuffer();
 	void setVertexBuffer(VertexBuffer *newVertexBuffer);
+
+	IObject *getObject();
+	void setObject(IObject *newObject);
 
 	Vector3 getPosition();
 	void setPosition(Vector3 newPosition);
@@ -48,6 +53,7 @@ public:
 	void setUpVector(Vector3 newUpVector);
 
 	Entity(VertexBuffer *vertexBuffer, Vector3 position);
+	Entity(IObject *object, Vector3 position);
 	~Entity();
 };
 

@@ -19,6 +19,11 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 		glEnable(GL_DEPTH_TEST); //tego tu nie powinno byc ale jakims cudem sie wylacza samo wiec trzeba wlaczac
 
 		Entity *entity = *iterator;
+
+
+	
+
+		//VertexBuffer
 		if (entity->getVertexBuffer() != NULL)
 		{
 		entity->getVertexBuffer()->getShader()->use();
@@ -71,6 +76,9 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 			
 		//entity->getVertexBuffer()->configureVertexAttributes(); // przeniesiono do konstruktora w "VertexBuffer"
 		entity->getVertexBuffer()->renderVertexBuffer();	
+		
+		//NEW
+		//entity->getObject()->draw()
 
 
 		//SKYBOX
@@ -86,6 +94,38 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 		//view = translate(view, vec3(-entity->getPosition().x, -entity->getPosition().y, -entity->getPosition().z));
 		model = mat4();
 		}
+
+
+		//IObject
+		if (entity->getObject() != NULL)
+		{
+
+			//dla testow to tu jest
+			
+			
+			model = translate(model, vec3(entity->getPosition().x, entity->getPosition().y, entity->getPosition().z));
+
+			model = rotate(model, radians(entity->getRotation().x), vec3(1.0f, 0.0f, 0.0f));
+			model = rotate(model, radians(entity->getRotation().y), vec3(0.0f, 1.0f, 0.0f));
+			model = rotate(model, radians(entity->getRotation().z), vec3(0.0f, 0.0f, 1.0f));
+
+			model = scale(model, vec3(entity->getScale().x, entity->getScale().y, entity->getScale().z));
+
+
+			entity->getObject()->configShader(model,view,projection); //uruchamia tez shader->Use()
+
+		
+
+
+
+			entity->getObject()->draw();
+			//chyba
+			model = mat4(); 
+		}
+
+
+
+
 	}
 	glfwSwapBuffers(_window);
 	glfwPollEvents();

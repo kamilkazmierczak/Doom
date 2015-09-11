@@ -2,6 +2,9 @@
 #include "CameraSystem.h"
 #include "ResourceManager.h"
 #include "PlayerInputSystem.h"
+#include "IObject.h"
+#include "SphereObject.h"
+#include "Sphere.h"
 
 using namespace glm;
 
@@ -17,6 +20,7 @@ Scene::Scene()
 
 	//triangle //chyba
 	entity = new Entity(resourceManager->getVertexBufferArray()->at(0), makeVector3(0.0f, 1.5f, -5.0f));
+	entity->setVelocity(makeVector3(0.0f, 0.0f, 0.01f));
 	entity->setRotation(makeVector3(0.0f, 0.0f, 0.0f));//to jest kat o jaki obrocic dla danej osi
 	entity->setScale(makeVector3(1.0f, 1.0f, 1.0f));
 	entity->setRotationVelocity(makeVector3(1.0f, 1.0f, 1.0f));
@@ -50,6 +54,16 @@ Scene::Scene()
 	//wall
 	entity = new Entity(resourceManager->getVertexBufferArray()->at(6), makeVector3(0.0f, -1.0f, 8.0f));
 	entity->setRotation(makeVector3(-90.0f, 0.0f, 0.0f));
+	_children->push_back(entity);
+
+
+	//NEW IObject (testing)
+	//sphere
+	Sphere *sphere1 = new Sphere(0.05f,15,15);
+
+	IObject *sphere = new SphereObject(sphere1);
+	entity = new Entity(sphere, makeVector3(0.0f, 4.0f, 0.0f));
+	entity->setScale(makeVector3(20.2f, 20.2f, 20.2f));
 	_children->push_back(entity);
 
 
