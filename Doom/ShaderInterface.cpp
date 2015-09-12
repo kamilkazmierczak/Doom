@@ -58,3 +58,8 @@ void ShaderInterface::use()
 {
 	shader->Use();
 }
+
+Shader* ShaderInterface::getShader()
+{
+	return shader;
+}

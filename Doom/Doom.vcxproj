@@ -82,6 +82,7 @@
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="IObject.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="ModelObject.cpp" />
     <ClCompile Include="MovementSystem.cpp" />
     <ClCompile Include="PlayerInputSystem.cpp" />
     <ClCompile Include="RenderSystem.cpp" />
@@ -106,6 +107,9 @@
     <ClInclude Include="FloorVertices.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="IObject.h" />
+    <ClInclude Include="Mesh.h" />
+    <ClInclude Include="Model.h" />
+    <ClInclude Include="ModelObject.h" />
     <ClInclude Include="MovementSystem.h" />
     <ClInclude Include="PlayerInputSystem.h" />
     <ClInclude Include="RenderSystem.h" />

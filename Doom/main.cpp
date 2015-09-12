@@ -2,7 +2,6 @@
 #include "GameManager.h"
 using namespace std;
 
-
 //void test(int& numer)
 //{
 //	//numer++;
@@ -19,6 +18,7 @@ int main(int argc, char **argv)
 	GameManager *gameManager = &GameManager::getGameManager();
 	gameManager->runGameLoop();
 	GameManager::destroyGameManager();
+
 
 
 	//int i;

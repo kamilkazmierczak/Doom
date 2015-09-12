@@ -100,6 +100,7 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 		if (entity->getObject() != NULL)
 		{
 
+
 			//dla testow to tu jest
 			
 			

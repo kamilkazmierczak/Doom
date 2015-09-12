@@ -22,6 +22,9 @@ public:
 	GLint get_uColor();
 	GLint get_uLightPosition();
 	GLint getUniformLocation(char* name);
+
+	Shader* getShader();
+
 	void use();
 
 	ShaderInterface(const GLchar* VS, const GLchar* FS);

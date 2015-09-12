@@ -5,6 +5,8 @@
 #include "IObject.h"
 #include "SphereObject.h"
 #include "Sphere.h"
+#include "ModelObject.h"
+#include "Model.h"
 
 using namespace glm;
 
@@ -59,14 +61,16 @@ Scene::Scene()
 
 	//NEW IObject (testing)
 	//sphere
-	Sphere *sphere1 = new Sphere(0.05f,15,15);
-
-	IObject *sphere = new SphereObject(sphere1);
+	IObject *sphere = new SphereObject(new Sphere(0.05f, 15, 15));
 	entity = new Entity(sphere, makeVector3(0.0f, 4.0f, 0.0f));
 	entity->setScale(makeVector3(20.2f, 20.2f, 20.2f));
 	_children->push_back(entity);
 
-
+	//model
+	IObject *model = new ModelObject(new Model("dalek/Dalek.obj"));
+	entity = new Entity(model, makeVector3(0.0f, 0.0f, 0.0f));
+	entity->setScale(makeVector3(0.002f, 0.002f, 0.002f));
+	_children->push_back(entity);
 
 	Camera *camera = new Camera(vec3(0.0f, 0.0f, 3.0f));
 	PlayerInputSystem *playerInputSystem = &PlayerInputSystem::getPlayerInputSystem();
