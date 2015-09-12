@@ -1,9 +1,12 @@
 #include "ModelObject.h"
+#include "ResourceManager.h"
+#include "CameraSystem.h"
+#include <glm/gtx/string_cast.hpp>
 
 
 ModelObject::ModelObject(Model *model) : _model(model)
 {
-	_typeOfObject = OB_SPHERE;
+	_typeOfObject = OB_MODEL;
 	_shader = new ShaderInterface("model_loading.vs", "model_loading.frag");
 
 }
@@ -27,22 +30,25 @@ void ModelObject::configShader(mat4& model, mat4& view, mat4& projection)
 
 	_shader->use();
 
-	//BARDZO TMP
-	// Positions of the point lights
-	glm::vec3 pointLightPositions[] = {
-		glm::vec3(0.7f, 0.2f, 2.0f),
-		glm::vec3(2.3f, -3.3f, -4.0f),
-		glm::vec3(-4.0f, 2.0f, -12.0f),
-		glm::vec3(0.0f, 0.0f, -3.0f)
-	};
+	ResourceManager *resourceManager = &ResourceManager::getResourceManager();
+	CameraSystem *cameraSystem = &CameraSystem::getCameraSystem();
 
+	Camera *currentCamera = cameraSystem->getCurrentCamera();	
+
+	//pod 5 jest vertexBuffer lampy a w jej ShaderData jest pozycja swiatla
+	Vector3 lamp1Position = resourceManager->getVertexBufferArray()->at(5)->getShaderData()->get_uLightPosition();
+	//vec3 lamp1Position = vec3(lamp1Position_.x, lamp1Position_.y, lamp1Position_.z);
+
+	//TEMPORARY
+	Vector3 lamp2Position = lamp1Position;
+
+	//cout << glm::to_string(lamp1Position) << endl;
 
 	// Set the lighting uniforms
-	//glUniform3f(glGetUniformLocation(shader->Program, "viewPos"), camera.Position.x, camera.Position.y, camera.Position.z);
-	// Point light 1
-	//glUniform3f(glGetUniformLocation(_shader->Program, "pointLights[0].position"), pointLightPositions[0].x, pointLightPositions[0].y, pointLightPositions[0].z);
-
+	glUniform3f(_shader->getUniformLocation("viewPos"), currentCamera->Position.x, currentCamera->Position.y, currentCamera->Position.z);
 	
+	// Point light 1
+	glUniform3f(_shader->getUniformLocation("pointLights[0].position"), lamp1Position.x, lamp1Position.y, lamp1Position.z);
 	glUniform3f(_shader->getUniformLocation("pointLights[0].ambient"), 0.05f, 0.05f, 0.05f);
 	glUniform3f(_shader->getUniformLocation("pointLights[0].diffuse"), 1.0f, 1.0f, 1.0f);
 	glUniform3f(_shader->getUniformLocation("pointLights[0].specular"), 1.0f, 1.0f, 1.0f);
@@ -50,14 +56,13 @@ void ModelObject::configShader(mat4& model, mat4& view, mat4& projection)
 	glUniform1f(_shader->getUniformLocation("pointLights[0].linear"), 0.009);
 	glUniform1f(_shader->getUniformLocation("pointLights[0].quadratic"), 0.0032);
 	// Point light 2
-	//glUniform3f(_shader->getUniformLocation("pointLights[1].position"), pointLightPositions[1].x, pointLightPositions[1].y, pointLightPositions[1].z);
+	glUniform3f(_shader->getUniformLocation("pointLights[1].position"), lamp2Position.x, lamp2Position.y, lamp2Position.z);
 	glUniform3f(_shader->getUniformLocation("pointLights[1].ambient"), 0.05f, 0.05f, 0.05f);
 	glUniform3f(_shader->getUniformLocation("pointLights[1].diffuse"), 1.0f, 1.0f, 1.0f);
 	glUniform3f(_shader->getUniformLocation("pointLights[1].specular"), 1.0f, 1.0f, 1.0f);
 	glUniform1f(_shader->getUniformLocation("pointLights[1].constant"), 1.0f);
 	glUniform1f(_shader->getUniformLocation("pointLights[1].linear"), 0.009);
 	glUniform1f(_shader->getUniformLocation("pointLights[1].quadratic"), 0.0032);
-
 
 	//przekazanie do shadera
 	GLint modelLoc = _shader->getUniformLocation("model");

@@ -63,13 +63,14 @@ Scene::Scene()
 	//sphere
 	IObject *sphere = new SphereObject(new Sphere(0.05f, 15, 15));
 	entity = new Entity(sphere, makeVector3(0.0f, 4.0f, 0.0f));
-	entity->setScale(makeVector3(20.2f, 20.2f, 20.2f));
+	entity->setScale(makeVector3(1.2f, 1.2f, 1.2f));
 	_children->push_back(entity);
 
 	//model
 	IObject *model = new ModelObject(new Model("dalek/Dalek.obj"));
-	entity = new Entity(model, makeVector3(0.0f, 0.0f, 0.0f));
-	entity->setScale(makeVector3(0.002f, 0.002f, 0.002f));
+	entity = new Entity(model, makeVector3(0.0f, -1.5f, -2.0f));
+	entity->setRotationVelocity(makeVector3(0.0f, 1.0f, 0.0f));
+	entity->setScale(makeVector3(0.007f, 0.007f, 0.007f));
 	_children->push_back(entity);
 
 	Camera *camera = new Camera(vec3(0.0f, 0.0f, 3.0f));
