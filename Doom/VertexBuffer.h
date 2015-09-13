@@ -35,13 +35,10 @@ private:
 	//do detekcji kolizji
 	vector <ThreeVertices> *_myVertices;
 	vector <ThreeVertices> *_myRealVertices;
-
 	void loadVertices(GLvoid *table, GLsizeiptr size, GLsizeiptr dataSize);
 
-
-	//void loadRealVertives(vector<GLfloat>* table, vector<ThreeVertices>* RealVertices, mat4& model);
 	
-	//void loadRealVertices(mat4& model);
+
 
 public:
 
@@ -49,6 +46,7 @@ public:
 	ShaderInterface *getShader();
 	ShaderData *getShaderData();
 	TextureLoader *getTextureLoader();
+
 
 	VertexBuffer(GLvoid *data, 
 				GLsizeiptr size, 
@@ -63,6 +61,7 @@ public:
 				TextureLoader *textureLoader);
 	~VertexBuffer();
 
+	void loadRealVertices(mat4& model);
 	void configureVertexAttributes();//vertexPosiotion to layout (location = 0) //0
 	void renderVertexBuffer();
 };

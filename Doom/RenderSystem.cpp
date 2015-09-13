@@ -10,6 +10,8 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 	mat4 model;
 	mat4 projection;
 
+	int test = 0;
+
 	projection = perspective(radians(_currentCamera->Zoom), (GLfloat)WIDTH / (GLfloat)HEIGHT, 0.1f, 100.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -38,7 +40,14 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 
 		model = scale(model, vec3(entity->getScale().x, entity->getScale().y, entity->getScale().z));
 		
-		//view = translate(view, vec3(entity->getPosition().x, entity->getPosition().y, entity->getPosition().z));
+
+		
+		//COLLISION DETECTION
+		entity->getVertexBuffer()->loadRealVertices(model);
+			
+
+		
+		//END OF COLLISION DETECTION
 
 
 			//SKYBOX

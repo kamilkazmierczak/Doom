@@ -31,6 +31,7 @@ Scene::Scene()
 	//triangle //chyba
 	entity = new Entity(resourceManager->getVertexBufferArray()->at(0), makeVector3(0.0f, 0.0f, 6.0f));
 	entity->setScale(makeVector3(2.0f, 2.0f, 2.0f));
+	entity->setRotationVelocity(makeVector3(0.0f, 1.0f, 0.0f));
 	_children->push_back(entity);
 
 

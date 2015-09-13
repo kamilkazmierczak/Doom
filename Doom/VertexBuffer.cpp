@@ -24,10 +24,68 @@ _textureOffset(textureOffset), _shaderData(shaderData), _textureLoader(textureLo
 
 	_myRealVertices = new vector<ThreeVertices>();
 	_myVertices = new vector<ThreeVertices>();
-	
 	loadVertices(data, size, stride);
-
 }
+
+
+
+
+
+
+void VertexBuffer::loadRealVertices(mat4& model)
+{
+	_myRealVertices->clear();
+	//std::vector<ThreeVertices>().swap(*RealVertices); //podobno dziala szybciej niz clear()
+	ThreeVertices data;
+	vec3 point = vec3(0.0f);
+	vec4 point4 = vec4(0.0f);
+
+	int i = 0;
+	int j = 0;
+
+
+
+	for (vector<ThreeVertices>::iterator iterator = _myVertices->begin(); iterator != _myVertices->end(); iterator++)
+	{
+
+		data.a = iterator->a;
+		point4 = model * vec4(data.a.x, data.a.y, data.a.z, 1.0f);
+		data.a = vec3(point4) / point4.w;
+
+		data.b = iterator->b;
+		point4 = model * vec4(data.b.x, data.b.y, data.b.z, 1.0f);
+		data.b = vec3(point4) / point4.w;
+
+		data.c = iterator->c;
+		point4 = model * vec4(data.c.x, data.c.y, data.c.z, 1.0f);
+		data.c = vec3(point4) / point4.w;
+
+		_myRealVertices->push_back(data);
+	}
+
+	
+
+		//for (vector<ThreeVertices>::iterator iterator = _myRealVertices->begin(); iterator != _myRealVertices->end(); iterator++)
+		//{
+		//	//cout << "#############NEW ONE##############" << endl;
+		//	cout << iterator->a.x << endl;
+		//	cout << iterator->a.y << endl;
+		//	cout << iterator->a.z << endl;
+		//	cout << "##" << endl;
+		//	cout << iterator->b.x << endl;
+		//	cout << iterator->b.y << endl;
+		//	cout << iterator->b.z << endl;
+		//	cout << "##" << endl;
+		//	cout << iterator->c.x << endl;
+		//	cout << iterator->c.y << endl;
+		//	cout << iterator->c.z << endl;
+		//	cout << "##" << endl;
+		//}
+	
+	
+}
+
+
 
 
 void VertexBuffer::loadVertices(GLvoid *table, GLsizeiptr size, GLsizeiptr dataSize)
@@ -45,7 +103,7 @@ void VertexBuffer::loadVertices(GLvoid *table, GLsizeiptr size, GLsizeiptr dataS
 			dataPNT = static_cast<VertexDataPNT*>(table);
 			nrOfVertices = size / (8 * sizeof(GLfloat));
 			//cout << nrOfVertices << endl;
-			cout << "PNT" << endl;
+			//cout << "PNT" << endl;
 		}
 		else if (dataSize == sizeof(VertexDataPN))
 		{
@@ -53,7 +111,7 @@ void VertexBuffer::loadVertices(GLvoid *table, GLsizeiptr size, GLsizeiptr dataS
 			dataPN = static_cast<VertexDataPN*>(table);
 			nrOfVertices = size / (6*sizeof(GLfloat));
 			//cout << nrOfVertices << endl;
-			cout << "PN" << endl;
+			//cout << "PN" << endl;
 		}
 		else if (dataSize == sizeof(VertexDataP))
 		{
@@ -61,7 +119,7 @@ void VertexBuffer::loadVertices(GLvoid *table, GLsizeiptr size, GLsizeiptr dataS
 			dataP = static_cast<VertexDataP*>(table);
 			nrOfVertices = size / (3*sizeof(GLfloat));
 			//cout << nrOfVertices << endl;
-			cout << "P" << endl;
+			//cout << "P" << endl;
 		}
 		else
 		{
@@ -119,67 +177,23 @@ void VertexBuffer::loadVertices(GLvoid *table, GLsizeiptr size, GLsizeiptr dataS
 			}
 		
 		
-		for (vector<ThreeVertices>::iterator iterator = _myVertices->begin(); iterator != _myVertices->end(); iterator++)
-		{
-			cout << iterator->a.x << endl;
-			cout << iterator->a.y << endl;
-			cout << iterator->a.z << endl;
-			cout << "##" << endl;
-			cout << iterator->b.x << endl;
-			cout << iterator->b.y << endl;
-			cout << iterator->b.z << endl;
-			cout << "##" << endl;
-			cout << iterator->c.x << endl;
-			cout << iterator->c.y << endl;
-			cout << iterator->c.z << endl;
-			cout << "##" << endl;
-		}
+		//for (vector<ThreeVertices>::iterator iterator = _myVertices->begin(); iterator != _myVertices->end(); iterator++)
+		//{
+		//	cout << iterator->a.x << endl;
+		//	cout << iterator->a.y << endl;
+		//	cout << iterator->a.z << endl;
+		//	cout << "##" << endl;
+		//	cout << iterator->b.x << endl;
+		//	cout << iterator->b.y << endl;
+		//	cout << iterator->b.z << endl;
+		//	cout << "##" << endl;
+		//	cout << iterator->c.x << endl;
+		//	cout << iterator->c.y << endl;
+		//	cout << iterator->c.z << endl;
+		//	cout << "##" << endl;
+		//}
 }
 
-
-
-
-//void VertexBuffer::loadRealVertices(mat4& model)
-//{
-//
-//	_myRealVertices->clear();
-//	//std::vector<ThreeVertices>().swap(*RealVertices); //podobno dziala szybciej niz clear()
-//
-//	ThreeVertices data;
-//	vec3 point = vec3(0.0f);
-//	vec4 point4 = vec4(0.0f);
-//
-//
-//	int i = 0;
-//	int j = 0;
-//	for (vector<ThreeVertices>::iterator iterator = _myVertices->begin(); iterator != _myVertices->end(); iterator++)
-//	{
-//
-//		//W TRAKCIE BUDOWY
-//		
-//
-//				data.a = point;
-//				point4 = model * vec4(point.x, point.y, point.z, 1.0f);
-//				data.a = vec3(point4) / point4.w;
-//				j++;
-//			}
-//			else if (j == 1)
-//			{
-//				data.b = point;
-//				point4 = model * vec4(point.x, point.y, point.z, 1.0f);
-//				data.b = vec3(point4) / point4.w;
-//				j++;
-//			}
-//			else
-//			{
-//				data.c = point; //zebralismy 3 wierzcholki
-//				point4 = model * vec4(point.x, point.y, point.z, 1.0f);
-//				data.c = vec3(point4) / point4.w;
-//				RealVertices->push_back(data);
-//			
-//
-//
-//}
 
 
 
