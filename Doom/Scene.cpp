@@ -21,12 +21,19 @@ Scene::Scene()
 	_children->push_back(entity);
 
 	//triangle //chyba
-	entity = new Entity(resourceManager->getVertexBufferArray()->at(0), makeVector3(0.0f, 1.5f, -5.0f));
-	entity->setVelocity(makeVector3(0.0f, 0.0f, 0.01f));
-	entity->setRotation(makeVector3(0.0f, 0.0f, 0.0f));//to jest kat o jaki obrocic dla danej osi
-	entity->setScale(makeVector3(1.0f, 1.0f, 1.0f));
-	entity->setRotationVelocity(makeVector3(1.0f, 1.0f, 1.0f));
+	//entity = new Entity(resourceManager->getVertexBufferArray()->at(0), makeVector3(0.0f, 1.5f, -5.0f));
+	//entity->setVelocity(makeVector3(0.0f, 0.0f, 0.01f));
+	//entity->setRotation(makeVector3(0.0f, 0.0f, 0.0f));//to jest kat o jaki obrocic dla danej osi
+	//entity->setScale(makeVector3(1.0f, 1.0f, 1.0f));
+	//entity->setRotationVelocity(makeVector3(1.0f, 1.0f, 1.0f));
+	//_children->push_back(entity);
+
+	//triangle //chyba
+	entity = new Entity(resourceManager->getVertexBufferArray()->at(0), makeVector3(0.0f, 0.0f, 6.0f));
+	entity->setScale(makeVector3(2.0f, 2.0f, 2.0f));
 	_children->push_back(entity);
+
+
 
 	//container1 //chyba
 	entity = new Entity(resourceManager->getVertexBufferArray()->at(1), makeVector3(0.0f, 0.0f, -5.0f));
@@ -62,8 +69,9 @@ Scene::Scene()
 	//NEW IObject (testing)
 	//sphere
 	IObject *sphere = new SphereObject(new Sphere(0.05f, 15, 15));
-	entity = new Entity(sphere, makeVector3(0.0f, 4.0f, 0.0f));
+	entity = new Entity(sphere, makeVector3(0.0f, 0.0f, 5.2f));
 	entity->setScale(makeVector3(1.2f, 1.2f, 1.2f));
+	entity->setVelocity(makeVector3(0.0f, 0.0f, 0.004f));
 	_children->push_back(entity);
 
 	//model
@@ -73,7 +81,8 @@ Scene::Scene()
 	entity->setScale(makeVector3(0.007f, 0.007f, 0.007f));
 	_children->push_back(entity);
 
-	Camera *camera = new Camera(vec3(0.0f, 0.0f, 3.0f));
+	//Camera *camera = new Camera(vec3(0.0f, 0.0f, 3.0f));
+	Camera *camera = new Camera(CameraPosition);
 	PlayerInputSystem *playerInputSystem = &PlayerInputSystem::getPlayerInputSystem();
 	playerInputSystem->setCurrentCamera(camera);
 
