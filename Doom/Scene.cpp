@@ -75,11 +75,11 @@ Scene::Scene()
 	_children->push_back(entity);
 
 	//model
-	IObject *model = new ModelObject(new Model("dalek/Dalek.obj"));
+	/*IObject *model = new ModelObject(new Model("dalek/Dalek.obj"));
 	entity = new Entity(model, makeVector3(0.0f, -1.5f, -2.0f));
 	entity->setRotationVelocity(makeVector3(0.0f, 1.0f, 0.0f));
 	entity->setScale(makeVector3(0.007f, 0.007f, 0.007f));
-	_children->push_back(entity);
+	_children->push_back(entity);*/
 
 	//Camera *camera = new Camera(vec3(0.0f, 0.0f, 3.0f));
 	Camera *camera = new Camera(CameraPosition);

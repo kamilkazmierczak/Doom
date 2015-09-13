@@ -5,6 +5,9 @@
 #include "FloorVertices.h"
 #include "WallVertices.h"
 #include "Entity.h"
+#include "Test.h"
+#include <typeinfo>
+
 
 vector<ShaderInterface *>* ResourceManager::getShaderArray()
 {
@@ -44,9 +47,13 @@ ResourceManager::ResourceManager()
 	TextureLoader *textureLoader; 
 	_vertexBufferArray = new vector<VertexBuffer *>();
 
+
+
 	//trojkat 
+	vector <ThreeVertices> *myVertices = new vector<ThreeVertices>();
+	//loadVertices(verticesTest, sizeof(verticesTest), myVertices, sizeof(VertexDataP));
 			VertexBuffer *vertexBuffer = new VertexBuffer(vertices, 
-												  sizeof(vertices), 
+												  sizeof(vertices),
 												  GL_TRIANGLES, 
 												  3, 
 												  sizeof(VertexDataP),
@@ -91,7 +98,7 @@ ResourceManager::ResourceManager()
 	
 	//skybox
 		   textureLoader = new TextureLoader(NULL,TX_SKYBOX);
-			VertexBuffer *skyBox = new VertexBuffer(skyboxVertices,
+		   VertexBuffer *skyBox = new VertexBuffer(skyboxVertices,												
 												  sizeof(skyboxVertices), 
 												  GL_TRIANGLES, 
 												  36, 
@@ -105,7 +112,7 @@ ResourceManager::ResourceManager()
 	_vertexBufferArray->push_back(skyBox);
 
 		//floor
-		   textureLoader = new TextureLoader("floor.png",TX_TEXTURE);
+		    textureLoader = new TextureLoader("floor.png",TX_TEXTURE);
 			VertexBuffer *floor = new VertexBuffer(floorVertices,
 												  sizeof(floorVertices), 
 												  GL_TRIANGLES, 
@@ -183,3 +190,111 @@ void ResourceManager::destroyResourceManager()
 	ResourceManager *resourceManager = &getResourceManager();
 	delete resourceManager;
 }
+
+
+//
+//void ResourceManager::loadVertices(GLvoid *table, GLsizeiptr size, vector<ThreeVertices>*Vertices, GLsizeiptr dataSize)
+//{
+//	//type = type.substr(0, type.find_last_of(' '));
+//	int nrOfVertices = 0;
+//	VertexDataP *dataP = nullptr;
+//	VertexDataPN *dataPN = nullptr;
+//	VertexDataPNT *dataPNT = nullptr;
+//
+//
+//	if (dataSize == sizeof(VertexDataPNT))
+//	{
+//		//VertexDataPNT *data = static_cast<VertexDataPNT*>(table);
+//		dataPNT = static_cast<VertexDataPNT*>(table);
+//		nrOfVertices = size / (8 * sizeof(GLfloat));
+//		//cout << nrOfVertices << endl;
+//		cout << "PNT" << endl;
+//	}
+//	else if (dataSize == sizeof(VertexDataPN))
+//	{
+//		//VertexDataPN *data = static_cast<VertexDataPN*>(table);
+//		dataPN = static_cast<VertexDataPN*>(table);
+//		nrOfVertices = size / (6*sizeof(GLfloat));
+//		//cout << nrOfVertices << endl;
+//		cout << "PN" << endl;
+//	}
+//	else if (dataSize == sizeof(VertexDataP))
+//	{
+//		//VertexDataP *data = static_cast<VertexDataP*>(table);
+//		dataP = static_cast<VertexDataP*>(table);
+//		nrOfVertices = size / (3*sizeof(GLfloat));
+//		//cout << nrOfVertices << endl;
+//		cout << "P" << endl;
+//	}
+//	else
+//	{
+//		cout << "Wrong type of vertices" << endl;
+//	}
+//
+//
+//	ThreeVertices data;
+//	vec3 point = vec3(0.0f);
+//
+//	
+//
+//		int j = 0;
+//		for (int i = 0; i < nrOfVertices; i++)
+//		{
+//			if (j % 3 == 0)	j = 0;
+//
+//
+//			//wez to jakos ogarnij pozniej bo nie potrzebnie sprawdza tyle razy warunek moze to zrobic raz
+//			if (dataPNT != nullptr)
+//			{
+//				point.x = dataPNT[i].positionCoordinates.x;
+//				point.y = dataPNT[i].positionCoordinates.y;
+//				point.z = dataPNT[i].positionCoordinates.z;
+//			}
+//			else if (dataPN != nullptr)
+//			{
+//				point.x = dataPN[i].positionCoordinates.x;
+//				point.y = dataPN[i].positionCoordinates.y;
+//				point.z = dataPN[i].positionCoordinates.z;
+//			}
+//			else if (dataP != nullptr)
+//			{
+//				point.x = dataP[i].positionCoordinates.x;
+//				point.y = dataP[i].positionCoordinates.y;
+//				point.z = dataP[i].positionCoordinates.z;
+//			}
+//
+//			if (j==0)
+//			{
+//				data.a = point;
+//				j++;
+//			}
+//			else if (j==1)
+//			{
+//				data.b = point;
+//				j++;
+//			}
+//			else
+//			{
+//				data.c = point;
+//				Vertices->push_back(data);
+//				j++;
+//			}
+//		}
+//	
+//	
+//	for (vector<ThreeVertices>::iterator iterator = Vertices->begin(); iterator != Vertices->end(); iterator++)
+//	{
+//		cout << iterator->a.x << endl;
+//		cout << iterator->a.y << endl;
+//		cout << iterator->a.z << endl;
+//		cout << "##" << endl;
+//		cout << iterator->b.x << endl;
+//		cout << iterator->b.y << endl;
+//		cout << iterator->b.z << endl;
+//		cout << "##" << endl;
+//		cout << iterator->c.x << endl;
+//		cout << iterator->c.y << endl;
+//		cout << iterator->c.z << endl;
+//		cout << "##" << endl;
+//	}
+//}

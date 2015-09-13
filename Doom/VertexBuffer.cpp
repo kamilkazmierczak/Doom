@@ -1,7 +1,7 @@
 #include "VertexBuffer.h"
+#include "VertexData.h"
 
-
-VertexBuffer::VertexBuffer(const GLvoid *data, 
+VertexBuffer::VertexBuffer(GLvoid *data, 
 						   GLsizeiptr size, 
 						   GLenum mode, 
 						   GLsizei count, 
@@ -21,13 +21,246 @@ _textureOffset(textureOffset), _shaderData(shaderData), _textureLoader(textureLo
 	//glBindBuffer(GL_ARRAY_BUFFER, 0); //??
 	configureVertexAttributes(); //nie do konca jestem pewien czy to tu powinno byc, ale dziala
 								//nie moze byc w petli bo sie wykrzaczy
+
+	_myRealVertices = new vector<ThreeVertices>();
+	_myVertices = new vector<ThreeVertices>();
+	
+	loadVertices(data, size, stride);
+
 }
+
+
+void VertexBuffer::loadVertices(GLvoid *table, GLsizeiptr size, GLsizeiptr dataSize)
+{
+
+		int nrOfVertices = 0;
+		VertexDataP *dataP = nullptr;
+		VertexDataPN *dataPN = nullptr;
+		VertexDataPNT *dataPNT = nullptr;
+	
+	
+		if (dataSize == sizeof(VertexDataPNT))
+		{
+			//VertexDataPNT *data = static_cast<VertexDataPNT*>(table);
+			dataPNT = static_cast<VertexDataPNT*>(table);
+			nrOfVertices = size / (8 * sizeof(GLfloat));
+			//cout << nrOfVertices << endl;
+			cout << "PNT" << endl;
+		}
+		else if (dataSize == sizeof(VertexDataPN))
+		{
+			//VertexDataPN *data = static_cast<VertexDataPN*>(table);
+			dataPN = static_cast<VertexDataPN*>(table);
+			nrOfVertices = size / (6*sizeof(GLfloat));
+			//cout << nrOfVertices << endl;
+			cout << "PN" << endl;
+		}
+		else if (dataSize == sizeof(VertexDataP))
+		{
+			//VertexDataP *data = static_cast<VertexDataP*>(table);
+			dataP = static_cast<VertexDataP*>(table);
+			nrOfVertices = size / (3*sizeof(GLfloat));
+			//cout << nrOfVertices << endl;
+			cout << "P" << endl;
+		}
+		else
+		{
+			cout << "Wrong type of vertices" << endl;
+		}
+	
+	
+		ThreeVertices data;
+		vec3 point = vec3(0.0f);
+	
+		
+	
+			int j = 0;
+			for (int i = 0; i < nrOfVertices; i++)
+			{
+				if (j % 3 == 0)	j = 0;
+	
+	
+				//wez to jakos ogarnij pozniej bo nie potrzebnie sprawdza tyle razy warunek moze to zrobic raz
+				if (dataPNT != nullptr)
+				{
+					point.x = dataPNT[i].positionCoordinates.x;
+					point.y = dataPNT[i].positionCoordinates.y;
+					point.z = dataPNT[i].positionCoordinates.z;
+				}
+				else if (dataPN != nullptr)
+				{
+					point.x = dataPN[i].positionCoordinates.x;
+					point.y = dataPN[i].positionCoordinates.y;
+					point.z = dataPN[i].positionCoordinates.z;
+				}
+				else if (dataP != nullptr)
+				{
+					point.x = dataP[i].positionCoordinates.x;
+					point.y = dataP[i].positionCoordinates.y;
+					point.z = dataP[i].positionCoordinates.z;
+				}
+	
+				if (j==0)
+				{
+					data.a = point;
+					j++;
+				}
+				else if (j==1)
+				{
+					data.b = point;
+					j++;
+				}
+				else
+				{
+					data.c = point;
+					_myVertices->push_back(data);
+					j++;
+				}
+			}
+		
+		
+		for (vector<ThreeVertices>::iterator iterator = _myVertices->begin(); iterator != _myVertices->end(); iterator++)
+		{
+			cout << iterator->a.x << endl;
+			cout << iterator->a.y << endl;
+			cout << iterator->a.z << endl;
+			cout << "##" << endl;
+			cout << iterator->b.x << endl;
+			cout << iterator->b.y << endl;
+			cout << iterator->b.z << endl;
+			cout << "##" << endl;
+			cout << iterator->c.x << endl;
+			cout << iterator->c.y << endl;
+			cout << iterator->c.z << endl;
+			cout << "##" << endl;
+		}
+}
+
+
+
+
+//void VertexBuffer::loadRealVertices(mat4& model)
+//{
+//
+//	_myRealVertices->clear();
+//	//std::vector<ThreeVertices>().swap(*RealVertices); //podobno dziala szybciej niz clear()
+//
+//	ThreeVertices data;
+//	vec3 point = vec3(0.0f);
+//	vec4 point4 = vec4(0.0f);
+//
+//
+//	int i = 0;
+//	int j = 0;
+//	for (vector<ThreeVertices>::iterator iterator = _myVertices->begin(); iterator != _myVertices->end(); iterator++)
+//	{
+//
+//		//W TRAKCIE BUDOWY
+//		
+//
+//				data.a = point;
+//				point4 = model * vec4(point.x, point.y, point.z, 1.0f);
+//				data.a = vec3(point4) / point4.w;
+//				j++;
+//			}
+//			else if (j == 1)
+//			{
+//				data.b = point;
+//				point4 = model * vec4(point.x, point.y, point.z, 1.0f);
+//				data.b = vec3(point4) / point4.w;
+//				j++;
+//			}
+//			else
+//			{
+//				data.c = point; //zebralismy 3 wierzcholki
+//				point4 = model * vec4(point.x, point.y, point.z, 1.0f);
+//				data.c = vec3(point4) / point4.w;
+//				RealVertices->push_back(data);
+//			
+//
+//
+//}
+
+
+
+
+//void VertexBuffer::loadRealVertives(vector<GLfloat>* table, vector<ThreeVertices>* RealVertices, mat4& model)
+//{
+//	//Ta funkcja jest wywolywana tylko na wektorach pobranym z VertexBuffera 
+//
+//	RealVertices->clear();
+//	//std::vector<ThreeVertices>().swap(*RealVertices); //podobno dziala szybciej niz clear()
+//
+//	ThreeVertices data;
+//	vec3 point = vec3(0.0f);
+//	vec4 point4 = vec4(0.0f);
+//
+//
+//	int i = 0;
+//	int j = 0;
+//	for (vector<GLfloat>::iterator iterator = table->begin(); iterator != table->end(); iterator++)
+//	{
+//
+//		if (i % 3 == 0)	i = 0;
+//		if (j % 3 == 0)	j = 0;
+//
+//		if (i == 0)
+//			point.x = *iterator;
+//		else if (i == 1)
+//			point.y = *iterator;
+//		else
+//			point.z = *iterator;
+//
+//		if (i == 2)   //jesli point zawiera xyz
+//		{
+//			if (j == 0)
+//			{
+//				data.a = point;
+//				point4 = model * vec4(point.x, point.y, point.z, 1.0f);
+//				data.a = vec3(point4) / point4.w;
+//				j++;
+//			}
+//			else if (j == 1)
+//			{
+//				data.b = point;
+//				point4 = model * vec4(point.x, point.y, point.z, 1.0f);
+//				data.b = vec3(point4) / point4.w;
+//				j++;
+//			}
+//			else
+//			{
+//				data.c = point; //zebralismy 3 wierzcholki
+//				point4 = model * vec4(point.x, point.y, point.z, 1.0f);
+//				data.c = vec3(point4) / point4.w;
+//				RealVertices->push_back(data);
+//				j++;
+//			}
+//		}
+//		i++;
+//	}
+//
+//
+//
+//}
+
+
+
+
+
+
+
+
+
 
 
 VertexBuffer::~VertexBuffer()
 {
 	glDeleteBuffers(1, &_vertexBufferID);
 	_vertexBufferID = 0;
+
+	//ODKOMENTUJ TO
+	//delete _myRealVertices;
+	//delete _myVertices;
 }
 
 GLuint VertexBuffer::getVertexBufferID()

@@ -5,8 +5,17 @@
 #include "ShaderInterface.h"
 #include "ShaderData.h"
 #include "TextureLoader.h"
+#include <glm/glm.hpp>
 #include <iostream>
 using namespace std;
+using namespace glm;
+
+struct ThreeVertices
+{
+	vec3 a;
+	vec3 b;
+	vec3 c;
+};
 
 class VertexBuffer
 {
@@ -23,6 +32,17 @@ private:
 	GLvoid *_normalOffset;
 	GLvoid *_textureOffset;
 
+	//do detekcji kolizji
+	vector <ThreeVertices> *_myVertices;
+	vector <ThreeVertices> *_myRealVertices;
+
+	void loadVertices(GLvoid *table, GLsizeiptr size, GLsizeiptr dataSize);
+
+
+	//void loadRealVertives(vector<GLfloat>* table, vector<ThreeVertices>* RealVertices, mat4& model);
+	
+	//void loadRealVertices(mat4& model);
+
 public:
 
 	GLuint getVertexBufferID();
@@ -30,7 +50,7 @@ public:
 	ShaderData *getShaderData();
 	TextureLoader *getTextureLoader();
 
-	VertexBuffer(const GLvoid *data, 
+	VertexBuffer(GLvoid *data, 
 				GLsizeiptr size, 
 				GLenum mode, 
 				GLsizei count, 

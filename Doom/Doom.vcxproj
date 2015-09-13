@@ -121,6 +121,7 @@
     <ClInclude Include="SkyboxVertices.h" />
     <ClInclude Include="Sphere.h" />
     <ClInclude Include="SphereObject.h" />
+    <ClInclude Include="Test.h" />
     <ClInclude Include="TextureLoader.h" />
     <ClInclude Include="TriangleVertices.h" />
     <ClInclude Include="Vector2.h" />

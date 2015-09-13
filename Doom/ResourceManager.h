@@ -14,6 +14,8 @@ private:
 
 	ShaderData *shaderData;
 
+	//void loadVertices(GLvoid *table, GLsizeiptr size, vector<ThreeVertices>*Vertices, GLsizeiptr dataSize);
+
 	ResourceManager();
 	~ResourceManager();
 public:
