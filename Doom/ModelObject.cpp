@@ -74,3 +74,8 @@ void ModelObject::configShader(mat4& model, mat4& view, mat4& projection)
 	glUniformMatrix4fv(projLoc, 1, GL_FALSE, value_ptr(_gameProjection));
 
 }
+
+Object_Type ModelObject::getObjectType()
+{
+	return _typeOfObject;
+}

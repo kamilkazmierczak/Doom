@@ -32,6 +32,9 @@ public:
 	
 	void test();
 
+	float getRadius();
+
+
 	vector <vec3> getVertives();
 	vector <GLuint> getIndices();
 

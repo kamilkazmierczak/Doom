@@ -19,6 +19,10 @@ private:
 public:
 	void draw();
 	void configShader(mat4& model, mat4& view, mat4& projection);
+	Object_Type getObjectType();
+
+	//tylko SphereObject
+	float getRadius();
 
 	SphereObject(Sphere* sphere);
 	~SphereObject();

@@ -1,5 +1,7 @@
 #include "RenderSystem.h"
 #include "Constants.h"
+#include "SphereObject.h"
+#include "ModelObject.h"
 
 
 using namespace glm;
@@ -109,10 +111,6 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 		if (entity->getObject() != NULL)
 		{
 
-
-			//dla testow to tu jest
-			
-			
 			model = translate(model, vec3(entity->getPosition().x, entity->getPosition().y, entity->getPosition().z));
 
 			model = rotate(model, radians(entity->getRotation().x), vec3(1.0f, 0.0f, 0.0f));
@@ -121,11 +119,26 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 
 			model = scale(model, vec3(entity->getScale().x, entity->getScale().y, entity->getScale().z));
 
-
 			entity->getObject()->configShader(model,view,projection); //uruchamia tez shader->Use()
 
-		
+			//SPHERE
+			if (entity->getObject()->getObjectType() == OB_SPHERE)
+			{
+				SphereObject *sphere = nullptr;
+				try {sphere = dynamic_cast<SphereObject*>(entity->getObject()); }
+				catch (bad_cast& bc){cerr << "bad_cast caught: " << bc.what() << endl;}
 
+				//cout << sphere->getRadius() << endl;
+			}
+
+
+			//MODEL (nie testowane)
+			if (entity->getObject()->getObjectType() == OB_MODEL)
+			{
+				ModelObject *model = nullptr;
+				try {model = dynamic_cast<ModelObject*>(entity->getObject()); }
+				catch (bad_cast& bc){ cerr << "bad_cast caught: " << bc.what() << endl; }
+			}
 
 
 			entity->getObject()->draw();

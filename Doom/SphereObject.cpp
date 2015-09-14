@@ -66,3 +66,13 @@ void SphereObject::configShader(mat4& model, mat4& view, mat4& projection)
 
 
 }
+
+float SphereObject::getRadius()
+{
+	return _sphere->getRadius();
+}
+
+Object_Type SphereObject::getObjectType()
+{
+	return _typeOfObject;
+}

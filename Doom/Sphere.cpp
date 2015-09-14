@@ -67,6 +67,11 @@ void Sphere::test()
 }
 
 
+float Sphere::getRadius()
+{
+	return _radius;
+}
+
 
 vector<vec3> Sphere::getVertives()
 {

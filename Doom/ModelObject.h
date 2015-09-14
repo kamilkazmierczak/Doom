@@ -11,6 +11,7 @@ private:
 public:
 	void draw();
 	void configShader(mat4& model, mat4& view, mat4& projection);
+	Object_Type getObjectType();
 
 	ModelObject(Model *model);
 	~ModelObject();
