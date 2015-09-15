@@ -1,4 +1,60 @@
 #include "Entity.h"
+#include "ModelObject.h"
+
+
+void Entity::loadRealVertices()
+{
+	if (_vertexBuffer != nullptr && _object != nullptr)
+	{
+		cout << "Something wrong with loadRealVertices #Entity" << endl;
+	}
+	if (_vertexBuffer == nullptr && _object == nullptr)
+	{
+		cout << "Something wrong with loadRealVertices #Entity" << endl;
+	}
+
+
+	if (_vertexBuffer != nullptr)
+	{
+		 _realVertices = _vertexBuffer->getRealVertices();
+	}
+
+	if (_object != nullptr)
+	{
+		if (_object->getObjectType() == OB_MODEL)
+		{
+		
+			ModelObject *modelObj = nullptr;
+			try {modelObj = dynamic_cast<ModelObject*>(_object); }
+			catch (bad_cast& bc){ cerr << "bad_cast caught: " << bc.what() << endl; }
+	
+			_realVertices = modelObj->getRealVertices();
+
+		}
+		else if (_object->getObjectType() == OB_SPHERE)
+		{
+			_realVertices = nullptr;
+			//sfera nie potrzebuje tego (do detekcji kolizji potrzebuje tylko promiec i srodek)
+		}
+		else
+		{
+			cout << "Unidentified object" << endl;
+		}
+	}
+}
+
+
+Entity_type Entity::getType()
+{
+	return _type;
+}
+
+
+vector <ThreeVertices>* Entity::getRealVertices()
+{
+	return _realVertices;
+}
+
 
 
 VertexBuffer* Entity::getVertexBuffer()
@@ -105,19 +161,19 @@ void Entity::setUpVector(Vector3 newUpVector)
 	_upVector = newUpVector;
 }
 
-Entity::Entity(VertexBuffer *vertexBuffer, Vector3 position)
+Entity::Entity(VertexBuffer *vertexBuffer, Vector3 position, Entity_type type)
 	:_vertexBuffer(vertexBuffer), _position(position), _scale(makeVector3(1.0f, 1.0f, 1.0f)),
 	_rotation(makeVector3(0.0f, 0.0f, 0.0f)), _velocity(makeVector3(0.0f, 0.0f, 0.0f)),
 	_scaleVelocity(makeVector3(0.0f, 0.0f, 0.0f)), _rotationVelocity(makeVector3(0.0f, 0.0f, 0.0f)),
-	_eyeVector(makeVector3(0.0f, 0.0f, 0.0f)), _upVector(makeVector3(0.0f, 0.0f, 0.0f))
+	_eyeVector(makeVector3(0.0f, 0.0f, 0.0f)), _upVector(makeVector3(0.0f, 0.0f, 0.0f)), _type(type)
 {
 }
 
-Entity::Entity(IObject *object, Vector3 position)
+Entity::Entity(IObject *object, Vector3 position, Entity_type type)
 	:_object(object), _position(position), _scale(makeVector3(1.0f, 1.0f, 1.0f)),
 	_rotation(makeVector3(0.0f, 0.0f, 0.0f)), _velocity(makeVector3(0.0f, 0.0f, 0.0f)),
 	_scaleVelocity(makeVector3(0.0f, 0.0f, 0.0f)), _rotationVelocity(makeVector3(0.0f, 0.0f, 0.0f)),
-	_eyeVector(makeVector3(0.0f, 0.0f, 0.0f)), _upVector(makeVector3(0.0f, 0.0f, 0.0f))
+	_eyeVector(makeVector3(0.0f, 0.0f, 0.0f)), _upVector(makeVector3(0.0f, 0.0f, 0.0f)), _type(type)
 {
 }
 

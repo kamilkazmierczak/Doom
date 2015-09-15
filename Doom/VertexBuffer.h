@@ -42,6 +42,8 @@ private:
 
 public:
 
+	vector <ThreeVertices>* getRealVertices();
+
 	GLuint getVertexBufferID();
 	ShaderInterface *getShader();
 	ShaderData *getShaderData();
@@ -60,6 +62,7 @@ public:
 				GLvoid *_textureOffset,
 				TextureLoader *textureLoader);
 	~VertexBuffer();
+
 
 	void loadRealVertices(mat4& model);
 	void configureVertexAttributes();//vertexPosiotion to layout (location = 0) //0

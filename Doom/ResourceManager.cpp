@@ -4,6 +4,7 @@
 #include "SkyboxVertices.h"
 #include "FloorVertices.h"
 #include "WallVertices.h"
+#include "BBVertices.h"
 #include "Entity.h"
 #include "Test.h"
 #include <typeinfo>

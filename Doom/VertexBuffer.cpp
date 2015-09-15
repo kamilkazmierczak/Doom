@@ -28,7 +28,10 @@ _textureOffset(textureOffset), _shaderData(shaderData), _textureLoader(textureLo
 }
 
 
-
+vector <ThreeVertices>* VertexBuffer::getRealVertices()
+{
+	return _myRealVertices;
+}
 
 
 
@@ -64,7 +67,7 @@ void VertexBuffer::loadRealVertices(mat4& model)
 	}
 
 	
-
+	//cout << _myRealVertices->size() << endl;
 		//for (vector<ThreeVertices>::iterator iterator = _myRealVertices->begin(); iterator != _myRealVertices->end(); iterator++)
 		//{
 		//	//cout << "#############NEW ONE##############" << endl;

@@ -4,14 +4,22 @@
 #include "IObject.h"
 #include <vector>
 
+enum Entity_type {
+	ENTITY_BULLET,
+	ENTITY_MOVE,
+	ENTITY_STOP,
+};
+
+
 class Entity
 {
 private:
-	VertexBuffer *_vertexBuffer;
-	IObject *_object;
+	VertexBuffer *_vertexBuffer = nullptr;
+	IObject *_object = nullptr;
 	Vector3 _position;
 	Vector3 _scale;
 	Vector3 _rotation;
+
 
 	Vector3 _velocity;
 	Vector3 _scaleVelocity;
@@ -20,7 +28,15 @@ private:
 	Vector3 _eyeVector;
 	Vector3 _upVector;
 
+	vector <ThreeVertices> *_realVertices;
+	Entity_type _type;
+
 public:
+
+	void loadRealVertices();
+	vector <ThreeVertices> *getRealVertices();
+	Entity_type getType();
+
 
 	VertexBuffer *getVertexBuffer();
 	void setVertexBuffer(VertexBuffer *newVertexBuffer);
@@ -52,8 +68,8 @@ public:
 	Vector3 getUpVector();
 	void setUpVector(Vector3 newUpVector);
 
-	Entity(VertexBuffer *vertexBuffer, Vector3 position);
-	Entity(IObject *object, Vector3 position);
+	Entity(VertexBuffer *vertexBuffer, Vector3 position, Entity_type type);
+	Entity(IObject *object, Vector3 position, Entity_type type);
 	~Entity();
 };
 

@@ -6,14 +6,12 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-
 using namespace glm;
 
 enum Object_Type{
 	OB_MODEL,
 	OB_SPHERE
 };
-
 
 
 class IObject

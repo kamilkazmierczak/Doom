@@ -21,6 +21,9 @@ using namespace std;
 #include "Shader.h"
 #include "Constants.h"
 #include "Mesh.h"
+#include "VertexData.h"
+#include "VertexBuffer.h"
+
 
 using namespace glm;
 
@@ -53,7 +56,61 @@ public:
 		drawBoundingBox();
 	}
 
+	vector <ThreeVertices>*getRealVertices()
+	{
+		return _myRealVertices;
+	}
 
+	void loadRealVertices(mat4& model)
+	{
+		_myRealVertices->clear();
+		//std::vector<ThreeVertices>().swap(*RealVertices); //podobno dziala szybciej niz clear()
+		ThreeVertices data;
+		vec3 point = vec3(0.0f);
+		vec4 point4 = vec4(0.0f);
+
+		int i = 0;
+		int j = 0;
+
+		for (vector<ThreeVertices>::iterator iterator = _myVertices->begin(); iterator != _myVertices->end(); iterator++)
+		{
+
+			data.a = iterator->a;
+			point4 = model * modelTransform * vec4(data.a.x, data.a.y, data.a.z, 1.0f);
+			data.a = vec3(point4) / point4.w;
+
+			data.b = iterator->b;
+			point4 = model * modelTransform * vec4(data.b.x, data.b.y, data.b.z, 1.0f);
+			data.b = vec3(point4) / point4.w;
+
+			data.c = iterator->c;
+			point4 = model * modelTransform * vec4(data.c.x, data.c.y, data.c.z, 1.0f);
+			data.c = vec3(point4) / point4.w;
+
+			_myRealVertices->push_back(data);
+		}
+
+
+
+		//for (vector<ThreeVertices>::iterator iterator = _myRealVertices->begin(); iterator != _myRealVertices->end(); iterator++)
+		//{
+		//	cout << "#############NEW ONE##############" << endl;
+		//	cout << iterator->a.x << endl;
+		//	cout << iterator->a.y << endl;
+		//	cout << iterator->a.z << endl;
+		//	cout << "##" << endl;
+		//	cout << iterator->b.x << endl;
+		//	cout << iterator->b.y << endl;
+		//	cout << iterator->b.z << endl;
+		//	cout << "##" << endl;
+		//	cout << iterator->c.x << endl;
+		//	cout << iterator->c.y << endl;
+		//	cout << iterator->c.z << endl;
+		//	cout << "##" << endl;
+		//}
+
+
+	}
 
 
 private:
@@ -68,6 +125,11 @@ private:
 	glm::mat4 _gameView;
 	glm::mat4 _gameProjection;
 	GLuint BBVAO; //BoundingBoxVAO
+
+	//do detekcji kolizji
+	vector <ThreeVertices> *_myVertices;
+	vector <ThreeVertices> *_myRealVertices;
+	int nrOfVertices; //i tak zawsze tyle samo (BB)
 
 	//Bounding box
 	glm::mat4 modelTransform; //macierz modelu 
@@ -105,9 +167,18 @@ private:
 	}
 
 
+
+
 	void configcube()
 	{
-		GLfloat vertices[] = {
+		//tego tu byc nie powinno ale dodac tego jako include nie moge bo widzi
+		//jakies multiple declarations
+
+		//jak bd czas to postaraj sie to przeniesc poza te funkcje
+		//oraz niech za kazdym razem kazdy model nie kopiuje sobie
+		//prawdziwych wierzcholkow tylko niech kazdy uzywa
+		//wskaznika do wektora z nimi bo kazdy ma te same
+		VertexDataP vertices[] = {
 			-0.5f, -0.5f, -0.5f,
 			0.5f, -0.5f, -0.5f,
 			0.5f, 0.5f, -0.5f,
@@ -150,6 +221,61 @@ private:
 			-0.5f, 0.5f, 0.5f,
 			-0.5f, 0.5f, -0.5f,
 		};
+
+
+
+		_myRealVertices = new vector<ThreeVertices>();
+		_myVertices = new vector<ThreeVertices>();
+		nrOfVertices = sizeof(vertices) / (3 * sizeof(GLfloat));
+
+
+		ThreeVertices data;
+		vec3 point = vec3(0.0f);
+
+		int j = 0;
+		for (int i = 0; i < nrOfVertices; i++)
+		{
+			if (j % 3 == 0)	j = 0;
+
+			point.x = vertices[i].positionCoordinates.x;
+			point.y = vertices[i].positionCoordinates.y;
+			point.z = vertices[i].positionCoordinates.z;
+			
+			if (j == 0)
+			{
+				data.a = point;
+				j++;
+			}
+			else if (j == 1)
+			{
+				data.b = point;
+				j++;
+			}
+			else
+			{
+				data.c = point;
+				_myVertices->push_back(data);
+				j++;
+			}
+		}
+
+
+		/*for (vector<ThreeVertices>::iterator iterator = _myVertices->begin(); iterator != _myVertices->end(); iterator++)
+		{
+			cout << iterator->a.x << endl;
+			cout << iterator->a.y << endl;
+			cout << iterator->a.z << endl;
+			cout << "##" << endl;
+			cout << iterator->b.x << endl;
+			cout << iterator->b.y << endl;
+			cout << iterator->b.z << endl;
+			cout << "##" << endl;
+			cout << iterator->c.x << endl;
+			cout << iterator->c.y << endl;
+			cout << iterator->c.z << endl;
+			cout << "##" << endl;
+		}*/
+
 
 
 		GLuint VBO;

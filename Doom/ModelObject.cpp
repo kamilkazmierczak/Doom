@@ -17,6 +17,13 @@ ModelObject::~ModelObject()
 }
 
 
+vector <ThreeVertices>* ModelObject::getRealVertices()
+{
+	return _myRealVertices;
+}
+
+
+
 void ModelObject::draw()
 {
 	_model->Draw(_shader->getShader(), _gameModel, _gameView, _gameProjection);
@@ -78,4 +85,11 @@ void ModelObject::configShader(mat4& model, mat4& view, mat4& projection)
 Object_Type ModelObject::getObjectType()
 {
 	return _typeOfObject;
+}
+
+
+void ModelObject::loadRealVertices(mat4& model)
+{
+	_model->loadRealVertices(model);
+	_myRealVertices = _model->getRealVertices();
 }
