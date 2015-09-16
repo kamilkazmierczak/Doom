@@ -26,6 +26,7 @@ private:
 	Camera *_currentCamera;
 
 	void update(vector<Entity *> *entityArray);
+	bool _firstRender;
 
 	RenderSystem();
 	~RenderSystem();

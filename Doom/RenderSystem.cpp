@@ -14,7 +14,6 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 	vector <ThreeVertices> *realCurrentVertices = nullptr;
 	int distance = 0;
 	int test = 0;
-	static bool firstRender = true;
 	int i = 0;
 
 	projection = perspective(radians(_currentCamera->Zoom), (GLfloat)WIDTH / (GLfloat)HEIGHT, 0.1f, 100.0f);
@@ -146,7 +145,7 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 		
 
 				//DETEKCJA KOLIZJI
-				if (firstRender != true)
+				if (_firstRender != true)
 				{
 					//Sprawdz wszystkie inne Entity
 					for (vector<Entity *>::iterator iterator = entityArray->begin(); iterator != entityArray->end(); iterator++)
@@ -234,7 +233,7 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 				modelObj->loadRealVertices(model);	
 
 				//DETEKCJA KOLIZJI
-				if (firstRender != true)
+				if (_firstRender != true)
 				{
 					//detekcja
 
@@ -345,24 +344,25 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 
 	}
 	glfwSwapBuffers(_window);
-	if (firstRender != true)
+	_firstRender = false;
+	if (_firstRender != true)
 	{
 		update(entityArray); //usun obiekty badz dodaj nowe
 	}
+
 	glfwPollEvents();
-	firstRender = false;
 	i = 0;
 }
 
 
 void RenderSystem::update(vector<Entity *> *entityArray)
 {
+	bool tmp = false;
 
-
+	//DESTRUKCJE
 	for (vector<Entity *>::iterator iterator = entityArray->begin(); iterator != entityArray->end();/**/)
 	{
 		Entity *entity = *iterator;
-
 
 		//DESTRUKCJE
 		bool destroy = false;
@@ -381,22 +381,10 @@ void RenderSystem::update(vector<Entity *> *entityArray)
 			{
 				cout << "ktos tu umarl" << endl;
 				destroy = true;
+				tmp = destroy;
 			}
 
 		}
-
-		//TWORZENIE
-
-
-
-
-
-
-
-
-
-
-
 		if (destroy)
 		{
 			delete entity;
@@ -410,13 +398,43 @@ void RenderSystem::update(vector<Entity *> *entityArray)
 	}
 
 
+
+
+	if (tmp)
+	{
+		//TWORZENIE
+		//model
+		/*IObject *model = new ModelObject(new Model("dalek/Dalek.obj"));
+		Entity *entity = new Entity(model, makeVector3(0.0f, -1.0f, 2.0f), ENTITY_ENEMY);
+		entity->setScale(makeVector3(0.007f, 0.007f, 0.007f));
+		entityArray->push_back(entity);*/
+		
+		IObject *sphere = new SphereObject(new Sphere(0.05f, 15, 15));
+		Entity *entity = new Entity(sphere, makeVector3(0.0f, -0.5f, -3.5f), ENTITY_BULLET);
+		entity->setVelocity(makeVector3(0.0f, 0.0f, -0.008f));
+		entityArray->push_back(entity);
+		
+		
+		
+		_firstRender = true;
+
+	}
+
+	
+
+
+
+
+	
+
+
 		
 }
 
 
 
 
-RenderSystem::RenderSystem() :_window(glfwGetCurrentContext()), _cameraSystem(&CameraSystem::getCameraSystem())
+RenderSystem::RenderSystem() :_window(glfwGetCurrentContext()), _cameraSystem(&CameraSystem::getCameraSystem()), _firstRender(true)
 {
 	
 }
