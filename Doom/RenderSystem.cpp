@@ -3,71 +3,34 @@
 #include "SphereObject.h"
 #include "ModelObject.h"
 #include "CollisionDetection.h"
-
+#include <glm/gtx/vector_angle.hpp>
 using namespace glm;
 
 void RenderSystem::render(vector<Entity*> *entityArray)
 {
-
-
 	mat4 view;
 	mat4 model;
 	mat4 projection;
 	vector <ThreeVertices> *realCurrentVertices = nullptr;
 	int distance = 0;
 	int test = 0;
-	static bool ttmp = false;
+	static bool firstRender = true;
 	int i = 0;
 
 	projection = perspective(radians(_currentCamera->Zoom), (GLfloat)WIDTH / (GLfloat)HEIGHT, 0.1f, 100.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	if (ttmp == false)
-	{
-		cout << "once" << endl;
-	}
-
 	view = _currentCamera->GetViewMatrix();
 	for (vector<Entity *>::iterator iterator = entityArray->begin(); iterator != entityArray->end(); iterator++)
 	{
 		glEnable(GL_DEPTH_TEST); //tego tu nie powinno byc ale jakims cudem sie wylacza samo wiec trzeba wlaczac
-
 		Entity *entity = *iterator;
 		distance = std::distance(entityArray->begin(), iterator);
+		entity->loadRealVertices(); //to pobiera efet dzialania funkji loadRealVertices(model) (dla obiektow)
 
-
-		
-
-		//pobranie rzeczywistych wierzcholkow
-		//nie wazne z jakiego typu entity mamy do czynienia
-		entity->loadRealVertices();
-		//tu moga byc problemy przy 1 iteracji ew. zignoruj wszystko co sie stanie w pierwszej iteracji
-		//moga ale nie musza
-		realCurrentVertices = entity->getRealVertices();
-
-
-		
-		//if (ttmp ==true)
-		//{
-		//	if (entity->getType() != ENTITY_BULLET)
-		//	{
-		//		//cout << i++ << endl;
-		//		for (vector<ThreeVertices>::iterator iterator = realCurrentVertices->begin(); iterator != realCurrentVertices->end(); iterator++)
-		//		{
-		//			//cout << "ok" << endl;
-		//			//cout << iterator->a.x << endl;
-		//		}
-		//	}
-		//}
-		//
-		
-
-
-
-
-
-
-
+		//nie jestem pewien czy te podstawienie tu powinno byc
+		//w obiektach pod ten wskaznik podstawiam aktualne realne ale innych obiektow
+		realCurrentVertices = entity->getRealVertices(); 
 
 
 		//VertexBuffer
@@ -78,51 +41,38 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 
 		//zeby sie rowno krecilo we wszystkie strony to rotate(mode,....,vec3(1.0f, 1.0f, 1.0f));
 		model = translate(model, vec3(entity->getPosition().x, entity->getPosition().y, entity->getPosition().z));
-
 		model = rotate(model, radians(entity->getRotation().x), vec3(1.0f, 0.0f, 0.0f));
 		model = rotate(model, radians(entity->getRotation().y), vec3(0.0f, 1.0f, 0.0f));
 		model = rotate(model, radians(entity->getRotation().z), vec3(0.0f, 0.0f, 1.0f));
-
 		model = scale(model, vec3(entity->getScale().x, entity->getScale().y, entity->getScale().z));
-		
+
+		entity->getVertexBuffer()->loadRealVertices(model);
 
 		
 		//COLLISION DETECTION
-		entity->getVertexBuffer()->loadRealVertices(model);
-			
-		/*if (test ==1)
-		{
-			static bool tmp = true;
-			if (tmp)
-			{
-				tmp = false;
+		//vec3 u = vec3(0.0f, 0.0f, 1.0f);
+		//vec3 u2 = vec3(1.0f, 0.0f, 1.0f);
+		////double angle = AngleBetweenVectors(v1, v2);
+		//vec3 v =/* u +*/ u2;
+	
+		//GLfloat angle = glm::orientedAngle(normalize(v1), normalize(newv), vec3(0.0f, 0.0f, 0.0f));
+		//GLfloat angle =glm::orientedAngle(normalize(vec2(newv.x, newv.z)), normalize(vec2(v1.x, v1.z)));
+		/*GLfloat angle;
+		cout << "GLM" << endl;
+		angle = glm::orientedAngle(normalize(vec2(u.x, u.z)), normalize(vec2(v.x, v.z)));
+		cout << angle << endl;
+		cout << "atan2" << endl;
+		angle = atan2(v.z, v.x) - atan2(u.z, u.x);
+		cout << angle << endl;
 
+		cout << "##" << endl;*/
+	/*	cout << newv.x << endl;
+		cout << newv.y << endl;
+		cout << newv.z << endl;*/
 
-				realCurrentVertices = entity->getRealVertices();
-
-				for (vector<ThreeVertices>::iterator iterator = realCurrentVertices->begin(); iterator != realCurrentVertices->end(); iterator++)
-				{
-					cout << "#############NEW ONE##############" << endl;
-					cout << iterator->a.x << endl;
-					cout << iterator->a.y << endl;
-					cout << iterator->a.z << endl;
-					cout << "##" << endl;
-					cout << iterator->b.x << endl;
-					cout << iterator->b.y << endl;
-					cout << iterator->b.z << endl;
-					cout << "##" << endl;
-					cout << iterator->c.x << endl;
-					cout << iterator->c.y << endl;
-					cout << iterator->c.z << endl;
-					cout << "##" << endl;
-				}
-
-			}
-		}
-		test++;*/
-
-
+	
 		
+
 		//END OF COLLISION DETECTION
 
 
@@ -145,8 +95,6 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, value_ptr(view));
 		glUniformMatrix4fv(projLoc, 1, GL_FALSE, value_ptr(projection));
 
-		
-
 		glUniform4f((entity->getVertexBuffer()->getShader())->get_uColor(),
 			entity->getVertexBuffer()->getShaderData()->get_uColorValue().x,
 			entity->getVertexBuffer()->getShaderData()->get_uColorValue().y,
@@ -159,13 +107,8 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 			entity->getVertexBuffer()->getShaderData()->get_uLightPosition().z);
 
 			
-		//entity->getVertexBuffer()->configureVertexAttributes(); // przeniesiono do konstruktora w "VertexBuffer"
 		entity->getVertexBuffer()->renderVertexBuffer();	
 		
-		//NEW
-		//entity->getObject()->draw()
-
-
 		//SKYBOX
 		if (entity->getVertexBuffer()->getTextureLoader() != NULL &&
 			entity->getVertexBuffer()->getTextureLoader()->getTextureType() == TX_SKYBOX)
@@ -174,9 +117,6 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 			view = _currentCamera->GetViewMatrix();
 		}
 
-
-		//troche to glupie ale nie mam pomyslu innego
-		//view = translate(view, vec3(-entity->getPosition().x, -entity->getPosition().y, -entity->getPosition().z));
 		model = mat4();
 		}
 
@@ -186,14 +126,16 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 		{
 
 			model = translate(model, vec3(entity->getPosition().x, entity->getPosition().y, entity->getPosition().z));
-
 			model = rotate(model, radians(entity->getRotation().x), vec3(1.0f, 0.0f, 0.0f));
 			model = rotate(model, radians(entity->getRotation().y), vec3(0.0f, 1.0f, 0.0f));
 			model = rotate(model, radians(entity->getRotation().z), vec3(0.0f, 0.0f, 1.0f));
-
 			model = scale(model, vec3(entity->getScale().x, entity->getScale().y, entity->getScale().z));
 
 			entity->getObject()->configShader(model,view,projection); //uruchamia tez shader->Use()
+
+
+
+
 
 			//SPHERE
 			if (entity->getObject()->getObjectType() == OB_SPHERE)
@@ -201,13 +143,11 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 				SphereObject *sphereObj = nullptr;
 				try {sphereObj = dynamic_cast<SphereObject*>(entity->getObject()); }
 				catch (bad_cast& bc){cerr << "bad_cast caught: " << bc.what() << endl;}
+		
 
-				//cout << sphereObj->getRadius() << endl;
-				
-				if (ttmp ==true)
+				//DETEKCJA KOLIZJI
+				if (firstRender != true)
 				{
-					
-
 					//Sprawdz wszystkie inne Entity
 					for (vector<Entity *>::iterator iterator = entityArray->begin(); iterator != entityArray->end(); iterator++)
 					{
@@ -219,7 +159,6 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 							if (otherEntity->getType() == ENTITY_BULLET)
 								continue;
 
-			
 							if (otherEntity->getVertexBuffer() != NULL &&
 								otherEntity->getVertexBuffer()->getTextureLoader() != NULL &&
 								otherEntity->getVertexBuffer()->getTextureLoader()->getTextureType() == TX_SKYBOX)
@@ -228,38 +167,11 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 							if (otherEntity->getRealVertices() == nullptr)
 								cout << "Cos jest nie tak #1" << endl;
 
-							//zabawa z reszta swiata
-		
-
-								//transformacja srodka sfery na rzeczywiste wspolrzedne
-								/*vec4 sphereCentreTransform = model* vec4(entity->getPosition().x,
-																		 entity->getPosition().y,
-																		 entity->getPosition().z,
-																		 1.0f);*/
-
-
-																	 //kazda sfera ma swoj poczatek w 0,0,0
-																	 //logiczne -> trojkat tez ma podane blisko 0
 							vec4 sphereCentreTransform = model* vec4(vec3(0.0f), 1.0f);
-
-						 
 							vec3 sphereCentreReal = vec3(sphereCentreTransform) / sphereCentreTransform.w;
-
-					/*		cout << "####REAL" << endl;
-							cout << sphereCentreReal.x << endl;
-							cout << sphereCentreReal.y << endl;
-							cout << sphereCentreReal.z << endl;*/
-						/*	cout << "####NORMAL" << endl;
-							cout << entity->getPosition().x << endl;
-							cout << entity->getPosition().y << endl;
-							cout << entity->getPosition().z << endl;
-							*/
-
-							//cout << "NEXT######################################" << endl;
-				
 							realCurrentVertices = otherEntity->getRealVertices();
-							//int nrOfTriangles = realCurrentVertices->size();
-							int i = 0;
+
+							//zabawa z reszta swiata
 							for (vector<ThreeVertices>::iterator iterator = realCurrentVertices->begin(); iterator != realCurrentVertices->end(); iterator++)
 							{
 								vec3 *real[3];
@@ -270,41 +182,14 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 									real[1] = &realCurrentVertices->at(k).b;
 									real[2] = &realCurrentVertices->at(k).c;
 
-									/*cout << "Triangle" << endl;
-									cout << real[0]->x << " " << real[0]->y << " " << real[0]->z << endl;
-									cout << real[1]->x << " " << real[1]->y << " " << real[1]->z << endl;
-									cout << real[2]->x << " " << real[2]->y << " " << real[2]->z << endl;*/
-
-
 									bool bCollided = SpherePolygonCollision(*real, sphereCentreReal, 3, sphereObj->getRadius());
 									if (bCollided)
 										cout << "kolizja" << endl;
-								}
-								
-								
-
-
-
-
-								//cout << "first" << endl;
-								//cout << "#####" << endl;
-								//cout << i++ << endl;
-								//cout << "vertices" << endl;
-								//cout << "#####" << endl;
+								}	
 							}
-
-
-
 						}
 					}
-
-
 				}
-	
-
-
-
-
 			}//koniec zabawy ze sfera
 
 
@@ -316,6 +201,112 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 				catch (bad_cast& bc){ cerr << "bad_cast caught: " << bc.what() << endl;}
 
 				modelObj->loadRealVertices(model);	
+
+				//DETEKCJA KOLIZJI
+				if (firstRender != true)
+				{
+					//detekcja
+
+					//Sprawdz wszystkie inne Entity
+					for (vector<Entity *>::iterator iterator = entityArray->begin(); iterator != entityArray->end(); iterator++)
+					{
+						if (distance != std::distance(entityArray->begin(), iterator))
+						{//Operacje na wszystkich innych Entity
+							Entity *otherEntity = *iterator;
+							otherEntity->loadRealVertices();
+
+							//if (otherEntity->getType() == ENTITY_BULLET)
+								//continue;
+
+							if (otherEntity->getVertexBuffer() != NULL &&
+								otherEntity->getVertexBuffer()->getTextureLoader() != NULL &&
+								otherEntity->getVertexBuffer()->getTextureLoader()->getTextureType() == TX_SKYBOX)
+								continue;
+
+							if (otherEntity->getRealVertices() == nullptr)
+								cout << "Cos jest nie tak #2" << endl;
+
+							realCurrentVertices = otherEntity->getRealVertices();
+
+											//po wszystkich moich trojkatach
+							for (int l = 0; l < entity->getRealVertices()->size(); l++)
+							{
+								vec3 *myReal[3];
+								myReal[0] = &entity->getRealVertices()->at(l).a;
+								myReal[1] = &entity->getRealVertices()->at(l).b;
+								myReal[2] = &entity->getRealVertices()->at(l).c;
+
+								//zabawa z reszta swiata
+								for (vector<ThreeVertices>::iterator iterator = realCurrentVertices->begin(); iterator != realCurrentVertices->end(); iterator++)
+								{
+									//przelec po wszystkich trojkatach danego obiektu
+									vec3 *real[3];
+									for (int k = 0; k < realCurrentVertices->size(); k++)
+									{
+										real[0] = &realCurrentVertices->at(k).a;
+										real[1] = &realCurrentVertices->at(k).b;
+										real[2] = &realCurrentVertices->at(k).c;
+
+										//ze wzgledu na ulomnosc funkcji IntersectedPolygon
+										//trzeba jej przekazac wspolrzedne lini
+										//wiec dla trojkata beda to 3 linie
+										vec3 *realLine[2];
+										for (int t = 0; t < 3; t++)
+										{
+											realLine[0] = real[(t + 1) % 3];
+											realLine[1] = real[(t + 2) % 3];
+
+
+											vec3 _myReal[3];
+											vec3 _realLine[2];
+
+											_myReal[0] = *myReal[0];
+											_myReal[1] = *myReal[1];
+											_myReal[2] = *myReal[2];
+
+											_realLine[0] = *realLine[0];
+											_realLine[1] = *realLine[1];
+
+
+											//tu sie dzieje cos dziwnego, ale mozesz przekazac
+											///myReal bez kopiowanie bez sensu, ale NIE MOZESZ
+											//przekazac *realLine bo jakies cuda sie dzieja
+											//i wykrywa kolizje gdy jej nie ma
+
+											bool bCollided = IntersectedPolygon(_myReal, _realLine, 3);
+											//bool bCollided = IntersectedPolygon(*myReal,*realLine, 3);
+											if (bCollided)
+											{
+												cout << "kolizja" << endl;
+
+
+											/*	cout << "myreal" << endl;
+												cout << myReal[0]->x << " " << myReal[0]->y << " " << myReal[0]->z << endl;
+												cout << myReal[1]->x << " " << myReal[1]->y << " " << myReal[1]->z << endl;
+												cout << myReal[2]->x << " " << myReal[2]->y << " " << myReal[2]->z << endl;
+												cout << "collided with line" << endl;
+												cout << realLine[0]->x << " " << realLine[0]->y << " " << realLine[0]->z << endl;
+												cout << realLine[1]->x << " " << realLine[1]->y << " " << realLine[1]->z << endl;*/
+											}
+											
+	
+
+										}
+									}
+								}
+							}
+							//cout << "koniec kolizji z modele" << endl;
+						}
+					}
+
+
+
+
+
+				}
+
+
+
 			}
 
 
@@ -327,10 +318,11 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 
 
 
+
 	}
 	glfwSwapBuffers(_window);
 	glfwPollEvents();
-	ttmp = true;
+	firstRender = false;
 	i = 0;
 }
 
