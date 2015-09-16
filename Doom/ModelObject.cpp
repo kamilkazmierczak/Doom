@@ -4,7 +4,7 @@
 #include <glm/gtx/string_cast.hpp>
 
 
-ModelObject::ModelObject(Model *model) : _model(model)
+ModelObject::ModelObject(Model *model) : _model(model), _health(100.0f)
 {
 	_typeOfObject = OB_MODEL;
 	_shader = new ShaderInterface("model_loading.vs", "model_loading.frag");
@@ -92,4 +92,14 @@ void ModelObject::loadRealVertices(mat4& model)
 {
 	_model->loadRealVertices(model);
 	_myRealVertices = _model->getRealVertices();
+}
+
+GLfloat ModelObject::getHealth()
+{
+	return _health;
+}
+
+void ModelObject::changeHealth(GLfloat change)
+{
+	_health += change; //mozesz dodawac i odejmowac
 }

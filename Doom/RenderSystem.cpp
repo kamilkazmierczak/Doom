@@ -184,11 +184,42 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 
 									bool bCollided = SpherePolygonCollision(*real, sphereCentreReal, 3, sphereObj->getRadius());
 									if (bCollided)
-										cout << "kolizja" << endl;
+									{
+										//cout << "kolizja sfery" << endl;
+
+										if (otherEntity->getType() == ENTITY_MAP)
+										{
+											cout << "udzerzyles w mape" << endl;
+										}
+
+										if (otherEntity->getType() == ENTITY_ENEMY)
+										{
+											cout << "udzerzyles we wroga" << endl;
+											ModelObject *enemyObj = nullptr;
+											try { enemyObj = dynamic_cast<ModelObject*>(otherEntity->getObject()); }
+											catch (bad_cast& bc){ cerr << "bad_cast caught: " << bc.what() << endl; }
+
+											cout << enemyObj->getHealth() << endl;
+
+											if (enemyObj->getHealth() > 0.0f)
+											{
+												enemyObj->changeHealth(-100.0f);
+											}
+											
+											
+
+
+
+										}
+
+		
+
+									}
 								}	
 							}
 						}
 					}
+					//cout << "koniec kolizji ze sfera" << endl;
 				}
 			}//koniec zabawy ze sfera
 
@@ -215,8 +246,8 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 							Entity *otherEntity = *iterator;
 							otherEntity->loadRealVertices();
 
-							//if (otherEntity->getType() == ENTITY_BULLET)
-								//continue;
+							if (otherEntity->getType() == ENTITY_BULLET)
+								continue;
 
 							if (otherEntity->getVertexBuffer() != NULL &&
 								otherEntity->getVertexBuffer()->getTextureLoader() != NULL &&
@@ -277,16 +308,9 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 											//bool bCollided = IntersectedPolygon(*myReal,*realLine, 3);
 											if (bCollided)
 											{
-												cout << "kolizja" << endl;
+												cout << "kolizja modelu" << endl;
 
 
-											/*	cout << "myreal" << endl;
-												cout << myReal[0]->x << " " << myReal[0]->y << " " << myReal[0]->z << endl;
-												cout << myReal[1]->x << " " << myReal[1]->y << " " << myReal[1]->z << endl;
-												cout << myReal[2]->x << " " << myReal[2]->y << " " << myReal[2]->z << endl;
-												cout << "collided with line" << endl;
-												cout << realLine[0]->x << " " << realLine[0]->y << " " << realLine[0]->z << endl;
-												cout << realLine[1]->x << " " << realLine[1]->y << " " << realLine[1]->z << endl;*/
 											}
 											
 	
@@ -321,10 +345,75 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 
 	}
 	glfwSwapBuffers(_window);
+	if (firstRender != true)
+	{
+		update(entityArray); //usun obiekty badz dodaj nowe
+	}
 	glfwPollEvents();
 	firstRender = false;
 	i = 0;
 }
+
+
+void RenderSystem::update(vector<Entity *> *entityArray)
+{
+
+
+	for (vector<Entity *>::iterator iterator = entityArray->begin(); iterator != entityArray->end();/**/)
+	{
+		Entity *entity = *iterator;
+
+
+		//DESTRUKCJE
+		bool destroy = false;
+		if (entity->getType() == ENTITY_ENEMY)
+		{
+
+			//nie istnieje koniecznosc by to sprawdzac (enemy jest modelem i jest OB_MODEL)
+			//if (entity->getObject() != NULL)
+			//if (entity->getObject()->getObjectType() == OB_MODEL)
+
+			ModelObject *enemyObj = nullptr;
+			try { enemyObj = dynamic_cast<ModelObject*>(entity->getObject()); }
+			catch (bad_cast& bc){ cerr << "bad_cast caught: " << bc.what() << endl; }
+
+			if (enemyObj->getHealth() <= 0.0f)
+			{
+				cout << "ktos tu umarl" << endl;
+				destroy = true;
+			}
+
+		}
+
+		//TWORZENIE
+
+
+
+
+
+
+
+
+
+
+
+		if (destroy)
+		{
+			delete entity;
+			iterator = entityArray->erase(iterator);
+		}
+		else
+		{
+			++iterator;
+		}
+
+	}
+
+
+		
+}
+
+
 
 
 RenderSystem::RenderSystem() :_window(glfwGetCurrentContext()), _cameraSystem(&CameraSystem::getCameraSystem())

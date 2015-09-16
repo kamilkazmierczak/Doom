@@ -6,8 +6,9 @@
 
 enum Entity_type {
 	ENTITY_BULLET,
-	ENTITY_MOVE,
-	ENTITY_STOP,
+	ENTITY_ENEMY,
+	ENTITY_MAP,
+	ENTITY_TEST
 };
 
 
