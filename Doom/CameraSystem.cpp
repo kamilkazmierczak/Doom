@@ -20,8 +20,8 @@ Camera* CameraSystem::getCurrentCamera()
 void CameraSystem::setCurrentCamera(Camera *newCamera)
 {
 	_currentCamera = newCamera;
-	RenderSystem *renderSystem = &RenderSystem::getRenderSystem();
-	renderSystem->setCurrentCamera(_currentCamera);
+	//RenderSystem *renderSystem = &RenderSystem::getRenderSystem();
+	//renderSystem->setCurrentCamera(_currentCamera);
 }
 
 CameraSystem& CameraSystem::getCameraSystem()

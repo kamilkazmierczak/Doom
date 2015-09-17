@@ -4,6 +4,7 @@
 #include "ModelObject.h"
 #include "CollisionDetection.h"
 #include <glm/gtx/vector_angle.hpp>
+#include <glm/gtx/string_cast.hpp>
 using namespace glm;
 
 void RenderSystem::render(vector<Entity*> *entityArray)
@@ -16,10 +17,15 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 	int test = 0;
 	int i = 0;
 
-	projection = perspective(radians(_currentCamera->Zoom), (GLfloat)WIDTH / (GLfloat)HEIGHT, 0.1f, 100.0f);
+	projection = perspective(radians(_cameraSystem->getCurrentCamera()->Zoom), (GLfloat)WIDTH / (GLfloat)HEIGHT, 0.1f, 100.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	view = _currentCamera->GetViewMatrix();
+	//wywal _currentCamera i uzywaj _cameraSystem;
+	//_cameraSystem->getCurrentCamera()->getCenter();
+	view = _cameraSystem->getCurrentCamera()->GetViewMatrix();
+	//_currentCamera->GetViewMatrix();
+
+	//
 	for (vector<Entity *>::iterator iterator = entityArray->begin(); iterator != entityArray->end(); iterator++)
 	{
 		glEnable(GL_DEPTH_TEST); //tego tu nie powinno byc ale jakims cudem sie wylacza samo wiec trzeba wlaczac
@@ -113,7 +119,7 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 			entity->getVertexBuffer()->getTextureLoader()->getTextureType() == TX_SKYBOX)
 		{
 			glDepthMask(GL_TRUE);
-			view = _currentCamera->GetViewMatrix();
+			view = _cameraSystem->getCurrentCamera()->GetViewMatrix();
 		}
 
 		model = mat4();
@@ -403,19 +409,30 @@ void RenderSystem::update(vector<Entity *> *entityArray)
 	if (tmp)
 	{
 		//TWORZENIE
-		//model
-		/*IObject *model = new ModelObject(new Model("dalek/Dalek.obj"));
-		Entity *entity = new Entity(model, makeVector3(0.0f, -1.0f, 2.0f), ENTITY_ENEMY);
-		entity->setScale(makeVector3(0.007f, 0.007f, 0.007f));
-		entityArray->push_back(entity);*/
-		
+
+		vec3 center = _cameraSystem->getCurrentCamera()->getCenter();
+		vec3 position = _cameraSystem->getCurrentCamera()->getPosition();	
 		IObject *sphere = new SphereObject(new Sphere(0.05f, 15, 15));
-		Entity *entity = new Entity(sphere, makeVector3(0.0f, -0.5f, -3.5f), ENTITY_BULLET);
-		entity->setVelocity(makeVector3(0.0f, 0.0f, -0.008f));
+		Entity *entity = new Entity(sphere, makeVector3(position.x, position.y, position.z), ENTITY_BULLET);
+
+		GLfloat bulletSpeed = 0.008f;
+		GLfloat max = std::max(std::abs(center.x), std::max(std::abs(center.y), std::abs(center.z)));
+
+
+		if (max != 0)
+		{
+			entity->setVelocity(makeVector3((center.x / max)*bulletSpeed, 
+											(center.y / max)*bulletSpeed, 
+											(center.z / max)*bulletSpeed));
+		}
+		else
+		{
+			cout << "patrzysz na srodek" << endl;
+			//chyba
+			entity->setVelocity(makeVector3(bulletSpeed, bulletSpeed, bulletSpeed));
+		}
+	
 		entityArray->push_back(entity);
-		
-		
-		
 		_firstRender = true;
 
 	}
@@ -445,15 +462,15 @@ RenderSystem::~RenderSystem()
 
 }
 
-Camera* RenderSystem::getCurrentCamera()
-{
-	return _currentCamera;
-}
-
-void RenderSystem::setCurrentCamera(Camera *newCamera)
-{
-	_currentCamera = newCamera;
-}
+//Camera* RenderSystem::getCurrentCamera()
+//{
+//	return _currentCamera;
+//}
+//
+//void RenderSystem::setCurrentCamera(Camera *newCamera)
+//{
+//	_currentCamera = newCamera;
+//}
 
 
 RenderSystem& RenderSystem::getRenderSystem()

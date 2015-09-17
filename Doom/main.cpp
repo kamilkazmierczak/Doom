@@ -1,7 +1,13 @@
 #include <iostream>
 #include "GameManager.h"
-using namespace std;
 
+
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/matrix_access.hpp>
+#include <glm/gtx/string_cast.hpp>
+using namespace std;
+using namespace glm;
 //void test(int& numer)
 //{
 //	//numer++;
@@ -21,62 +27,16 @@ int main(int argc, char **argv)
 	gameManager->runGameLoop();
 	GameManager::destroyGameManager();
 
-	//vector<int>* wektor = new vector<int>();
+	//GLfloat max;
 
-	//wektor->push_back(10);
-	//wektor->push_back(11);
-	//wektor->push_back(12);
-	//wektor->push_back(13);
+	//max = cmp::max(0.0f, 1.0f);
 
+	/*GLfloat num = -0.0f;
+	cout << glm::sign(num) << endl;*/
 
-
-	//int distance = 0;
-
-	//for (vector<int>::iterator iterator = wektor->begin(); iterator != wektor->end(); iterator++)
-	//{
-	//	//cout <<  *iterator << endl;
-	//	//(*iterator) += 5;
-	//	cout << std::distance(wektor->begin(), iterator) << endl;
-	//	distance = std::distance(wektor->begin(), iterator);
-
-	//	for (vector<int>::iterator iterator = wektor->begin(); iterator != wektor->end(); iterator++)
-	//	{
-	//		if (distance != std::distance(wektor->begin(), iterator))
-	//		{
-	//			if (*iterator == 12)
-	//			{
-	//				//cout << "O nie ! to 12" << endl;
-	//				continue;
-	//			}
-	//			cout << *iterator << endl;
-	//		}
-
-
-	//		
-	//	}
-
-	//}
-
-	/*for (vector<int>::iterator iterator = wektor->begin(); iterator != wektor->end(); iterator++)
-	{
-		cout << *iterator << endl;
-	}*/
-
-
-
-
-
-
-
-
-
-	//int i;
-	//i = 5;
-
-	//cout << i << endl;
-	//cout << "test" << endl;
-	//test(i);
-	//cout << i << endl;
+	/*GLfloat num = -0.0000f;
+	cout << sign(num) << endl;*/
+	//cout << signbit(num) << endl;
 
 
 	//getchar();

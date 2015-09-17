@@ -23,7 +23,7 @@ private:
 
 	GLFWwindow *_window;
 	CameraSystem *_cameraSystem;
-	Camera *_currentCamera;
+	//Camera *_currentCamera;
 
 	void update(vector<Entity *> *entityArray);
 	bool _firstRender;
@@ -33,8 +33,8 @@ private:
 
 public:
 
-	Camera *getCurrentCamera();
-	void setCurrentCamera(Camera *newCamera);
+	//Camera *getCurrentCamera();   // po co mi to tutaj?
+	//void setCurrentCamera(Camera *newCamera); //to tez przecieza camera system wszystko ma
 
 	void render(vector<Entity *> *entityArray);
 	static RenderSystem& getRenderSystem();
