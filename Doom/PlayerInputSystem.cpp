@@ -1,6 +1,10 @@
 #include "PlayerInputSystem.h"
 #include "GameManager.h"
 #include "Constants.h"
+#include <algorithm>
+#include "SphereObject.h"
+
+
 
 using namespace std;
 
@@ -45,54 +49,10 @@ void PlayerInputSystem::update()
 	}
 	
 
-	//OLD
-	/* 
-	if (_currentPlayer != NULL && glfwGetInputMode(_window, GLFW_CURSOR) == GLFW_CURSOR_DISABLED) 
-	{
-		if (glfwGetKey(_window, GLFW_KEY_W)){
-			_currentPlayer->setPosition(addVector3(_currentPlayer->getPosition(),
-				scalerMultiplyVector3(_eyeVector,0.07f)));
-		}
-
-		if (glfwGetKey(_window, GLFW_KEY_S)){
-			_currentPlayer->setPosition(subtractVector3(_currentPlayer->getPosition(),
-				scalerMultiplyVector3(_eyeVector, 0.07f)));
-		}
-
-		if (glfwGetKey(_window, GLFW_KEY_A)){
-			_currentPlayer->setPosition(subtractVector3(_currentPlayer->getPosition(),//up vector? why not
-				scalerMultiplyVector3(crossProductVector3(_eyeVector,makeVector3(0.0f, 1.0f,0.0f)), 0.07f)));
-		}
-
-		if (glfwGetKey(_window, GLFW_KEY_D)){
-			_currentPlayer->setPosition(addVector3(_currentPlayer->getPosition(),//up vector? why not
-				scalerMultiplyVector3(crossProductVector3(_eyeVector, makeVector3(0.0f, 1.0f, 0.0f)), 0.07f)));
-		}
-
-		Vector2 currentMousePosition;
-		glfwGetCursorPos(_window, &currentMousePosition.x, &currentMousePosition.y);
-																		//45stopni? w radianach ?
-		_eyeVector = transformVector3(_eyeVector, makeRotationMatrix3((3.14f / (4.0f*45.0f))*-
-			(currentMousePosition.x - _lastMousePosition.x), 0.0f, 1.0f, 0.0f));
-											//for horizontal rotate around up vector 
-
-		glfwGetCursorPos(_window, &_lastMousePosition.x, &_lastMousePosition.y);
-
-		_currentPlayer->setEyeVector(addVector3(_currentPlayer->getPosition(), _eyeVector));
-		}
-
-		*/ 
-		//OLD
+	
 	
 }
 
-/*
-void PlayerInputSystem::setCurrentPlayer(Entity *newPlayer)
-{
-	_currentPlayer = newPlayer;
-	_eyeVector = normalizeVector3(newPlayer->getEyeVector());
-}
-*/
 
 
 void PlayerInputSystem::setCurrentCamera(Camera *newCamera)
@@ -146,11 +106,62 @@ void PlayerInputSystem::mouseCallback(GLFWwindow* window, double xpos, double yp
 	
 }
 
+void PlayerInputSystem::mouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
+{
+	if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
+	{
+		cout << "nacisnieto LPM" << endl;
+		RenderSystem *renderSystem = &RenderSystem::getRenderSystem();
+		CameraSystem *cameraSystem = &CameraSystem::getCameraSystem();
+		//dostep do wektorow
+		//gameManager->getScene()->getChildren()
+		//renderSystem->getNewObjects()
+
+		
+		//tworzenie naboju 
+		vec3 center = cameraSystem->getCurrentCamera()->getCenter();
+		vec3 position = cameraSystem->getCurrentCamera()->getPosition();
+		IObject *sphere = new SphereObject(new Sphere(0.05f, 15, 15));
+		Entity *entity = new Entity(sphere, makeVector3(position.x, position.y, position.z), ENTITY_BULLET);
+
+		//GLfloat bulletSpeed = 0.008f;
+		GLfloat max = std::max(std::abs(center.x), std::max(std::abs(center.y), std::abs(center.z)));
+
+		if (max != 0)
+		{
+			entity->setVelocity(makeVector3((center.x / max)*BulletSpeed,
+				(center.y / max)*BulletSpeed,
+				(center.z / max)*BulletSpeed));
+		}
+		else
+		{
+			cout << "patrzysz na srodek" << endl;
+			//chyba
+			entity->setVelocity(makeVector3(BulletSpeed, BulletSpeed, BulletSpeed));
+		}
+
+		renderSystem->getNewObjects()->push_back(entity);
+
+	}
+
+
+
+
+
+}
+
 void PlayerInputSystem::mouseCallbackFun(GLFWwindow* window, double xpos, double ypos)
 {
 	PlayerInputSystem *playerInputSystem = &getPlayerInputSystem();
 	playerInputSystem->mouseCallback(window, xpos, ypos);
 }
+
+void PlayerInputSystem::mouseButtonCallbackFun(GLFWwindow* window, int button, int action, int mods)
+{
+	PlayerInputSystem *playerInputSystem = &getPlayerInputSystem();
+	playerInputSystem->mouseButtonCallback(window, button, action, mods);
+}
+
 
 void PlayerInputSystem::scrollCallback(GLFWwindow* window, double xoffset, double yoffset)
 {
@@ -173,7 +184,9 @@ PlayerInputSystem& PlayerInputSystem::getPlayerInputSystem()
 		glfwSetKeyCallback(glfwGetCurrentContext(), *keyCallbackFun);
 		glfwSetScrollCallback(glfwGetCurrentContext(), *scrollCallbackFun);
 		glfwSetCursorPosCallback(glfwGetCurrentContext(), *mouseCallbackFun);
-			
+		glfwSetMouseButtonCallback(glfwGetCurrentContext(), *mouseButtonCallbackFun);
+
+
 		//glfwSetMouseallback(glfwGetCurrentContext(), *mouseCallbackFun);
 		//glfwSetKeyCallback();
 		glfwSetInputMode(glfwGetCurrentContext(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);

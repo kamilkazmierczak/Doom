@@ -40,6 +40,7 @@ public:
 
 	void runGameLoop();
 	GLfloat getDeltaTime();
+	Scene *getScene();
 
 	static GameManager& getGameManager();
 	static void destroyGameManager();

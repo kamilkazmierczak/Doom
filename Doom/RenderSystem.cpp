@@ -194,12 +194,12 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 
 										if (otherEntity->getType() == ENTITY_MAP)
 										{
-											cout << "udzerzyles w mape" << endl;
+											//cout << "udzerzyles w mape" << endl;
 										}
 
 										if (otherEntity->getType() == ENTITY_ENEMY)
 										{
-											cout << "udzerzyles we wroga" << endl;
+											//cout << "udzerzyles we wroga" << endl;
 											ModelObject *enemyObj = nullptr;
 											try { enemyObj = dynamic_cast<ModelObject*>(otherEntity->getObject()); }
 											catch (bad_cast& bc){ cerr << "bad_cast caught: " << bc.what() << endl; }
@@ -353,12 +353,32 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 	_firstRender = false;
 	if (_firstRender != true)
 	{
-		update(entityArray); //usun obiekty badz dodaj nowe
+		checkForNewObjects(entityArray);
+		//update(entityArray); //usun obiekty badz dodaj nowe
 	}
 
 	glfwPollEvents();
 	i = 0;
 }
+
+
+
+
+void RenderSystem::checkForNewObjects(vector<Entity *> *entityArray)
+{
+	for (vector<Entity *>::iterator iterator = _newObjects->begin(); iterator != _newObjects->end(); iterator++)
+	{
+		entityArray->push_back(*iterator);
+		_firstRender = true;
+	}
+
+	if (_newObjects->size() != 0)
+	{
+		_newObjects->clear();
+	}
+}
+
+
 
 
 void RenderSystem::update(vector<Entity *> *entityArray)
@@ -453,7 +473,7 @@ void RenderSystem::update(vector<Entity *> *entityArray)
 
 RenderSystem::RenderSystem() :_window(glfwGetCurrentContext()), _cameraSystem(&CameraSystem::getCameraSystem()), _firstRender(true)
 {
-	
+	_newObjects = new vector<Entity *>();
 }
 
 
@@ -493,3 +513,7 @@ void RenderSystem::destroyRenderSystem()
 	delete renderSystem;
 }
 
+vector<Entity *>* RenderSystem::getNewObjects()
+{
+	return _newObjects;
+}

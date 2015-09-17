@@ -42,6 +42,10 @@ void GameManager::runGameLoop()
 			--_deltaTime;
 		}
 
+		
+	
+
+
 		_renderSystem->render(_scene->getChildren());
 		
 	}
@@ -51,6 +55,11 @@ void GameManager::runGameLoop()
 GLfloat GameManager::getDeltaTime()
 {
 	return _deltaTime;
+}
+
+Scene* GameManager::getScene()
+{
+	return _scene;
 }
 
 

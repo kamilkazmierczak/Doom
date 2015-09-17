@@ -25,7 +25,11 @@ private:
 	CameraSystem *_cameraSystem;
 	//Camera *_currentCamera;
 
+	vector<Entity *> *_newObjects;
+
 	void update(vector<Entity *> *entityArray);
+	void checkForNewObjects(vector<Entity *> *entityArray);
+
 	bool _firstRender;
 
 	RenderSystem();
@@ -35,6 +39,8 @@ public:
 
 	//Camera *getCurrentCamera();   // po co mi to tutaj?
 	//void setCurrentCamera(Camera *newCamera); //to tez przecieza camera system wszystko ma
+
+	vector<Entity *> *getNewObjects();
 
 	void render(vector<Entity *> *entityArray);
 	static RenderSystem& getRenderSystem();

@@ -27,6 +27,18 @@ int main(int argc, char **argv)
 	gameManager->runGameLoop();
 	GameManager::destroyGameManager();
 
+
+
+	/*vector<int> wektor;
+
+	wektor.push_back(2);
+	wektor.clear();
+
+	for (vector<int>::iterator iterator = wektor.begin(); iterator != wektor.end(); iterator++)
+	{
+		cout << "jestem" << endl;
+	}*/
+
 	//GLfloat max;
 
 	//max = cmp::max(0.0f, 1.0f);
