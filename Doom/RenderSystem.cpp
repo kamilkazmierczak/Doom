@@ -205,7 +205,7 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 											catch (bad_cast& bc){ cerr << "bad_cast caught: " << bc.what() << endl; }
 
 											cout << enemyObj->getHealth() << endl;
-
+											cout << "koniec umierania" << endl;
 											if (enemyObj->getHealth() > 0.0f)
 											{
 												enemyObj->changeHealth(-100.0f);
@@ -221,6 +221,7 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 
 									}
 								}	
+								
 							}
 						}
 					}
@@ -237,6 +238,50 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 				catch (bad_cast& bc){ cerr << "bad_cast caught: " << bc.what() << endl;}
 
 				modelObj->loadRealVertices(model);	
+
+				//ARTIFICIAL INTELLIGENCE
+
+				if (entity->getType() == ENTITY_ENEMY)
+				{
+					_Ai->moveToCamera(entity, DalekSpeed);
+
+
+					////JAZDA W STRONE KAMERY
+					////rotation
+					//vec2 oldVelocity = vec2(entity->getVelocity().x,entity->getVelocity().z);
+					////#rotation
+					//vec2 cameraPosition = vec2(_cameraSystem->getCurrentCamera()->getPosition().x, _cameraSystem->getCurrentCamera()->getPosition().z);
+					//vec2 myPosition = vec2(entity->getPosition().x, entity->getPosition().z);
+					//vec2 direction = normalize(cameraPosition - myPosition);																
+					//GLfloat max = std::max(std::abs(direction.x), std::abs(direction.y)); //y to tak naprawde z
+
+					//if (max != 0)
+					//{
+					//	entity->setVelocity(makeVector3((direction.x / max) * DalekSpeed, 
+					//									0.0f, 
+					//									(direction.y / max) * DalekSpeed));
+					//}
+					//else
+					//{
+					//	//chyba teraz patrze na srodek
+					//	entity->setVelocity(makeVector3(DalekSpeed, 0.0f, DalekSpeed));
+					//}
+					////teraz obrot
+					//vec2 u = oldVelocity;
+					//vec2 v = vec2(entity->getVelocity().x, entity->getVelocity().z);
+					//GLfloat angle = -1 * 180 / pi<GLfloat>() * fmodf(atan2(u.x*v.y - v.x*u.y, u.x*v.x + u.y*v.y), 2 * pi<GLfloat>());
+					//entity->setRotation(makeVector3(0.0f, entity->getRotation().y + angle, 0.0f));
+
+
+					////ZACHOWANIE W PRZYPADKU UDZERZENIA W MAPE
+
+
+
+				}
+		
+				//#ARTIFICIAL INTELLIGENCE
+
+
 
 				//DETEKCJA KOLIZJI
 				if (_firstRender != true)
@@ -324,7 +369,7 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 									}
 								}
 							}
-							//cout << "koniec kolizji z modele" << endl;
+							cout << "koniec kolizji z modele" << endl;
 						}
 					}
 
@@ -353,8 +398,8 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 	_firstRender = false;
 	if (_firstRender != true)
 	{
+		update(entityArray); //usun obiekty
 		checkForNewObjects(entityArray);
-		//update(entityArray); //usun obiekty badz dodaj nowe
 	}
 
 	glfwPollEvents();
@@ -383,8 +428,6 @@ void RenderSystem::checkForNewObjects(vector<Entity *> *entityArray)
 
 void RenderSystem::update(vector<Entity *> *entityArray)
 {
-	bool tmp = false;
-
 	//DESTRUKCJE
 	for (vector<Entity *>::iterator iterator = entityArray->begin(); iterator != entityArray->end();/**/)
 	{
@@ -407,7 +450,6 @@ void RenderSystem::update(vector<Entity *> *entityArray)
 			{
 				cout << "ktos tu umarl" << endl;
 				destroy = true;
-				tmp = destroy;
 			}
 
 		}
@@ -421,57 +463,13 @@ void RenderSystem::update(vector<Entity *> *entityArray)
 			++iterator;
 		}
 
-	}
-
-
-
-
-	if (tmp)
-	{
-		//TWORZENIE
-
-		vec3 center = _cameraSystem->getCurrentCamera()->getCenter();
-		vec3 position = _cameraSystem->getCurrentCamera()->getPosition();	
-		IObject *sphere = new SphereObject(new Sphere(0.05f, 15, 15));
-		Entity *entity = new Entity(sphere, makeVector3(position.x, position.y, position.z), ENTITY_BULLET);
-
-		GLfloat bulletSpeed = 0.008f;
-		GLfloat max = std::max(std::abs(center.x), std::max(std::abs(center.y), std::abs(center.z)));
-
-
-		if (max != 0)
-		{
-			entity->setVelocity(makeVector3((center.x / max)*bulletSpeed, 
-											(center.y / max)*bulletSpeed, 
-											(center.z / max)*bulletSpeed));
-		}
-		else
-		{
-			cout << "patrzysz na srodek" << endl;
-			//chyba
-			entity->setVelocity(makeVector3(bulletSpeed, bulletSpeed, bulletSpeed));
-		}
-	
-		entityArray->push_back(entity);
-		_firstRender = true;
-
-	}
-
-	
-
-
-
-
-	
-
-
-		
+	}		
 }
 
 
 
 
-RenderSystem::RenderSystem() :_window(glfwGetCurrentContext()), _cameraSystem(&CameraSystem::getCameraSystem()), _firstRender(true)
+RenderSystem::RenderSystem() :_window(glfwGetCurrentContext()), _cameraSystem(&CameraSystem::getCameraSystem()),_Ai(&ArtificialIntelligence::getArtificialIntelligence()), _firstRender(true)
 {
 	_newObjects = new vector<Entity *>();
 }

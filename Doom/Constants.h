@@ -7,6 +7,8 @@ const vec3 CameraPosition = vec3(0.0f, 0.0f, 2.0f);
 const bool FpsCamera = false;
 const bool Show_Bounding_Boxes = true;
 const GLfloat BulletSpeed = 0.08f;
+const GLfloat BulletRadius = 0.05f;
+const GLfloat DalekSpeed = 0.019f;
 
 /*
 #error C1189: #error :  gl.h included before glew.h

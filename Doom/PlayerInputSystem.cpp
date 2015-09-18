@@ -111,6 +111,7 @@ void PlayerInputSystem::mouseButtonCallback(GLFWwindow* window, int button, int 
 	if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
 	{
 		cout << "nacisnieto LPM" << endl;
+		ResourceManager *resourceManager = &ResourceManager::getResourceManager();
 		RenderSystem *renderSystem = &RenderSystem::getRenderSystem();
 		CameraSystem *cameraSystem = &CameraSystem::getCameraSystem();
 		//dostep do wektorow
@@ -121,7 +122,8 @@ void PlayerInputSystem::mouseButtonCallback(GLFWwindow* window, int button, int 
 		//tworzenie naboju 
 		vec3 center = cameraSystem->getCurrentCamera()->getCenter();
 		vec3 position = cameraSystem->getCurrentCamera()->getPosition();
-		IObject *sphere = new SphereObject(new Sphere(0.05f, 15, 15));
+		IObject *sphere = new SphereObject(resourceManager->getBullet());
+	
 		Entity *entity = new Entity(sphere, makeVector3(position.x, position.y, position.z), ENTITY_BULLET);
 
 		//GLfloat bulletSpeed = 0.008f;

@@ -8,6 +8,7 @@
 #include "ResourceManager.h"
 #include "Entity.h"
 #include "CameraSystem.h"
+#include "ArtificialIntelligence.h"
 // GLM Mathematics
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -23,6 +24,9 @@ private:
 
 	GLFWwindow *_window;
 	CameraSystem *_cameraSystem;
+
+	//przenies to jak i cala detekcje kolizji do ModelObject
+	ArtificialIntelligence *_Ai;
 	//Camera *_currentCamera;
 
 	vector<Entity *> *_newObjects;

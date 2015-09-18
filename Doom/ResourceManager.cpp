@@ -7,6 +7,8 @@
 #include "BBVertices.h"
 #include "Entity.h"
 #include "Test.h"
+#include "Constants.h"
+
 #include <typeinfo>
 
 
@@ -21,8 +23,17 @@ vector<VertexBuffer *>* ResourceManager::getVertexBufferArray()
 }
 
 
+Sphere* ResourceManager::getBullet()
+{
+	return _bullet;
+}
+
 ResourceManager::ResourceManager()
 {
+
+	_bullet = new Sphere(BulletRadius, 15, 15);
+
+
 	//Shaders
 	_shaderArray = new vector<ShaderInterface *>();
 	ShaderInterface *shader = new ShaderInterface("ColorShader.vs", "ColorShader.frag");
@@ -37,7 +48,7 @@ ResourceManager::ResourceManager()
 	ShaderInterface *lampShader = new ShaderInterface("lamp.vs", "lamp.frag");
 	_shaderArray->push_back(lampShader);
 
-	shaderData = new ShaderData(makeVector4(0.0f, 0.0f, 1.0f, 1.0f), makeVector3(0.0f, 0.0f, 1.0f));
+	shaderData = new ShaderData(makeVector4(0.0f, 0.0f, 1.0f, 1.0f), makeVector3(0.0f, 2.0f, 1.0f));
 
 
 	//VertexBuffers
