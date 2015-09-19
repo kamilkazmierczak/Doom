@@ -104,6 +104,17 @@ Vector3 Entity::getPosition()
 	return _position;
 }
 
+Vector3 Entity::getMovementDirection()
+{
+	return _movementDirection;
+}
+
+void Entity::setMovementDirection(Vector3 newDirection)
+{
+	 _movementDirection = newDirection;
+}
+
+
 void Entity::setPosition(Vector3 newPosition)
 {
 	_position = newPosition;

@@ -10,7 +10,6 @@ private:
 	ShaderInterface *_shader; //na razie stala (tworzona w konstruktorze)
 	vector <ThreeVertices> *_myRealVertices;
 	GLfloat _health; //tego tu nie powinno byc - powinna byc klasa Enemy (ze wzgledu na czas na razie to tu zostanie)
-
 public:
 	void draw();
 	void configShader(mat4& model, mat4& view, mat4& projection);

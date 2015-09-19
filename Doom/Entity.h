@@ -21,6 +21,7 @@ private:
 	Vector3 _scale;
 	Vector3 _rotation;
 
+	Vector3 _movementDirection;
 
 	Vector3 _velocity;
 	Vector3 _scaleVelocity;
@@ -44,6 +45,9 @@ public:
 
 	IObject *getObject();
 	void setObject(IObject *newObject);
+
+	Vector3 getMovementDirection();
+	void setMovementDirection(Vector3 newDirection);
 
 	Vector3 getPosition();
 	void setPosition(Vector3 newPosition);

@@ -129,7 +129,7 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 		//IObject
 		if (entity->getObject() != NULL)
 		{
-
+			
 			model = translate(model, vec3(entity->getPosition().x, entity->getPosition().y, entity->getPosition().z));
 			model = rotate(model, radians(entity->getRotation().x), vec3(1.0f, 0.0f, 0.0f));
 			model = rotate(model, radians(entity->getRotation().y), vec3(0.0f, 1.0f, 0.0f));
@@ -138,8 +138,7 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 
 			entity->getObject()->configShader(model,view,projection); //uruchamia tez shader->Use()
 
-
-
+	
 
 
 			//SPHERE
@@ -195,6 +194,7 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 										if (otherEntity->getType() == ENTITY_MAP)
 										{
 											//cout << "udzerzyles w mape" << endl;
+											//cout << "end" << endl;
 										}
 
 										if (otherEntity->getType() == ENTITY_ENEMY)
@@ -244,34 +244,6 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 				if (entity->getType() == ENTITY_ENEMY)
 				{
 					_Ai->moveToCamera(entity, DalekSpeed);
-
-
-					////JAZDA W STRONE KAMERY
-					////rotation
-					//vec2 oldVelocity = vec2(entity->getVelocity().x,entity->getVelocity().z);
-					////#rotation
-					//vec2 cameraPosition = vec2(_cameraSystem->getCurrentCamera()->getPosition().x, _cameraSystem->getCurrentCamera()->getPosition().z);
-					//vec2 myPosition = vec2(entity->getPosition().x, entity->getPosition().z);
-					//vec2 direction = normalize(cameraPosition - myPosition);																
-					//GLfloat max = std::max(std::abs(direction.x), std::abs(direction.y)); //y to tak naprawde z
-
-					//if (max != 0)
-					//{
-					//	entity->setVelocity(makeVector3((direction.x / max) * DalekSpeed, 
-					//									0.0f, 
-					//									(direction.y / max) * DalekSpeed));
-					//}
-					//else
-					//{
-					//	//chyba teraz patrze na srodek
-					//	entity->setVelocity(makeVector3(DalekSpeed, 0.0f, DalekSpeed));
-					//}
-					////teraz obrot
-					//vec2 u = oldVelocity;
-					//vec2 v = vec2(entity->getVelocity().x, entity->getVelocity().z);
-					//GLfloat angle = -1 * 180 / pi<GLfloat>() * fmodf(atan2(u.x*v.y - v.x*u.y, u.x*v.x + u.y*v.y), 2 * pi<GLfloat>());
-					//entity->setRotation(makeVector3(0.0f, entity->getRotation().y + angle, 0.0f));
-
 
 					////ZACHOWANIE W PRZYPADKU UDZERZENIA W MAPE
 
@@ -358,7 +330,9 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 											//bool bCollided = IntersectedPolygon(*myReal,*realLine, 3);
 											if (bCollided)
 											{
-												cout << "kolizja modelu" << endl;
+												//cout << "kolizja modelu" << endl;
+												_Ai->moveWhenCollision(entity, DalekSpeed);
+
 
 
 											}
@@ -369,7 +343,7 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 									}
 								}
 							}
-							cout << "koniec kolizji z modele" << endl;
+							//cout << "koniec kolizji z modele" << endl;
 						}
 					}
 

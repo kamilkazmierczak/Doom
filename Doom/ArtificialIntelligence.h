@@ -13,6 +13,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <GLFW/glfw3.h>
 
+
 using namespace std;
 using namespace glm;
 
@@ -20,11 +21,15 @@ class ArtificialIntelligence
 {
 private:
 
+	GLfloat _collisionTime;
+	vec3 _returnSpeed; //tmp
+
 	ArtificialIntelligence();
 	~ArtificialIntelligence();
 public:
 
 	void moveToCamera(Entity* entity, GLfloat speed);
+	void moveWhenCollision(Entity *entity, GLfloat speed);
 
 	static ArtificialIntelligence& getArtificialIntelligence();
 	static void destroyArtificialIntelligence();

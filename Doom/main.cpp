@@ -31,6 +31,17 @@ int main(int argc, char **argv)
 	GameManager::destroyGameManager();
 
 
+	//glfwInit();
+	//GLfloat lastTime = glfwGetTime();
+	//while (true)
+	//{
+	//	if (lastTime + 5.0f < glfwGetTime())
+	//	{
+	//		cout << "minelo 5s" << endl;
+	//	}
+	//}
+
+
 	//vec2 u = vec2(0.0f, 1.0f);
 	//vec2 v = vec2(1.0f, 1.0f);
 	//GLfloat angle = -1 * 180 / pi<GLfloat>() * fmodf(atan2(u.x*v.y - v.x*u.y, u.x*v.x + u.y*v.y), 2 * pi<GLfloat>());
@@ -64,7 +75,7 @@ int main(int argc, char **argv)
 	//cout << signbit(num) << endl;
 
 
-	//getchar();
+	getchar();
 
 	return 0;
 }
