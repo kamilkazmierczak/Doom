@@ -26,7 +26,7 @@ private:
 	CameraSystem *_cameraSystem;
 
 	//przenies to jak i cala detekcje kolizji do ModelObject
-	ArtificialIntelligence *_Ai;
+	//ArtificialIntelligence *_Ai;
 	//Camera *_currentCamera;
 
 	vector<Entity *> *_newObjects;

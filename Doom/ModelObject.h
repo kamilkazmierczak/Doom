@@ -1,7 +1,7 @@
 #pragma once
 #include "IObject.h"
 #include "Model.h"
-
+#include "ArtificialIntelligence.h"
 
 class ModelObject : public IObject
 {
@@ -9,7 +9,11 @@ private:
 	Model *_model;
 	ShaderInterface *_shader; //na razie stala (tworzona w konstruktorze)
 	vector <ThreeVertices> *_myRealVertices;
+	//to powinno byc w klasie Enemy - jak bd czas taka zrob
 	GLfloat _health; //tego tu nie powinno byc - powinna byc klasa Enemy (ze wzgledu na czas na razie to tu zostanie)
+	ArtificialIntelligence *_Ai;
+
+
 public:
 	void draw();
 	void configShader(mat4& model, mat4& view, mat4& projection);
@@ -19,7 +23,7 @@ public:
 	//to samo co zmienna _health - tego tu byc nie powinno (potem to zmien i zrob nowa klase)
 	GLfloat getHealth();
 	void changeHealth(GLfloat change);
-
+	ArtificialIntelligence *getAi();
 
 
 	//tylko model

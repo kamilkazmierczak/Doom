@@ -9,11 +9,18 @@ ModelObject::ModelObject(Model *model) : _model(model), _health(100.0f)
 	_typeOfObject = OB_MODEL;
 	_shader = new ShaderInterface("model_loading.vs", "model_loading.frag");
 
-}
+	//tez do klasy Enemy
+	_Ai = new ArtificialIntelligence();
 
+}
 
 ModelObject::~ModelObject()
 {
+}
+
+ArtificialIntelligence* ModelObject::getAi()
+{
+	return _Ai;
 }
 
 

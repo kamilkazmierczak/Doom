@@ -22,18 +22,21 @@ class ArtificialIntelligence
 private:
 
 	GLfloat _collisionTime;
-	vec3 _returnSpeed; //tmp
+	Vector3 _returnSpeed;
+	bool _resetRotation;
+	
+	//GLfloat _angle;
+
+	void moveToCamera(Entity* entity, GLfloat speed);
+	void moveSomewhere(Entity* entity, GLfloat speed);
+
+public:
+
+	void move(Entity* entity, GLfloat speed);
+	void moveWhenCollision(Entity *entity, GLfloat speed);
 
 	ArtificialIntelligence();
 	~ArtificialIntelligence();
-public:
-
-	void moveToCamera(Entity* entity, GLfloat speed);
-	void moveWhenCollision(Entity *entity, GLfloat speed);
-
-	static ArtificialIntelligence& getArtificialIntelligence();
-	static void destroyArtificialIntelligence();
-
 
 };
 

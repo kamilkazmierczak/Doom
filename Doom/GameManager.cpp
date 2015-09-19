@@ -1,5 +1,6 @@
 #include "GameManager.h"
 #include "Constants.h"
+#include <time.h>
 // Window dimensions
 
 
@@ -72,7 +73,7 @@ GameManager& GameManager::getGameManager()
 		// Init GLFW
 		glfwInit();
 
-		
+		srand(time(NULL));
 		// Set all the required options for GLFW
 		
 		glfwWindowHint(GLFW_DEPTH_BITS, 24);

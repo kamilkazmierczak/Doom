@@ -243,7 +243,8 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 
 				if (entity->getType() == ENTITY_ENEMY)
 				{
-					_Ai->moveToCamera(entity, DalekSpeed);
+
+					modelObj->getAi()->move(entity, DalekSpeed);
 
 					////ZACHOWANIE W PRZYPADKU UDZERZENIA W MAPE
 
@@ -331,8 +332,7 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 											if (bCollided)
 											{
 												//cout << "kolizja modelu" << endl;
-												_Ai->moveWhenCollision(entity, DalekSpeed);
-
+												modelObj->getAi()->moveWhenCollision(entity, DalekSpeed);
 
 
 											}
@@ -443,7 +443,7 @@ void RenderSystem::update(vector<Entity *> *entityArray)
 
 
 
-RenderSystem::RenderSystem() :_window(glfwGetCurrentContext()), _cameraSystem(&CameraSystem::getCameraSystem()),_Ai(&ArtificialIntelligence::getArtificialIntelligence()), _firstRender(true)
+RenderSystem::RenderSystem() :_window(glfwGetCurrentContext()), _cameraSystem(&CameraSystem::getCameraSystem()), _firstRender(true)
 {
 	_newObjects = new vector<Entity *>();
 }

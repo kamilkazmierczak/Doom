@@ -9,6 +9,7 @@
 #include <glm/gtc/constants.hpp>
 #include <cmath>
 #include <math.h>
+#include <time.h>  
 using namespace std;
 using namespace glm;
 //void test(int& numer)
@@ -42,9 +43,42 @@ int main(int argc, char **argv)
 	//}
 
 
-	//vec2 u = vec2(0.0f, 1.0f);
+
+
+	//srand(time(NULL));
+	//
+	//while (true)
+	//{
+	//	cout << rand() % 90 + 1 << endl;
+	//	Sleep(100);
+	//}
+
+	//vec2 u = vec2(1.0f, 1.0f);
+	//GLfloat angle = 90.0f;
+	//vec2 v = -vec2(u.x * cos(glm::radians(angle)) - u.y * sin(glm::radians(angle)), u.x * sin(glm::radians(angle)) + u.y * cos(glm::radians(angle)));
+
+	//cout << "new vector" << endl;
+	//cout << to_string(v) << endl;
+
 	//vec2 v = vec2(1.0f, 1.0f);
 	//GLfloat angle = -1 * 180 / pi<GLfloat>() * fmodf(atan2(u.x*v.y - v.x*u.y, u.x*v.x + u.y*v.y), 2 * pi<GLfloat>());
+
+	//vec2 v;
+
+	//mat2 rotationM;
+	//rotationM = rotate(rotationM, radians(angle), vec2(1.0f, 0.0f));
+
+		//model = rotate(model, radians(angle), vec2(1.0f, 0.0f));
+	//model = translate(model, vec3(entity->getPosition().x, entity->getPosition().y, entity->getPosition().z));
+
+	//v.x = cos(angle);
+//	v.y = sin(angle);
+
+
+
+
+	
+	//cout << to_string(v) << endl;
 	//cout << "angle" << endl;
 	//cout << angle << endl;
 
@@ -75,7 +109,7 @@ int main(int argc, char **argv)
 	//cout << signbit(num) << endl;
 
 
-	getchar();
+	//getchar();
 
 	return 0;
 }

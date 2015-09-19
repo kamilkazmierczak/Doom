@@ -9,7 +9,7 @@ const bool Show_Bounding_Boxes = true;
 const GLfloat BulletSpeed = 0.08f;
 const GLfloat BulletRadius = 0.05f;
 const GLfloat DalekSpeed = 0.019f;
-const GLfloat TimeToEscape = 3.0f;
+const GLfloat TimeToEscape = 1.5f;
 
 /*
 #error C1189: #error :  gl.h included before glew.h
