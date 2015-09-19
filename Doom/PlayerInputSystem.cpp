@@ -146,10 +146,6 @@ void PlayerInputSystem::mouseButtonCallback(GLFWwindow* window, int button, int 
 
 	}
 
-
-
-
-
 }
 
 void PlayerInputSystem::mouseCallbackFun(GLFWwindow* window, double xpos, double ypos)

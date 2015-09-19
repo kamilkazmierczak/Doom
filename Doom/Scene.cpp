@@ -7,6 +7,7 @@
 #include "Sphere.h"
 #include "ModelObject.h"
 #include "Model.h"
+#include "EnemyIntelligence.h"
 
 using namespace glm;
 
@@ -86,7 +87,7 @@ Scene::Scene()
 	//_children->push_back(entity);
 
 	//model
-	IObject *model = new ModelObject(new Model("dalek/Dalek.obj"));
+	IObject *model = new ModelObject(new Model("dalek/Dalek.obj"), new EnemyIntelligence());
 	entity = new Entity(model, makeVector3(-5.0f, -1.0f, 0.0f), ENTITY_ENEMY);
 	//entity->setRotationVelocity(makeVector3(0.0f, 1.0f, 0.0f));
 	//entity->setVelocity(makeVector3(0.0f, 0.0f, 0.009f));

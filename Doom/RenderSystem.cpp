@@ -243,13 +243,7 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 
 				if (entity->getType() == ENTITY_ENEMY)
 				{
-
 					modelObj->getAi()->move(entity, DalekSpeed);
-
-					////ZACHOWANIE W PRZYPADKU UDZERZENIA W MAPE
-
-
-
 				}
 		
 				//#ARTIFICIAL INTELLIGENCE

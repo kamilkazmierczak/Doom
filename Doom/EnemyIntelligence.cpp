@@ -1,17 +1,17 @@
-#include "ArtificialIntelligence.h"
+#include "EnemyIntelligence.h"
 
 
-ArtificialIntelligence::ArtificialIntelligence() : _resetRotation(false)
+EnemyIntelligence::EnemyIntelligence() : _resetRotation(false)
 {
 }
 
 
-ArtificialIntelligence::~ArtificialIntelligence()
+EnemyIntelligence::~EnemyIntelligence()
 {
 }
 
 
-void ArtificialIntelligence::move(Entity* entity, GLfloat speed)
+void EnemyIntelligence::move(Entity* entity, GLfloat speed)
 {
 	if (_collisionTime + TimeToEscape < glfwGetTime())
 	{
@@ -32,7 +32,7 @@ void ArtificialIntelligence::move(Entity* entity, GLfloat speed)
 }
 
 
-void ArtificialIntelligence::shoot(Entity* entity)
+void EnemyIntelligence::shoot(Entity* entity)
 {
 	ResourceManager *resourceManager = &ResourceManager::getResourceManager();
 	RenderSystem *renderSystem = &RenderSystem::getRenderSystem();
@@ -74,7 +74,7 @@ void ArtificialIntelligence::shoot(Entity* entity)
 }
 
 
-void ArtificialIntelligence::moveSomewhere(Entity* entity, GLfloat speed)
+void EnemyIntelligence::moveSomewhere(Entity* entity, GLfloat speed)
 {
 	vec2 u = vec2(0.0f, 1.0f);
 	vec2 v = vec2(entity->getMovementDirection().x, entity->getMovementDirection().z);
@@ -85,7 +85,7 @@ void ArtificialIntelligence::moveSomewhere(Entity* entity, GLfloat speed)
 
 
 
-void ArtificialIntelligence::moveToCamera(Entity* entity, GLfloat speed)
+void EnemyIntelligence::moveToCamera(Entity* entity, GLfloat speed)
 {
 
 	CameraSystem *cameraSystem = &CameraSystem::getCameraSystem();
@@ -130,7 +130,7 @@ void ArtificialIntelligence::moveToCamera(Entity* entity, GLfloat speed)
 }
 
 
-void ArtificialIntelligence::moveWhenCollision(Entity *entity, GLfloat speed)
+void EnemyIntelligence::moveWhenCollision(Entity *entity, GLfloat speed)
 {
 	vec2 movementDir = - vec2(entity->getMovementDirection().x, entity->getMovementDirection().z);
 	vec2 oldVelocity = vec2(entity->getVelocity().x, entity->getVelocity().z);

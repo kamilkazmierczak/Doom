@@ -78,7 +78,10 @@
     <ClCompile Include="CollisionDetection.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ArtificialIntelligence.cpp">
+    <ClCompile Include="EnemyIntelligence.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="IArtificialIntelligence.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -182,7 +185,10 @@
     <ClInclude Include="CollisionDetection.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ArtificialIntelligence.h">
+    <ClInclude Include="EnemyIntelligence.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IArtificialIntelligence.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -77,11 +77,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ArtificialIntelligence.cpp" />
+    <ClCompile Include="EnemyIntelligence.cpp" />
     <ClCompile Include="CameraSystem.cpp" />
     <ClCompile Include="CollisionDetection.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="IArtificialIntelligence.cpp" />
     <ClCompile Include="IObject.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ModelObject.cpp" />
@@ -101,7 +102,7 @@
     <ClCompile Include="VertexBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ArtificialIntelligence.h" />
+    <ClInclude Include="EnemyIntelligence.h" />
     <ClInclude Include="BBVertices.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CameraSystem.h" />
@@ -111,6 +112,7 @@
     <ClInclude Include="Entity.h" />
     <ClInclude Include="FloorVertices.h" />
     <ClInclude Include="GameManager.h" />
+    <ClInclude Include="IArtificialIntelligence.h" />
     <ClInclude Include="IObject.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Model.h" />

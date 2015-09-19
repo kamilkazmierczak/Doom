@@ -1,16 +1,17 @@
 #include "ModelObject.h"
 #include "ResourceManager.h"
 #include "CameraSystem.h"
+#include "EnemyIntelligence.h"
 #include <glm/gtx/string_cast.hpp>
 
 
-ModelObject::ModelObject(Model *model) : _model(model), _health(100.0f)
+ModelObject::ModelObject(Model *model, IArtificialIntelligence *Ai) : _model(model), _health(100.0f)
 {
 	_typeOfObject = OB_MODEL;
 	_shader = new ShaderInterface("model_loading.vs", "model_loading.frag");
 
+	_Ai = Ai;
 	//tez do klasy Enemy
-	_Ai = new ArtificialIntelligence();
 
 }
 
@@ -18,7 +19,7 @@ ModelObject::~ModelObject()
 {
 }
 
-ArtificialIntelligence* ModelObject::getAi()
+IArtificialIntelligence* ModelObject::getAi()
 {
 	return _Ai;
 }
