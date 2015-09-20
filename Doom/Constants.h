@@ -5,10 +5,10 @@ const GLfloat UpdatesPerSecond = 60.0f;
 const vec3 CameraPosition = vec3(0.0f, 0.0f, 2.0f);
 //const GLfloat CameraSpeed = 2.0f;
 const bool FpsCamera = false;
-const bool Show_Bounding_Boxes = true;
+const bool Show_Bounding_Boxes = false;
 const GLfloat BulletSpeed = 0.08f;
 const GLfloat BulletRadius = 0.05f;
-const GLfloat DalekSpeed = 0.019f;
+const GLfloat DalekSpeed = 0.019f;  //0.019f
 const GLfloat TimeToEscape = 1.5f; //czas z jakim dalek ignoruje obecnosc kamery i za nia nie jedzie
 
 /*

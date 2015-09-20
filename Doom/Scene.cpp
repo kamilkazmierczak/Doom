@@ -23,15 +23,7 @@ Scene::Scene()
 	entity = new Entity(resourceManager->getVertexBufferArray()->at(3), makeVector3(NULL, NULL, NULL),ENTITY_MAP);
 	_children->push_back(entity);
 
-	//triangle //chyba
-	//entity = new Entity(resourceManager->getVertexBufferArray()->at(0), makeVector3(0.0f, 1.5f, -5.0f));
-	//entity->setVelocity(makeVector3(0.0f, 0.0f, 0.01f));
-	//entity->setRotation(makeVector3(0.0f, 0.0f, 0.0f));//to jest kat o jaki obrocic dla danej osi
-	//entity->setScale(makeVector3(1.0f, 1.0f, 1.0f));
-	//entity->setRotationVelocity(makeVector3(1.0f, 1.0f, 1.0f));
-	//_children->push_back(entity);
-
-	//triangle //chyba
+	//triangle //testowy
 	//entity = new Entity(resourceManager->getVertexBufferArray()->at(0), makeVector3(0.0f, 0.0f, 4.0f),ENTITY_TEST);
 	////entity->setScale(makeVector3(2.0f, 2.0f, 2.0f));
 	////entity->setRotationVelocity(makeVector3(0.0f, 1.0f, 1.0f));
@@ -39,30 +31,18 @@ Scene::Scene()
 	////entity->setRotation(makeVector3(0.0f, 0.0f, 180.0f));
 	//_children->push_back(entity);
 
-
-
-	////container1 //chyba
-	entity = new Entity(resourceManager->getVertexBufferArray()->at(1), makeVector3(0.0f, 0.0f, -5.0f),ENTITY_MAP);
-	entity->setRotation(makeVector3(0.0f, 0.0f, 0.0f));//to jest kat o jaki obrocic dla danej osi
-	entity->setScale(makeVector3(1.0f, 1.0f, 1.0f));
-	//entity->setVelocity(makeVector3(0.001f, 0.0f, 0.0f));
+	//container1 //chyba
+	entity = new Entity(resourceManager->getVertexBufferArray()->at(1), makeVector3(-8.7f, 0.6f, 1.5f), ENTITY_MAP);
+	entity->setRotation(makeVector3(0.0f, 0.0f, 90.0f));//to jest kat o jaki obrocic dla danej osi
+	entity->setScale(makeVector3(0.6f, 0.6f, 0.6f));
 	entity->setRotationVelocity(makeVector3(1.0f, 1.0f, 1.0f));
-
-	//niewiadomo dlaczego przy obrocie wzgledem z przy rejonach 180stopni lapie kolizje z modelem ktory jest
-	//oddalony od niego o jakies 1.0f;
-	//entity->setRotation(makeVector3(0.0f, 0.0f, 180.0f));
-	//entity->setRotationVelocity(makeVector3(0.0f, 0.0f, 1.0f));
-	//entity->setScaleVelocity(makeVector3(0.001f, 0.0f, 0.0f));
 	_children->push_back(entity);
 
-	//
-	////container2 //chyba
+	//container2 //chyba
 	entity = new Entity(resourceManager->getVertexBufferArray()->at(2), makeVector3(2.0f, -1.0f, 3.0f),ENTITY_MAP);
-	//entity->setRotation(makeVector3(10.0f, 0.0f, 0.0f));//to jest kat o jaki obrocic dla danej osi
 	entity->setScale(makeVector3(1.0f, 1.0f, 1.0f));
-	//entity->setRotationVelocity(makeVector3(1.0f, 1.0f, 1.0f));
 	_children->push_back(entity);
-	//
+	
 	//floor
 	entity = new Entity(resourceManager->getVertexBufferArray()->at(4), makeVector3(0.0f, -1.0f, 0.0f),ENTITY_MAP);
 	_children->push_back(entity);
@@ -71,12 +51,6 @@ Scene::Scene()
 	entity = new Entity(resourceManager->getVertexBufferArray()->at(5), resourceManager->getVertexBufferArray()->at(5)->getShaderData()->get_uLightPosition(),ENTITY_MAP);
 	entity->setScale(makeVector3(0.2f, 0.2f, 0.2f));
 	_children->push_back(entity);
-
-	//wall
-	entity = new Entity(resourceManager->getVertexBufferArray()->at(6), makeVector3(0.0f, -1.0f, 8.0f),ENTITY_MAP);
-	entity->setRotation(makeVector3(-90.0f, 0.0f, 0.0f));
-	_children->push_back(entity);
-
 
 	////NEW IObject (testing)
 	//sphere
@@ -87,19 +61,134 @@ Scene::Scene()
 	//_children->push_back(entity);
 
 	//model
-	IObject *model = new ModelObject(new Model("dalek/Dalek.obj"), new EnemyIntelligence());
-	entity = new Entity(model, makeVector3(-5.0f, -1.0f, 0.0f), ENTITY_ENEMY);
-	//entity->setRotationVelocity(makeVector3(0.0f, 1.0f, 0.0f));
-	//entity->setVelocity(makeVector3(0.0f, 0.0f, 0.009f));
+	IObject *model = new ModelObject(new Model("Models/dalek/Dalek.obj"), new EnemyIntelligence());
+	entity = new Entity(model, makeVector3(-5.0f, -1.5f, 0.0f), ENTITY_ENEMY);
 	vec2 u = vec2(0.0f, 1.0f); //wektor wskazujacy kierunek wzroku modelu
 	vec2 v = normalize(vec2(CameraPosition.x, CameraPosition.z) - vec2(entity->getPosition().x, entity->getPosition().z));
 	GLfloat angle = -1 * 180 / pi<GLfloat>() * fmodf(atan2(u.x*v.y - v.x*u.y, u.x*v.x + u.y*v.y), 2 * pi<GLfloat>());
 	entity->setRotation(makeVector3(0.0f, entity->getRotation().y + angle, 0.0f));
-
-
-
 	entity->setScale(makeVector3(0.007f, 0.007f, 0.007f));
 	_children->push_back(entity);
+
+
+	//model - tardis
+	model = new ModelObject(new Model("Models/tardis/TARDIS.obj"), NULL);
+	entity = new Entity(model, makeVector3(8.7f, -1.5f, 8.5f), ENTITY_MAP);
+	entity->setRotation(makeVector3(0.0f, -90.0f, 0.0f));
+	entity->setScale(makeVector3(0.5f, 0.5f, 0.5f));
+	_children->push_back(entity);
+
+	//model - gun
+	model = new ModelObject(new Model("Models/gun/freeze_gun.obj"), NULL);
+	entity = new Entity(model, makeVector3(8.7f, -0.3f, -1.2f), ENTITY_MAP);
+	entity->setScale(makeVector3(0.007f, 0.007f, 0.007f));
+	entity->setRotationVelocity(makeVector3(0.0f, -1.0f, 0.0f));
+	_children->push_back(entity);
+
+	//drewniana skrzynka
+	model = new ModelObject(new Model("Models/woodenbox/Wooden_Box.obj"), NULL);
+	entity = new Entity(model, makeVector3(8.7f, -1.5f, -1.5f), ENTITY_MAP);
+	entity->setRotation(makeVector3(0.0f, -90.0f, 0.0f));
+	entity->setScale(makeVector3(0.5f, 0.5f, 0.5f));
+	_children->push_back(entity);
+
+	//pudelko z nabojami
+	model = new ModelObject(new Model("Models/ammobox/box.obj"), NULL);
+	entity = new Entity(model, makeVector3(8.7f, -0.6f, -2.0f), ENTITY_MAP);
+	entity->setRotation(makeVector3(0.0f, -45.0f, 0.0f));
+	entity->setScale(makeVector3(0.007f, 0.007f, 0.007f));
+	_children->push_back(entity);
+	
+	//kartony
+	model = new ModelObject(new Model("Models/boxes/untitled.obj"), NULL);
+	entity = new Entity(model, makeVector3(-8.7f, -1.5f, +10.5f), ENTITY_MAP);
+	entity->setRotation(makeVector3(0.0f, -180.0f, 0.0f));
+	entity->setScale(makeVector3(0.5f, 0.5f, 0.5f));
+	_children->push_back(entity);
+
+	//miecz
+	model = new ModelObject(new Model("Models/sword/Sword.obj"), NULL);
+	entity = new Entity(model, makeVector3(9.45f, -0.6f, -0.1f), ENTITY_MAP);
+	entity->setRotation(makeVector3(0.0f, 0.0f, 70.0f));
+	entity->setScale(makeVector3(0.07f, 0.07f, 0.07f));
+	_children->push_back(entity);
+
+	//samolot (wczytuje sie 1,5min)
+	model = new ModelObject(new Model("Models/starcruiser/Starcruiser military.obj"), NULL);
+	entity = new Entity(model, makeVector3(-10.0f, 4.0f, 0.0f), ENTITY_MAP);
+	entity->setRotation(makeVector3(0.0f, 135.0f, 17.0f));
+	entity->setScale(makeVector3(0.02f, 0.02f, 0.02f));
+	entity->setVelocity(makeVector3(0.003f,0.0f,-0.003f));
+	_children->push_back(entity);
+
+	//beczka
+	model = new ModelObject(new Model("Models/b1/barrel.obj"), NULL);
+	entity = new Entity(model, makeVector3(-8.7f, -1.5f, 1.5f), ENTITY_MAP);
+	entity->setScale(makeVector3(0.6f, 0.6f, 0.6f));
+	_children->push_back(entity);
+
+	//lampa  z wielkim Bounding box
+	//IObject *model = new ModelObject(new Model("Models/lampbb/Light Pole.obj"), NULL);
+	//entity = new Entity(model, makeVector3(0.0f, 0.0f, 0.0f), ENTITY_MAP);
+	//entity->setScale(makeVector3(0.3f, 0.3f, 0.3f));
+	//_children->push_back(entity);
+
+	//lampa 
+	//IObject *model = new ModelObject(new Model("Models/lamp/little_brown_lamp.obj"), NULL);
+	//entity = new Entity(model, makeVector3(0.0f, 0.0f, 0.0f), ENTITY_MAP);
+	//entity->setScale(makeVector3(0.007f, 0.007f, 0.007f));
+	//_children->push_back(entity);
+
+	//r2d2
+	model = new ModelObject(new Model("Models/r2d2/untitled.obj"), NULL);
+	entity = new Entity(model, makeVector3(0.0f, -1.5f, +13.8f), ENTITY_MAP);
+	entity->setScale(makeVector3(0.7f, 0.7f, 0.7f));
+	entity->setRotationVelocity(makeVector3(0.0f, 1.0f, 0.0f));
+	_children->push_back(entity);
+	
+
+	//WALLS
+	////front wall
+	entity = new Entity(resourceManager->getVertexBufferArray()->at(7), makeVector3(0.0f, 0.0f, -9.75f), ENTITY_MAP);
+	_children->push_back(entity);
+	////back wall
+	entity = new Entity(resourceManager->getVertexBufferArray()->at(13), makeVector3(0.0f, 0.0f, +15.25f), ENTITY_MAP);
+	entity->setRotation(makeVector3(0.0f, 180.0f, 0.0f));
+	_children->push_back(entity);
+
+	//side walls (right)
+	entity = new Entity(resourceManager->getVertexBufferArray()->at(14), makeVector3(10.0f, 0.0f, 0.0f), ENTITY_MAP);
+	entity->setRotation(makeVector3(0.0f, -90.0f, 0.0f));
+	_children->push_back(entity);
+	//side walls (left)
+	entity = new Entity(resourceManager->getVertexBufferArray()->at(8), makeVector3(-10.0f, 0.0f, 5.0f), ENTITY_MAP);
+	entity->setRotation(makeVector3(0.0f, 90.0f, 0.0f));
+	_children->push_back(entity);
+
+	////blocker prawej sciany
+	entity = new Entity(resourceManager->getVertexBufferArray()->at(9), makeVector3(10.0f, -0.5f, 2.5f),ENTITY_MAP);
+	entity->setRotation(makeVector3(0.0f, -90.0f, 0.0f));
+	entity->setScale(makeVector3(25.0f, 0.1f, 0.1f));
+	_children->push_back(entity);
+	////blocker lewej sciany
+	entity = new Entity(resourceManager->getVertexBufferArray()->at(10), makeVector3(-10.0f, -0.5f, 2.5f), ENTITY_MAP);
+	entity->setRotation(makeVector3(0.0f, -90.0f, 0.0f));
+	entity->setScale(makeVector3(25.0f, 0.1f, 0.1f));
+	_children->push_back(entity);
+	////blocker front wall
+	entity = new Entity(resourceManager->getVertexBufferArray()->at(11), makeVector3(0.0f, -0.5f, -9.75f), ENTITY_MAP);
+	entity->setRotation(makeVector3(0.0f, 0.0f, 0.0f));
+	entity->setScale(makeVector3(20.0f, 0.1f, 0.1f));
+	_children->push_back(entity);
+	////blocker back wall
+	entity = new Entity(resourceManager->getVertexBufferArray()->at(12), makeVector3(0.0f, -0.5f, 15.25f), ENTITY_MAP);
+	entity->setRotation(makeVector3(0.0f, 0.0f, 0.0f));
+	entity->setScale(makeVector3(20.0f, 0.1f, 0.1f));
+	_children->push_back(entity);
+	//WALLS END
+
+
+
 
 	//Camera *camera = new Camera(vec3(0.0f, 0.0f, 3.0f));
 	Camera *camera = new Camera(CameraPosition);
@@ -109,22 +198,6 @@ Scene::Scene()
 	CameraSystem *cameraSystem = &CameraSystem::getCameraSystem();
 	cameraSystem->setCurrentCamera(camera);
 	
-
-
-	/*
-	Entity *camera = new Entity(NULL, makeVector3(1.0f, 1.0f, 2.0f));
-	camera->setEyeVector(normalizeVector3(makeVector3(-1.0f, -1.0f, -1.0f)));
-	camera->setUpVector(normalizeVector3(makeVector3(0.0f, 1.0f, 0.0f)));
-
-
-	PlayerInputSystem *playerInputSystem = &PlayerInputSystem::getPlayerInputSystem();
-	playerInputSystem->setCurrentPlayer(camera);
-
-	_children->push_back(camera);
-
-	CameraSystem *cameraSystem = &CameraSystem::getCameraSystem();
-	cameraSystem->setCurrentCamera(camera);
-	*/ //tu sie zrobil problem
 }
 
 

@@ -87,6 +87,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ModelObject.cpp" />
     <ClCompile Include="MovementSystem.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerInputSystem.cpp" />
     <ClCompile Include="RenderSystem.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
@@ -118,6 +119,7 @@
     <ClInclude Include="Model.h" />
     <ClInclude Include="ModelObject.h" />
     <ClInclude Include="MovementSystem.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerInputSystem.h" />
     <ClInclude Include="RenderSystem.h" />
     <ClInclude Include="ResourceManager.h" />
@@ -137,6 +139,7 @@
     <ClInclude Include="VertexBuffer.h" />
     <ClInclude Include="VertexData.h" />
     <ClInclude Include="WallVertices.h" />
+    <ClInclude Include="WallVertices2.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Doom.rc" />

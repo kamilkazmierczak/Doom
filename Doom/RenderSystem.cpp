@@ -250,103 +250,106 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 
 
 
-				//DETEKCJA KOLIZJI
-				if (_firstRender != true)
+				if (entity->getType() != ENTITY_MAP)
 				{
-					//detekcja
-
-					//Sprawdz wszystkie inne Entity
-					for (vector<Entity *>::iterator iterator = entityArray->begin(); iterator != entityArray->end(); iterator++)
+					//DETEKCJA KOLIZJI
+					if (_firstRender != true)
 					{
-						if (distance != std::distance(entityArray->begin(), iterator))
-						{//Operacje na wszystkich innych Entity
-							Entity *otherEntity = *iterator;
-							otherEntity->loadRealVertices();
+						//detekcja
 
-							if (otherEntity->getType() == ENTITY_BULLET)
-								continue;
+						//Sprawdz wszystkie inne Entity
+						for (vector<Entity *>::iterator iterator = entityArray->begin(); iterator != entityArray->end(); iterator++)
+						{
+							if (distance != std::distance(entityArray->begin(), iterator))
+							{//Operacje na wszystkich innych Entity
+								Entity *otherEntity = *iterator;
+								otherEntity->loadRealVertices();
 
-							if (otherEntity->getVertexBuffer() != NULL &&
-								otherEntity->getVertexBuffer()->getTextureLoader() != NULL &&
-								otherEntity->getVertexBuffer()->getTextureLoader()->getTextureType() == TX_SKYBOX)
-								continue;
+								if (otherEntity->getType() == ENTITY_BULLET)
+									continue;
 
-							if (otherEntity->getRealVertices() == nullptr)
-								cout << "Cos jest nie tak #2" << endl;
+								if (otherEntity->getVertexBuffer() != NULL &&
+									otherEntity->getVertexBuffer()->getTextureLoader() != NULL &&
+									otherEntity->getVertexBuffer()->getTextureLoader()->getTextureType() == TX_SKYBOX)
+									continue;
 
-							realCurrentVertices = otherEntity->getRealVertices();
+								if (otherEntity->getRealVertices() == nullptr)
+									cout << "Cos jest nie tak #2" << endl;
 
-											//po wszystkich moich trojkatach
-							for (int l = 0; l < entity->getRealVertices()->size(); l++)
-							{
-								vec3 *myReal[3];
-								myReal[0] = &entity->getRealVertices()->at(l).a;
-								myReal[1] = &entity->getRealVertices()->at(l).b;
-								myReal[2] = &entity->getRealVertices()->at(l).c;
+								realCurrentVertices = otherEntity->getRealVertices();
 
-								//zabawa z reszta swiata
-								for (vector<ThreeVertices>::iterator iterator = realCurrentVertices->begin(); iterator != realCurrentVertices->end(); iterator++)
+								//po wszystkich moich trojkatach
+								for (int l = 0; l < entity->getRealVertices()->size(); l++)
 								{
-									//przelec po wszystkich trojkatach danego obiektu
-									vec3 *real[3];
-									for (int k = 0; k < realCurrentVertices->size(); k++)
+									vec3 *myReal[3];
+									myReal[0] = &entity->getRealVertices()->at(l).a;
+									myReal[1] = &entity->getRealVertices()->at(l).b;
+									myReal[2] = &entity->getRealVertices()->at(l).c;
+
+									//zabawa z reszta swiata
+									for (vector<ThreeVertices>::iterator iterator = realCurrentVertices->begin(); iterator != realCurrentVertices->end(); iterator++)
 									{
-										real[0] = &realCurrentVertices->at(k).a;
-										real[1] = &realCurrentVertices->at(k).b;
-										real[2] = &realCurrentVertices->at(k).c;
-
-										//ze wzgledu na ulomnosc funkcji IntersectedPolygon
-										//trzeba jej przekazac wspolrzedne lini
-										//wiec dla trojkata beda to 3 linie
-										vec3 *realLine[2];
-										for (int t = 0; t < 3; t++)
+										//przelec po wszystkich trojkatach danego obiektu
+										vec3 *real[3];
+										for (int k = 0; k < realCurrentVertices->size(); k++)
 										{
-											realLine[0] = real[(t + 1) % 3];
-											realLine[1] = real[(t + 2) % 3];
+											real[0] = &realCurrentVertices->at(k).a;
+											real[1] = &realCurrentVertices->at(k).b;
+											real[2] = &realCurrentVertices->at(k).c;
 
-
-											vec3 _myReal[3];
-											vec3 _realLine[2];
-
-											_myReal[0] = *myReal[0];
-											_myReal[1] = *myReal[1];
-											_myReal[2] = *myReal[2];
-
-											_realLine[0] = *realLine[0];
-											_realLine[1] = *realLine[1];
-
-
-											//tu sie dzieje cos dziwnego, ale mozesz przekazac
-											///myReal bez kopiowanie bez sensu, ale NIE MOZESZ
-											//przekazac *realLine bo jakies cuda sie dzieja
-											//i wykrywa kolizje gdy jej nie ma
-
-											bool bCollided = IntersectedPolygon(_myReal, _realLine, 3);
-											//bool bCollided = IntersectedPolygon(*myReal,*realLine, 3);
-											if (bCollided)
+											//ze wzgledu na ulomnosc funkcji IntersectedPolygon
+											//trzeba jej przekazac wspolrzedne lini
+											//wiec dla trojkata beda to 3 linie
+											vec3 *realLine[2];
+											for (int t = 0; t < 3; t++)
 											{
-												//cout << "kolizja modelu" << endl;
-												modelObj->getAi()->moveWhenCollision(entity, DalekSpeed);
+												realLine[0] = real[(t + 1) % 3];
+												realLine[1] = real[(t + 2) % 3];
+
+
+												vec3 _myReal[3];
+												vec3 _realLine[2];
+
+												_myReal[0] = *myReal[0];
+												_myReal[1] = *myReal[1];
+												_myReal[2] = *myReal[2];
+
+												_realLine[0] = *realLine[0];
+												_realLine[1] = *realLine[1];
+
+
+												//tu sie dzieje cos dziwnego, ale mozesz przekazac
+												///myReal bez kopiowanie bez sensu, ale NIE MOZESZ
+												//przekazac *realLine bo jakies cuda sie dzieja
+												//i wykrywa kolizje gdy jej nie ma
+
+												bool bCollided = IntersectedPolygon(_myReal, _realLine, 3);
+												//bool bCollided = IntersectedPolygon(*myReal,*realLine, 3);
+												if (bCollided)
+												{
+													//cout << "kolizja modelu" << endl;
+
+													//cout << "moje" << endl;
+
+													if (entity->getType() == ENTITY_ENEMY)
+													{
+														modelObj->getAi()->moveWhenCollision(entity, DalekSpeed);
+													}
+
+												}
+
+
 
 
 											}
-											
-	
-
 										}
 									}
 								}
+								//cout << "koniec kolizji z modele" << endl;
 							}
-							//cout << "koniec kolizji z modele" << endl;
 						}
-					}
-
-
-
-
-
+					}//Koniec detekcji
 				}
-
 
 
 			}
@@ -366,8 +369,8 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 	_firstRender = false;
 	if (_firstRender != true)
 	{
-		update(entityArray); //usun obiekty
-		checkForNewObjects(entityArray);
+		//update(entityArray); //usun obiekty
+		//checkForNewObjects(entityArray);
 	}
 
 	glfwPollEvents();

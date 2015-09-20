@@ -1,0 +1,74 @@
+# Max2Mtl Version 4.0 Mar 10th, 2001
+# 
+newmtl WoodenBox1
+Ns 0.000000
+Ka 0.000000 0.000000 0.000000
+Kd 0.480000 0.480000 0.480000
+Ks 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 1
+map_Kd WoodenBoxD1.png
+map_Bump WoodenBoxN1.png
+
+
+newmtl WoodenBox2
+Ns 0.000000
+Ka 0.000000 0.000000 0.000000
+Kd 0.480000 0.480000 0.480000
+Ks 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 1
+map_Kd WoodenBoxD2.png
+map_Bump WoodenBoxN2.png
+
+
+newmtl WoodenBox3
+Ns 0.000000
+Ka 0.000000 0.000000 0.000000
+Kd 0.480000 0.480000 0.480000
+Ks 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 1
+map_Kd WoodenBoxD3.png
+map_Bump WoodenBoxN3.png
+
+
+newmtl WoodenBox4
+Ns 0.000000
+Ka 0.000000 0.000000 0.000000
+Kd 0.480000 0.480000 0.480000
+Ks 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 1
+map_Kd WoodenBoxD4.png
+map_Bump WoodenBoxN4.png
+
+
+newmtl WoodenBox5
+Ns 0.000000
+Ka 0.000000 0.000000 0.000000
+Kd 0.480000 0.480000 0.480000
+Ks 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 1
+map_Kd WoodenBoxD5.png
+map_Bump WoodenBoxN5.png
+
+
+newmtl WoodenBox6
+Ns 0.000000
+Ka 0.000000 0.000000 0.000000
+Kd 0.480000 0.480000 0.480000
+Ks 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 1
+map_Kd WoodenBoxD6.png
+map_Bump WoodenBoxN6.png
+
+

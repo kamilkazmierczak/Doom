@@ -4,6 +4,7 @@
 #include "SkyboxVertices.h"
 #include "FloorVertices.h"
 #include "WallVertices.h"
+#include "WallVertices2.h"
 #include "BBVertices.h"
 #include "Entity.h"
 #include "Test.h"
@@ -124,7 +125,7 @@ ResourceManager::ResourceManager()
 	_vertexBufferArray->push_back(skyBox);
 
 		//floor
-		    textureLoader = new TextureLoader("floor.png",TX_TEXTURE);
+		    textureLoader = new TextureLoader("Textures/floor_tiles.jpg",TX_TEXTURE);
 			VertexBuffer *floor = new VertexBuffer(floorVertices,
 												  sizeof(floorVertices), 
 												  GL_TRIANGLES, 
@@ -153,7 +154,7 @@ ResourceManager::ResourceManager()
 	_vertexBufferArray->push_back(lamp);
 
 			//wall
-	textureLoader = new TextureLoader("wall.jpg", TX_TEXTURE);
+	textureLoader = new TextureLoader("Textures/wall.jpg", TX_TEXTURE);
 	VertexBuffer *wall = new VertexBuffer(wallVertices, 
 												  sizeof(wallVertices), 
 												  GL_TRIANGLES, 
@@ -166,6 +167,131 @@ ResourceManager::ResourceManager()
 												  (GLvoid *)(offsetof(VertexDataPNT, textureCoordinates)),
 												  textureLoader);
 	_vertexBufferArray->push_back(wall);
+
+
+				//wallfront
+	textureLoader = new TextureLoader("Textures/wall.jpg", TX_TEXTURE);
+	VertexBuffer *wall2 = new VertexBuffer(wallVerticesfront, 
+												  sizeof(wallVerticesfront), 
+												  GL_TRIANGLES, 
+												  36, 
+												  sizeof(VertexDataPNT) , 
+												  _shaderArray->at(1),
+												  shaderData,
+												  (GLvoid *)(offsetof(VertexDataPNT, positionCoordinates)),
+												  (GLvoid *)(offsetof(VertexDataPNT, normalCoordinates)),
+												  (GLvoid *)(offsetof(VertexDataPNT, textureCoordinates)),
+												  textureLoader);
+	_vertexBufferArray->push_back(wall2);
+
+					//wall left
+	textureLoader = new TextureLoader("Textures/wall4.jpg", TX_TEXTURE);
+	VertexBuffer *wall3 = new VertexBuffer(wallVerticesSide, 
+												  sizeof(wallVerticesSide), 
+												  GL_TRIANGLES, 
+												  36, 
+												  sizeof(VertexDataPNT) , 
+												  _shaderArray->at(1),
+												  shaderData,
+												  (GLvoid *)(offsetof(VertexDataPNT, positionCoordinates)),
+												  (GLvoid *)(offsetof(VertexDataPNT, normalCoordinates)),
+												  (GLvoid *)(offsetof(VertexDataPNT, textureCoordinates)),
+												  textureLoader);
+	_vertexBufferArray->push_back(wall3);
+
+
+		  //right blocker 
+	    textureLoader = new TextureLoader("container2.jpg",TX_TEXTURE);
+		VertexBuffer *rightBlocker = new VertexBuffer(cubeVertices, 
+												  sizeof(cubeVertices), 
+												  GL_TRIANGLES, 
+												  36, 
+												  sizeof(VertexDataPNT) , 
+												  _shaderArray->at(1),
+												  shaderData,
+												  (GLvoid *)(offsetof(VertexDataPNT, positionCoordinates)),
+												  (GLvoid *)(offsetof(VertexDataPNT, normalCoordinates)),
+												  (GLvoid *)(offsetof(VertexDataPNT, textureCoordinates)),
+												  textureLoader);
+		_vertexBufferArray->push_back(rightBlocker);
+
+			//left blocker
+	    textureLoader = new TextureLoader("container2.jpg",TX_TEXTURE);
+		VertexBuffer *leftBlocker = new VertexBuffer(cubeVertices, 
+												  sizeof(cubeVertices), 
+												  GL_TRIANGLES, 
+												  36, 
+												  sizeof(VertexDataPNT) , 
+												  _shaderArray->at(1),
+												  shaderData,
+												  (GLvoid *)(offsetof(VertexDataPNT, positionCoordinates)),
+												  (GLvoid *)(offsetof(VertexDataPNT, normalCoordinates)),
+												  (GLvoid *)(offsetof(VertexDataPNT, textureCoordinates)),
+												  textureLoader);
+		_vertexBufferArray->push_back(leftBlocker);
+
+			//front blocker
+	    textureLoader = new TextureLoader("container2.jpg",TX_TEXTURE);
+		VertexBuffer *frontBlocker = new VertexBuffer(cubeVertices, 
+												  sizeof(cubeVertices), 
+												  GL_TRIANGLES, 
+												  36, 
+												  sizeof(VertexDataPNT) , 
+												  _shaderArray->at(1),
+												  shaderData,
+												  (GLvoid *)(offsetof(VertexDataPNT, positionCoordinates)),
+												  (GLvoid *)(offsetof(VertexDataPNT, normalCoordinates)),
+												  (GLvoid *)(offsetof(VertexDataPNT, textureCoordinates)),
+												  textureLoader);
+		_vertexBufferArray->push_back(frontBlocker);
+
+			//back blocker
+	    textureLoader = new TextureLoader("container2.jpg",TX_TEXTURE);
+		VertexBuffer *backBlocker = new VertexBuffer(cubeVertices, 
+												  sizeof(cubeVertices), 
+												  GL_TRIANGLES, 
+												  36, 
+												  sizeof(VertexDataPNT) , 
+												  _shaderArray->at(1),
+												  shaderData,
+												  (GLvoid *)(offsetof(VertexDataPNT, positionCoordinates)),
+												  (GLvoid *)(offsetof(VertexDataPNT, normalCoordinates)),
+												  (GLvoid *)(offsetof(VertexDataPNT, textureCoordinates)),
+												  textureLoader);
+		_vertexBufferArray->push_back(backBlocker);
+
+
+
+			textureLoader = new TextureLoader("Textures/wall.jpg", TX_TEXTURE);
+	VertexBuffer *wallback = new VertexBuffer(wallVerticesfront, 
+												  sizeof(wallVerticesfront), 
+												  GL_TRIANGLES, 
+												  36, 
+												  sizeof(VertexDataPNT) , 
+												  _shaderArray->at(1),
+												  shaderData,
+												  (GLvoid *)(offsetof(VertexDataPNT, positionCoordinates)),
+												  (GLvoid *)(offsetof(VertexDataPNT, normalCoordinates)),
+												  (GLvoid *)(offsetof(VertexDataPNT, textureCoordinates)),
+												  textureLoader);
+	_vertexBufferArray->push_back(wallback);
+
+						//wall right
+	textureLoader = new TextureLoader("Textures/wall4.jpg", TX_TEXTURE);
+	VertexBuffer *wallright = new VertexBuffer(wallVerticesSide, 
+												  sizeof(wallVerticesSide), 
+												  GL_TRIANGLES, 
+												  36, 
+												  sizeof(VertexDataPNT) , 
+												  _shaderArray->at(1),
+												  shaderData,
+												  (GLvoid *)(offsetof(VertexDataPNT, positionCoordinates)),
+												  (GLvoid *)(offsetof(VertexDataPNT, normalCoordinates)),
+												  (GLvoid *)(offsetof(VertexDataPNT, textureCoordinates)),
+												  textureLoader);
+	_vertexBufferArray->push_back(wallright);
+
+
 }
 
 

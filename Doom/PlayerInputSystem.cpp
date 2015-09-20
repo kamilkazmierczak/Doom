@@ -110,7 +110,7 @@ void PlayerInputSystem::mouseButtonCallback(GLFWwindow* window, int button, int 
 {
 	if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
 	{
-		cout << "nacisnieto LPM" << endl;
+		//cout << "nacisnieto LPM" << endl;
 		ResourceManager *resourceManager = &ResourceManager::getResourceManager();
 		RenderSystem *renderSystem = &RenderSystem::getRenderSystem();
 		CameraSystem *cameraSystem = &CameraSystem::getCameraSystem();
