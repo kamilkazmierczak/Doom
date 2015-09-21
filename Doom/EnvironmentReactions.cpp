@@ -26,9 +26,10 @@ void EnvironmentReactions::createWave()
 
 	if (_deadDalekNumber >= NumberOfDaleks - 1)
 	{
-		cout << "wygrales" << endl;
+		if (_deadDalekNumber >= NumberOfDaleks)
+			cout << "wygrales" << endl;
 	}
-	else
+	else //sprawdz czy jest koniecznosc i wygeneruj dalka
 	{
 		if (_deadDalekNumber != nrOfDeadDaleks)
 		{
@@ -44,9 +45,7 @@ void EnvironmentReactions::createWave()
 				dalekPostion = vec3(5.0f, -1.5f, -8.5f);
 			}
 
-
 			//tworzenie dalka
-
 			ResourceManager *resourceManager = &ResourceManager::getResourceManager();
 			RenderSystem *renderSystem = &RenderSystem::getRenderSystem();
 			CameraSystem *cameraSystem = &CameraSystem::getCameraSystem();

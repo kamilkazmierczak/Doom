@@ -55,7 +55,8 @@ void ModelObject::configShader(mat4& model, mat4& view, mat4& projection)
 	//vec3 lamp1Position = vec3(lamp1Position_.x, lamp1Position_.y, lamp1Position_.z);
 
 	//TEMPORARY
-	Vector3 lamp2Position = lamp1Position;
+	//Vector3 lamp2Position = lamp1Position;
+	Vector3 lamp2Position = resourceManager->getVertexBufferArray()->at(5)->getShaderData()->get_uLightPosition2();
 
 	//cout << glm::to_string(lamp1Position) << endl;
 
@@ -64,9 +65,24 @@ void ModelObject::configShader(mat4& model, mat4& view, mat4& projection)
 	
 	// Point light 1
 	glUniform3f(_shader->getUniformLocation("pointLights[0].position"), lamp1Position.x, lamp1Position.y, lamp1Position.z);
-	glUniform3f(_shader->getUniformLocation("pointLights[0].ambient"), 0.05f, 0.05f, 0.05f);
-	glUniform3f(_shader->getUniformLocation("pointLights[0].diffuse"), 1.0f, 1.0f, 1.0f);
-	glUniform3f(_shader->getUniformLocation("pointLights[0].specular"), 1.0f, 1.0f, 1.0f);
+
+	//glUniform3f(_shader->getUniformLocation("pointLights[0].ambient"), 0.05f, 0.05f, 0.05f);
+	//glUniform3f(_shader->getUniformLocation("pointLights[0].diffuse"), 1.0f, 1.0f, 1.0f);
+	//glUniform3f(_shader->getUniformLocation("pointLights[0].specular"), 1.0f, 1.0f, 1.0f);
+	glUniform3f(_shader->getUniformLocation("pointLights[0].ambient"), 
+		0.2f, 
+		0.2f, 
+		0.2f);
+	glUniform3f(_shader->getUniformLocation("pointLights[0].diffuse"), 
+		0.5f, 
+		0.5f, 
+		0.5f);
+	glUniform3f(_shader->getUniformLocation("pointLights[0].specular"), 
+		0.5f, 
+		0.5f, 
+		0.5f);
+
+
 	glUniform1f(_shader->getUniformLocation("pointLights[0].constant"), 1.0f);
 	glUniform1f(_shader->getUniformLocation("pointLights[0].linear"), 0.009);
 	glUniform1f(_shader->getUniformLocation("pointLights[0].quadratic"), 0.0032);
@@ -79,6 +95,7 @@ void ModelObject::configShader(mat4& model, mat4& view, mat4& projection)
 	glUniform1f(_shader->getUniformLocation("pointLights[1].linear"), 0.009);
 	glUniform1f(_shader->getUniformLocation("pointLights[1].quadratic"), 0.0032);
 
+
 	//przekazanie do shadera
 	GLint modelLoc = _shader->getUniformLocation("model");
 	GLint viewLoc = _shader->getUniformLocation("view");
@@ -87,6 +104,15 @@ void ModelObject::configShader(mat4& model, mat4& view, mat4& projection)
 	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, value_ptr(_gameModel));
 	glUniformMatrix4fv(viewLoc, 1, GL_FALSE, value_ptr(_gameView));
 	glUniformMatrix4fv(projLoc, 1, GL_FALSE, value_ptr(_gameProjection));
+
+
+
+	//SPECULAR
+
+
+
+
+
 
 }
 

@@ -61,8 +61,33 @@ ResourceManager::ResourceManager()
 
 	ShaderInterface *lampShader = new ShaderInterface("lamp.vs", "lamp.frag");
 	_shaderArray->push_back(lampShader);
+												
+	Light light;
+	light.ambient = vec3(0.2f, 0.2f, 0.2f);
+	light.diffuse = vec3(0.5f, 0.5f, 0.5f);
+	light.specular = vec3(0.5f, 0.5f, 0.5f);
+	//light.ambient = vec3(0.05f, 0.05f, 0.05f);
+	//light.diffuse = vec3(1.0f, 1.0f, 1.0f);
+	//light.specular = vec3(1.0f, 1.0f, 1.0f);
 
-	shaderData = new ShaderData(makeVector4(0.0f, 0.0f, 1.0f, 1.0f), makeVector3(0.0f, 2.0f, 1.0f));
+
+	Material material;
+	//material.specular = vec3(0.5f, 0.5f, 0.5f);
+	material.specular = vec3(0.0f, 0.0f, 0.0f);
+	material.shininess = 32.0f;
+
+	vector<Material> *materials = new vector<Material>();
+	vector<Light> *lights = new vector<Light>();
+
+	materials->push_back(material);
+	materials->push_back(material); //potem inny material
+
+	lights->push_back(light);
+	lights->push_back(light); //potem inny material
+
+
+	//1
+	shaderData = new ShaderData(lights, materials, makeVector4(0.0f, 0.0f, 1.0f, 1.0f), makeVector3(0.0f, 2.0f, 5.0f), makeVector3(0.0f, 2.0f, -6.0f));
 
 
 	//VertexBuffers
@@ -304,7 +329,19 @@ ResourceManager::ResourceManager()
 												  textureLoader);
 	_vertexBufferArray->push_back(wallright);
 
-
+	//lamp2
+		VertexBuffer *lamp2 = new VertexBuffer(cubeVertices, 
+												  sizeof(cubeVertices), 
+												  GL_TRIANGLES, 
+												  36, 
+												  sizeof(VertexDataPNT) , 
+												  _shaderArray->at(3),
+												  shaderData,
+												  (GLvoid *)(offsetof(VertexDataPNT, positionCoordinates)),
+												  (GLvoid *)(offsetof(VertexDataPNT, normalCoordinates)),
+												  (GLvoid *)(offsetof(VertexDataPNT, textureCoordinates)),
+												  NULL);
+	_vertexBufferArray->push_back(lamp2);
 }
 
 

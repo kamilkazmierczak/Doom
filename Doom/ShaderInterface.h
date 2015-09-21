@@ -12,6 +12,7 @@ private:
 	GLint _aTextureCoord;
 	GLint _uColor;
 	GLint _uLightPosition;
+	GLint _uLightPosition2;
 
 public:
 
@@ -21,6 +22,7 @@ public:
 
 	GLint get_uColor();
 	GLint get_uLightPosition();
+	GLint get_uLightPosition2();
 	GLint getUniformLocation(char* name);
 
 	Shader* getShader();
