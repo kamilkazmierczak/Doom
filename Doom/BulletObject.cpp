@@ -61,7 +61,6 @@ void BulletObject::configShader(mat4& model, mat4& view, mat4& projection)
 	_gameView = view;
 	_gameProjection = projection;
 
-
 	_shader->use();
 	//przekazanie do shadera
 	GLint modelLoc = _shader->getUniformLocation("model");
@@ -72,7 +71,11 @@ void BulletObject::configShader(mat4& model, mat4& view, mat4& projection)
 	glUniformMatrix4fv(viewLoc, 1, GL_FALSE, value_ptr(_gameView));
 	glUniformMatrix4fv(projLoc, 1, GL_FALSE, value_ptr(_gameProjection));
 
-
+	if (_bulletType == BU_PLAYER)	
+		glUniform4f(_shader->get_uColor(), 0.0f, 0.0f, 1.0f, 1.0f);
+	
+	if (_bulletType == BU_ENEMY)
+		glUniform4f(_shader->get_uColor(), 1.0f, 0.0f, 0.0f, 1.0f);
 
 }
 

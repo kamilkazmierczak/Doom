@@ -11,6 +11,8 @@ const GLfloat BulletSpeed = 0.08f;
 const GLfloat BulletRadius = 0.05f;  //0.05f
 const GLfloat DalekSpeed = 0.019f;  //0.019f
 const GLfloat TimeToEscape = 1.5f; //czas z jakim dalek ignoruje obecnosc kamery i za nia nie jedzie
+const GLfloat ReloadTime = 0.0f;
+const GLfloat maxAmmo = 15.0f;
 
 
 /*

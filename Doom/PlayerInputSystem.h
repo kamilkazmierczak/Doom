@@ -15,6 +15,8 @@ private:
 	GLfloat _lastFrame;
 	bool _firstMouse;
 
+	GLfloat _lastShootTime;
+
 	Vector3 _eyeVector;
 
 	Camera *_currentCamera;

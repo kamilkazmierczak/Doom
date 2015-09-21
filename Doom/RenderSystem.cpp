@@ -4,6 +4,7 @@
 #include "ModelObject.h"
 #include "CollisionDetection.h"
 #include "Player.h"
+#include "EnvironmentReactions.h"
 #include <glm/gtx/vector_angle.hpp>
 #include <glm/gtx/string_cast.hpp>
 using namespace glm;
@@ -40,8 +41,14 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 		
 		if (_firstRender != true)
 		{
-			_cameraSystem->reactOnMap(entity);	
+			_cameraSystem->reactOnMap(entity);
+			EnvironmentReactions *environment = &EnvironmentReactions::getEnvironmentReactions();
+			environment->react();
 		}	
+
+
+
+
 
 		//VertexBuffer
 		if (entity->getVertexBuffer() != NULL)

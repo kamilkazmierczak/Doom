@@ -3,6 +3,7 @@
 #include "Constants.h"
 #include <algorithm>
 #include "BulletObject.h"
+#include "Player.h"
 
 
 
@@ -10,7 +11,7 @@ using namespace std;
 
 PlayerInputSystem::PlayerInputSystem() 
 :_window(glfwGetCurrentContext()), _mouseLastX(WIDTH / 2.0), _mouseLastY(HEIGHT / 2.0), _firstMouse(true),
-_deltaTime(0.0f), _lastFrame(0.0f)
+_deltaTime(0.0f), _lastFrame(0.0f), _lastShootTime(glfwGetTime())
 {
 	//glfwGetCursorPos(_window, &_lastMousePosition.x, &_lastMousePosition.y);
 	/*
@@ -108,49 +109,59 @@ void PlayerInputSystem::mouseCallback(GLFWwindow* window, double xpos, double yp
 
 void PlayerInputSystem::mouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
 {
-	if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
+	Player *player = &Player::getPlayer();
+
+	if ((_lastShootTime + ReloadTime < glfwGetTime()) && player->getAmmo() > 0)
 	{
-		//cout << "nacisnieto LPM" << endl;
-		ResourceManager *resourceManager = &ResourceManager::getResourceManager();
-		RenderSystem *renderSystem = &RenderSystem::getRenderSystem();
-		CameraSystem *cameraSystem = &CameraSystem::getCameraSystem();
-		//dostep do wektorow
-		//gameManager->getScene()->getChildren()
-		//renderSystem->getNewObjects()
-
-		
-		//tworzenie naboju 
-		vec3 center = cameraSystem->getCurrentCamera()->getCenter();
-		vec3 position = cameraSystem->getCurrentCamera()->getPosition();
-		vec3 viewDirection = cameraSystem->getCurrentCamera()->getCenter();
-		//position += viewDirection * 2.0f;
-
-
-		IObject *sphere = new BulletObject(resourceManager->getBullet(),BU_PLAYER);
-	
-		Entity *entity = new Entity(sphere, makeVector3(position.x, position.y, position.z), ENTITY_BULLET);
-
-
-		//GLfloat bulletSpeed = 0.008f;
-		GLfloat max = std::max(std::abs(center.x), std::max(std::abs(center.y), std::abs(center.z)));
-
-		if (max != 0)
+		if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
 		{
-			entity->setVelocity(makeVector3((center.x / max)*BulletSpeed,
-				(center.y / max)*BulletSpeed,
-				(center.z / max)*BulletSpeed));
+			//cout << "nacisnieto LPM" << endl;
+			ResourceManager *resourceManager = &ResourceManager::getResourceManager();
+			RenderSystem *renderSystem = &RenderSystem::getRenderSystem();
+			CameraSystem *cameraSystem = &CameraSystem::getCameraSystem();
+			Player *player = &Player::getPlayer();
+			//dostep do wektorow
+			//gameManager->getScene()->getChildren()
+			//renderSystem->getNewObjects()
+
+
+			//tworzenie naboju 
+			vec3 center = cameraSystem->getCurrentCamera()->getCenter();
+			vec3 position = cameraSystem->getCurrentCamera()->getPosition();
+			vec3 viewDirection = cameraSystem->getCurrentCamera()->getCenter();
+			//position += viewDirection * 2.0f;
+
+
+			IObject *sphere = new BulletObject(resourceManager->getBullet(), BU_PLAYER);
+
+			Entity *entity = new Entity(sphere, makeVector3(position.x, position.y, position.z), ENTITY_BULLET);
+
+
+			//GLfloat bulletSpeed = 0.008f;
+			GLfloat max = std::max(std::abs(center.x), std::max(std::abs(center.y), std::abs(center.z)));
+
+			if (max != 0)
+			{
+				entity->setVelocity(makeVector3((center.x / max)*BulletSpeed,
+					(center.y / max)*BulletSpeed,
+					(center.z / max)*BulletSpeed));
+			}
+			else
+			{
+				cout << "patrzysz na srodek" << endl;
+				//chyba
+				entity->setVelocity(makeVector3(BulletSpeed, BulletSpeed, BulletSpeed));
+			}
+
+			renderSystem->getNewObjects()->push_back(entity);
+			_lastShootTime = glfwGetTime();
+			player->setAmmo(-1.0f);
+
+			cout << "Ammo left:" << endl;
+			cout << player->getAmmo() << endl;
+
 		}
-		else
-		{
-			cout << "patrzysz na srodek" << endl;
-			//chyba
-			entity->setVelocity(makeVector3(BulletSpeed, BulletSpeed, BulletSpeed));
-		}
-
-		renderSystem->getNewObjects()->push_back(entity);
-
-	}
-
+	} 
 }
 
 void PlayerInputSystem::mouseCallbackFun(GLFWwindow* window, double xpos, double ypos)

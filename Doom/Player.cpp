@@ -1,7 +1,7 @@
 #include "Player.h"
 
 
-Player::Player() : _health(100.0f)
+Player::Player() : _health(100.0f), _ammo(maxAmmo)
 {	
 	CameraSystem *cameraSystem = &CameraSystem::getCameraSystem();
 	_cameraSystem = cameraSystem;
@@ -31,19 +31,33 @@ void Player::changeHealth(GLfloat change)
 	_health += change;
 }
 
+GLfloat Player::getAmmo()
+{
+	return _ammo;
+}
 
-
+void Player::setAmmo(GLfloat newAmmo)
+{
+	if (_ammo + newAmmo >maxAmmo)
+	{
+		_ammo = maxAmmo;
+	}
+	else
+	{
+		_ammo += newAmmo;
+	}	
+}
 
 
 Player& Player::getPlayer()
 {
-	static Player *resourceManager = NULL;
+	static Player *player = NULL;
 
-	if (resourceManager == NULL){
-		resourceManager = new Player();
+	if (player == NULL){
+		player = new Player();
 	}
 
-	return *resourceManager;
+	return *player;
 }
 
 void Player::destroyPlayer()

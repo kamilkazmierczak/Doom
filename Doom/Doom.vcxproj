@@ -81,6 +81,7 @@
     <ClCompile Include="CameraSystem.cpp" />
     <ClCompile Include="CollisionDetection.cpp" />
     <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="EnvironmentReactions.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="IArtificialIntelligence.cpp" />
     <ClCompile Include="IObject.cpp" />
@@ -111,6 +112,7 @@
     <ClInclude Include="Constants.h" />
     <ClInclude Include="CubeVertices.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="EnvironmentReactions.h" />
     <ClInclude Include="FloorVertices.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="IArtificialIntelligence.h" />

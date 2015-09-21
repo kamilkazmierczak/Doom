@@ -7,6 +7,7 @@ class Player
 {
 private:
 	GLfloat _health;
+	GLfloat _ammo;
 	CameraSystem *_cameraSystem;
 	//Vector3 _position;
 
@@ -16,6 +17,10 @@ public:
 
 	GLfloat getHealth();
 	void changeHealth(GLfloat change);
+
+	GLfloat getAmmo();
+	void setAmmo(GLfloat newAmmo);
+
 
 	Vector3 getPosition();
 	static Player& getPlayer();
