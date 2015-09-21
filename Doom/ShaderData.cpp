@@ -3,7 +3,7 @@
 
 
 
-ShaderData::ShaderData(vector<Light>*light,vector <Material>*material, Vector4 newColor, Vector3 newPosition, Vector3 newPosition2) :_uLightArray(light), _uMaterialArray(material), _uColorValue(newColor), _uLightPosition(newPosition), _uLightPosition2(newPosition2)
+ShaderData::ShaderData(vector<Light>*light,Material material, Vector4 newColor/*, Vector3 newPosition, Vector3 newPosition2*/) :_uLightArray(light), _uMaterial(material), _uColorValue(newColor)/*, _uLightPosition(newPosition), _uLightPosition2(newPosition2)*/
 {
 	//vector<Light> *_uLightArray;
 	//vector<Material> *_uMaterialArray
@@ -28,14 +28,14 @@ void ShaderData::set_uLightArray(vector<Light>* newLights)
 	_uLightArray = newLights;
 }
 
-vector<Material>* ShaderData::get_uMaterialArray()
+Material ShaderData::get_uMaterial()
 {
-	return _uMaterialArray;
+	return _uMaterial;
 }
 
-void ShaderData::set_uMaterialArray(vector<Material>* newMaterials)
+void ShaderData::set_uMaterial(Material newMaterial)
 {
-	_uMaterialArray = newMaterials;
+	_uMaterial = newMaterial;
 }
 
 
@@ -49,25 +49,25 @@ Vector4 ShaderData::get_uColorValue()
 	return _uColorValue;
 }
 
-void ShaderData::set_uLightPosition(Vector3 newLight)
-{
-	_uLightPosition = newLight;
-}
-
-
-Vector3 ShaderData::get_uLightPosition()
-{
-	return _uLightPosition;
-}
-
-
-void ShaderData::set_uLightPosition2(Vector3 newLight)
-{
-	_uLightPosition2 = newLight;
-}
-
-
-Vector3 ShaderData::get_uLightPosition2()
-{
-	return _uLightPosition2;
-}
+//void ShaderData::set_uLightPosition(Vector3 newLight)
+//{
+//	_uLightPosition = newLight;
+//}
+//
+//
+//Vector3 ShaderData::get_uLightPosition()
+//{
+//	return _uLightPosition;
+//}
+//
+//
+//void ShaderData::set_uLightPosition2(Vector3 newLight)
+//{
+//	_uLightPosition2 = newLight;
+//}
+//
+//
+//Vector3 ShaderData::get_uLightPosition2()
+//{
+//	return _uLightPosition2;
+//}

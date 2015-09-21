@@ -8,14 +8,15 @@ struct Material {
 };
 
 struct Light {
+	vec3 position;
 	vec3 ambient;
 	vec3 diffuse;
 	vec3 specular;
 };
 
 uniform vec4 uColor;
-uniform vec3 uLightPosition;
-uniform vec3 uLightPosition2;
+//uniform vec3 uLightPosition;
+//uniform vec3 uLightPosition2;
 uniform sampler2D uTexture1;
 uniform vec3 uViewPosition;
 
@@ -47,7 +48,7 @@ void main()
 
 	// Diffuse 
 	vec3 norm = normalize(Normal);
-	vec3 lightDir = normalize(uLightPosition - FragPos);
+	vec3 lightDir = normalize(light.position - FragPos);
 	float diff = max(dot(norm, lightDir), 0.0);
 	vec3 diffuse = light.diffuse * diff * vec3(texture(uTexture1, TextureCoord));
 
@@ -62,14 +63,14 @@ void main()
 
 	//2
 
-	ambient = light.ambient * vec3(texture(uTexture1, TextureCoord));
-	// Diffuse 
-	norm = normalize(Normal);
-	lightDir = normalize(uLightPosition2 - FragPos);
-	diff = max(dot(norm, lightDir), 0.0);
-	diffuse = light.diffuse * diff * vec3(texture(uTexture1, TextureCoord));
+	//ambient = light.ambient * vec3(texture(uTexture1, TextureCoord));
+	//// Diffuse 
+	//norm = normalize(Normal);
+	//lightDir = normalize(uLightPosition2 - FragPos);
+	//diff = max(dot(norm, lightDir), 0.0);
+	//diffuse = light.diffuse * diff * vec3(texture(uTexture1, TextureCoord));
 
-	result = result + ambient + diffuse;
+	//result = result + ambient + diffuse;
 
 	color = vec4(result/*+ specular*/, 1.0f);
 

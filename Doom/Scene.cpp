@@ -47,8 +47,13 @@ Scene::Scene()
 	entity = new Entity(resourceManager->getVertexBufferArray()->at(4), makeVector3(0.0f, -1.0f, 0.0f),ENTITY_MAP);
 	_children->push_back(entity);
 
-	////lamp																	
-	entity = new Entity(resourceManager->getVertexBufferArray()->at(5), resourceManager->getVertexBufferArray()->at(5)->getShaderData()->get_uLightPosition(),ENTITY_MAP);
+	////lamp	
+	Vector3 lightPosition1 = makeVector3(
+		resourceManager->getVertexBufferArray()->at(5)->getShaderData()->get_uLightArray()->at(0).position.x,
+		resourceManager->getVertexBufferArray()->at(5)->getShaderData()->get_uLightArray()->at(0).position.y,
+		resourceManager->getVertexBufferArray()->at(5)->getShaderData()->get_uLightArray()->at(0).position.z);
+
+	entity = new Entity(resourceManager->getVertexBufferArray()->at(5), lightPosition1 ,ENTITY_MAP);
 	entity->setScale(makeVector3(0.2f, 0.2f, 0.2f));
 	_children->push_back(entity);
 
@@ -214,8 +219,15 @@ Scene::Scene()
 	_children->push_back(entity);
 	//WALLS END
 
-	////lamp2															
-	entity = new Entity(resourceManager->getVertexBufferArray()->at(15), resourceManager->getVertexBufferArray()->at(15)->getShaderData()->get_uLightPosition2(), ENTITY_MAP);
+	////lamp2		
+
+	////lamp	2
+	Vector3 lightPosition2 = makeVector3(
+		resourceManager->getVertexBufferArray()->at(5)->getShaderData()->get_uLightArray()->at(1).position.x,
+		resourceManager->getVertexBufferArray()->at(5)->getShaderData()->get_uLightArray()->at(1).position.y,
+		resourceManager->getVertexBufferArray()->at(5)->getShaderData()->get_uLightArray()->at(1).position.z);
+
+	entity = new Entity(resourceManager->getVertexBufferArray()->at(15), lightPosition2, ENTITY_MAP);
 	entity->setScale(makeVector3(0.2f, 0.2f, 0.2f));
 	_children->push_back(entity);
 

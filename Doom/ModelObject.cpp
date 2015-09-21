@@ -51,14 +51,29 @@ void ModelObject::configShader(mat4& model, mat4& view, mat4& projection)
 	Camera *currentCamera = cameraSystem->getCurrentCamera();	
 
 	//pod 5 jest vertexBuffer lampy a w jej ShaderData jest pozycja swiatla
-	Vector3 lamp1Position = resourceManager->getVertexBufferArray()->at(5)->getShaderData()->get_uLightPosition();
+	
+	
+	//resourceManager->getVertexBufferArray()->at(5)->getShaderData()->get_uLightArray()->at(0).light;
+	Vector3 lamp1Position = makeVector3(
+		resourceManager->getVertexBufferArray()->at(5)->getShaderData()->get_uLightArray()->at(0).position.x,
+		resourceManager->getVertexBufferArray()->at(5)->getShaderData()->get_uLightArray()->at(0).position.y,
+		resourceManager->getVertexBufferArray()->at(5)->getShaderData()->get_uLightArray()->at(0).position.z);
+
+	//Vector3 lamp1Position = resourceManager->getVertexBufferArray()->at(5)->getShaderData()->get_uLightPosition();
 	//vec3 lamp1Position = vec3(lamp1Position_.x, lamp1Position_.y, lamp1Position_.z);
 
 	//TEMPORARY
 	//Vector3 lamp2Position = lamp1Position;
-	Vector3 lamp2Position = resourceManager->getVertexBufferArray()->at(5)->getShaderData()->get_uLightPosition2();
+	//Vector3 lamp2Position = resourceManager->getVertexBufferArray()->at(5)->getShaderData()->get_uLightPosition2();
+
+	Vector3 lamp2Position = makeVector3(
+		resourceManager->getVertexBufferArray()->at(5)->getShaderData()->get_uLightArray()->at(1).position.x,
+		resourceManager->getVertexBufferArray()->at(5)->getShaderData()->get_uLightArray()->at(1).position.y,
+		resourceManager->getVertexBufferArray()->at(5)->getShaderData()->get_uLightArray()->at(1).position.z);
 
 	//cout << glm::to_string(lamp1Position) << endl;
+
+	//lamp2Position = lamp1Position;
 
 	// Set the lighting uniforms
 	glUniform3f(_shader->getUniformLocation("viewPos"), currentCamera->Position.x, currentCamera->Position.y, currentCamera->Position.z);
@@ -66,21 +81,21 @@ void ModelObject::configShader(mat4& model, mat4& view, mat4& projection)
 	// Point light 1
 	glUniform3f(_shader->getUniformLocation("pointLights[0].position"), lamp1Position.x, lamp1Position.y, lamp1Position.z);
 
-	//glUniform3f(_shader->getUniformLocation("pointLights[0].ambient"), 0.05f, 0.05f, 0.05f);
-	//glUniform3f(_shader->getUniformLocation("pointLights[0].diffuse"), 1.0f, 1.0f, 1.0f);
-	//glUniform3f(_shader->getUniformLocation("pointLights[0].specular"), 1.0f, 1.0f, 1.0f);
-	glUniform3f(_shader->getUniformLocation("pointLights[0].ambient"), 
-		0.2f, 
-		0.2f, 
-		0.2f);
-	glUniform3f(_shader->getUniformLocation("pointLights[0].diffuse"), 
-		0.5f, 
-		0.5f, 
-		0.5f);
-	glUniform3f(_shader->getUniformLocation("pointLights[0].specular"), 
-		0.5f, 
-		0.5f, 
-		0.5f);
+	glUniform3f(_shader->getUniformLocation("pointLights[0].ambient"), 0.05f, 0.05f, 0.05f);
+	glUniform3f(_shader->getUniformLocation("pointLights[0].diffuse"), 1.0f, 1.0f, 1.0f);
+	glUniform3f(_shader->getUniformLocation("pointLights[0].specular"), 1.0f, 1.0f, 1.0f);
+	//glUniform3f(_shader->getUniformLocation("pointLights[0].ambient"), 
+	//	0.2f, 
+	//	0.2f, 
+	//	0.2f);
+	//glUniform3f(_shader->getUniformLocation("pointLights[0].diffuse"), 
+	//	0.5f, 
+	//	0.5f, 
+	//	0.5f);
+	//glUniform3f(_shader->getUniformLocation("pointLights[0].specular"), 
+	//	0.5f, 
+	//	0.5f, 
+	//	0.5f);
 
 
 	glUniform1f(_shader->getUniformLocation("pointLights[0].constant"), 1.0f);
