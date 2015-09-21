@@ -95,7 +95,7 @@
     <ClCompile Include="ShaderData.cpp" />
     <ClCompile Include="ShaderInterface.cpp" />
     <ClCompile Include="Sphere.cpp" />
-    <ClCompile Include="SphereObject.cpp" />
+    <ClCompile Include="BulletObject.cpp" />
     <ClCompile Include="TextureLoader.cpp" />
     <ClCompile Include="Vector2.cpp" />
     <ClCompile Include="Vector3.cpp" />
@@ -129,7 +129,7 @@
     <ClInclude Include="ShaderInterface.h" />
     <ClInclude Include="SkyboxVertices.h" />
     <ClInclude Include="Sphere.h" />
-    <ClInclude Include="SphereObject.h" />
+    <ClInclude Include="BulletObject.h" />
     <ClInclude Include="Test.h" />
     <ClInclude Include="TextureLoader.h" />
     <ClInclude Include="TriangleVertices.h" />

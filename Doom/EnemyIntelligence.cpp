@@ -24,7 +24,7 @@ void EnemyIntelligence::move(Entity* entity, GLfloat speed)
 		moveSomewhere(entity, speed);
 	}
 
-	if (rand() % 100 + 1 <5)
+	if (rand() % 100 + 1 <2)
 	{
 		shoot(entity);
 	} 
@@ -50,7 +50,7 @@ void EnemyIntelligence::shoot(Entity* entity)
 	//testy
 	position = position + 0.7f * direction;
 
-	IObject *sphere = new SphereObject(resourceManager->getBullet());
+	IObject *sphere = new BulletObject(resourceManager->getBullet(),BU_ENEMY);
 
 	Entity *newEntity = new Entity(sphere, makeVector3(position.x, position.y, position.z), ENTITY_BULLET);
 

@@ -2,7 +2,7 @@
 #include "GameManager.h"
 #include "Constants.h"
 #include <algorithm>
-#include "SphereObject.h"
+#include "BulletObject.h"
 
 
 
@@ -122,9 +122,14 @@ void PlayerInputSystem::mouseButtonCallback(GLFWwindow* window, int button, int 
 		//tworzenie naboju 
 		vec3 center = cameraSystem->getCurrentCamera()->getCenter();
 		vec3 position = cameraSystem->getCurrentCamera()->getPosition();
-		IObject *sphere = new SphereObject(resourceManager->getBullet());
+		vec3 viewDirection = cameraSystem->getCurrentCamera()->getCenter();
+		//position += viewDirection * 2.0f;
+
+
+		IObject *sphere = new BulletObject(resourceManager->getBullet(),BU_PLAYER);
 	
 		Entity *entity = new Entity(sphere, makeVector3(position.x, position.y, position.z), ENTITY_BULLET);
+
 
 		//GLfloat bulletSpeed = 0.008f;
 		GLfloat max = std::max(std::abs(center.x), std::max(std::abs(center.y), std::abs(center.z)));

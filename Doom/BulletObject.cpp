@@ -1,11 +1,11 @@
-#include "SphereObject.h"
+#include "BulletObject.h"
 
 
-SphereObject::SphereObject(Sphere *sphere) :_sphere(sphere)
+BulletObject::BulletObject(Sphere *sphere, Bullet_Type type) :_sphere(sphere), _destroy(false), _bulletType(type)
 {
 	_typeOfObject = OB_SPHERE;
 	_shader = new ShaderInterface("sphere.vs", "sphere.frag");
-
+	
 
 
 	GLuint VBO3, EBO3;
@@ -30,14 +30,14 @@ SphereObject::SphereObject(Sphere *sphere) :_sphere(sphere)
 }
 
 
-SphereObject::~SphereObject()
+BulletObject::~BulletObject()
 {
 }
 
 
-void SphereObject::draw()
+void BulletObject::draw()
 {
-	//cout << "Rysuje z klasy SphereObject" << endl;
+	//cout << "Rysuje z klasy BulletObject" << endl;
 	glBindVertexArray(VAO3);
 	glDrawElements(GL_TRIANGLES, _sphere->GetTotalIndices(), GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);
@@ -45,8 +45,17 @@ void SphereObject::draw()
 }
 
 
+void BulletObject::destroy()
+{
+	_destroy = true;
+}
 
-void SphereObject::configShader(mat4& model, mat4& view, mat4& projection)
+bool BulletObject::toDestroy()
+{
+	return _destroy;
+}
+
+void BulletObject::configShader(mat4& model, mat4& view, mat4& projection)
 {
 	_gameModel = model;
 	_gameView = view;
@@ -67,12 +76,17 @@ void SphereObject::configShader(mat4& model, mat4& view, mat4& projection)
 
 }
 
-float SphereObject::getRadius()
+float BulletObject::getRadius()
 {
 	return _sphere->getRadius();
 }
 
-Object_Type SphereObject::getObjectType()
+Object_Type BulletObject::getObjectType()
 {
 	return _typeOfObject;
+}
+
+Bullet_Type BulletObject::getBulletType()
+{
+	return _bulletType;
 }

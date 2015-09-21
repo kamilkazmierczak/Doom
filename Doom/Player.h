@@ -14,7 +14,10 @@ private:
 	~Player();
 public:
 
-	Vector3 getPosiion();
+	GLfloat getHealth();
+	void changeHealth(GLfloat change);
+
+	Vector3 getPosition();
 	static Player& getPlayer();
 	static void destroyPlayer();
 };

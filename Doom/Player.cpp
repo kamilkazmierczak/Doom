@@ -13,12 +13,25 @@ Player::~Player()
 }
 
 
-Vector3 Player::getPosiion()
+Vector3 Player::getPosition()
 {	
 	return makeVector3(_cameraSystem->getCurrentCamera()->getPosition().x, 
 					   _cameraSystem->getCurrentCamera()->getPosition().y, 
 					   _cameraSystem->getCurrentCamera()->getPosition().z);
 }
+
+
+GLfloat Player::getHealth()
+{
+	return _health;
+}
+
+void Player::changeHealth(GLfloat change)
+{
+	_health += change;
+}
+
+
 
 
 

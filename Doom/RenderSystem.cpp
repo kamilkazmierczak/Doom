@@ -1,8 +1,9 @@
 #include "RenderSystem.h"
 #include "Constants.h"
-#include "SphereObject.h"
+#include "BulletObject.h"
 #include "ModelObject.h"
 #include "CollisionDetection.h"
+#include "Player.h"
 #include <glm/gtx/vector_angle.hpp>
 #include <glm/gtx/string_cast.hpp>
 using namespace glm;
@@ -148,14 +149,53 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 			//SPHERE
 			if (entity->getObject()->getObjectType() == OB_SPHERE)
 			{
-				SphereObject *sphereObj = nullptr;
-				try {sphereObj = dynamic_cast<SphereObject*>(entity->getObject()); }
+				BulletObject *sphereObj = nullptr;
+				try {sphereObj = dynamic_cast<BulletObject*>(entity->getObject()); }
 				catch (bad_cast& bc){cerr << "bad_cast caught: " << bc.what() << endl;}
 		
 
 				//DETEKCJA KOLIZJI
 				if (_firstRender != true)
 				{
+
+					if (entity->getType() == ENTITY_BULLET && sphereObj->getBulletType() == BU_ENEMY)
+					{
+						//KOLIZJA Z GRACZEM
+						Player* player = &Player::getPlayer();
+						
+						vec4 BulletCentreTransform = model* vec4(vec3(0.0f), 1.0f);
+						vec3 BulletCentreReal = vec3(BulletCentreTransform) / BulletCentreTransform.w;
+						GLfloat bulletRadius = sphereObj->getRadius();
+						GLfloat spheresDistance = glm::distance(BulletCentreReal, vec3(player->getPosition().x, player->getPosition().y, player->getPosition().z));
+
+						//detekcja kolizji
+		
+						if (bulletRadius + _cameraSystem->getCurrentCamera()->getRadius() > spheresDistance)
+						{
+							cout << "trafiony" << endl;
+							cout << "#" << endl;
+
+								////sprawdzenie czy czasami to nie jest moj naboj
+								//vec3 bulletDirection = vec3(entity->getMovementDirection().x, entity->getMovementDirection().y, entity->getMovementDirection().z);
+								//vec3 cameraDirection = _cameraSystem->getCurrentCamera()->getCenter();
+								//vec2 u = vec2(bulletDirection.x,bulletDirection.z);
+								//vec2 v = vec2(cameraDirection.x, cameraDirection.z);
+								//GLfloat angle = -1 * 180 / pi<GLfloat>() * fmodf(atan2(u.x*v.y - v.x*u.y, u.x*v.x + u.y*v.y), 2 * pi<GLfloat>());
+								//if (!(angle > 90.0f || angle > -90.0f))
+								//{
+								//	//usun naboj ktory mnie trafil
+								//	sphereObj->destroy();
+								//
+							sphereObj->destroy();
+						}
+						
+						//# KOLIZJA Z GRACZEM
+					}
+
+
+
+				if (!sphereObj->toDestroy())
+				 {
 					//Sprawdz wszystkie inne Entity
 					for (vector<Entity *>::iterator iterator = entityArray->begin(); iterator != entityArray->end(); iterator++)
 					{
@@ -193,7 +233,14 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 									bool bCollided = SpherePolygonCollision(*real, sphereCentreReal, 3, sphereObj->getRadius());
 									if (bCollided)
 									{
-										//cout << "kolizja sfery" << endl;
+										cout << "kolizja sfery" << endl;
+
+										if (sphereObj->getBulletType() == BU_PLAYER)
+										{
+											sphereObj->destroy();
+										}
+										
+
 
 										if (otherEntity->getType() == ENTITY_MAP)
 										{
@@ -208,15 +255,15 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 											try { enemyObj = dynamic_cast<ModelObject*>(otherEntity->getObject()); }
 											catch (bad_cast& bc){ cerr << "bad_cast caught: " << bc.what() << endl; }
 
-											cout << enemyObj->getHealth() << endl;
-											cout << "koniec umierania" << endl;
-											if (enemyObj->getHealth() > 0.0f)
+											if (sphereObj->getBulletType() == BU_PLAYER)
 											{
-												enemyObj->changeHealth(-100.0f);
+												cout << enemyObj->getHealth() << endl;
+												//cout << "koniec umierania" << endl;
+												if (enemyObj->getHealth() > 0.0f)
+												{
+													enemyObj->changeHealth(-100.0f);
+												}
 											}
-											
-											
-
 
 
 										}
@@ -229,6 +276,7 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 							}
 						}
 					}
+				  }
 					//cout << "koniec kolizji ze sfera" << endl;
 				}
 			}//koniec zabawy ze sfera
@@ -247,7 +295,11 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 
 				if (entity->getType() == ENTITY_ENEMY)
 				{
-					modelObj->getAi()->move(entity, DalekSpeed);
+					if (EnemyMovementEnabled)
+					{
+						modelObj->getAi()->move(entity, DalekSpeed);
+					}
+					
 				}
 		
 				//#ARTIFICIAL INTELLIGENCE
@@ -373,8 +425,8 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 	_firstRender = false;
 	if (_firstRender != true)
 	{
-		//update(entityArray); //usun obiekty
-		//checkForNewObjects(entityArray);
+		update(entityArray); //usun obiekty
+		checkForNewObjects(entityArray);
 	}
 
 	glfwPollEvents();
@@ -410,6 +462,8 @@ void RenderSystem::update(vector<Entity *> *entityArray)
 
 		//DESTRUKCJE
 		bool destroy = false;
+
+
 		if (entity->getType() == ENTITY_ENEMY)
 		{
 
@@ -428,20 +482,35 @@ void RenderSystem::update(vector<Entity *> *entityArray)
 			}
 
 		}
-		if (destroy)
+
+		if (entity->getType() == ENTITY_BULLET)
 		{
-			delete entity;
-			iterator = entityArray->erase(iterator);
-		}
-		else
-		{
-			++iterator;
+			BulletObject *sphereObj = nullptr;
+			try { sphereObj = dynamic_cast<BulletObject*>(entity->getObject()); }
+			catch (bad_cast& bc){cerr << "bad_cast caught: " << bc.what() << endl;}
+
+				if (sphereObj->toDestroy())
+				{
+					destroy = true;
+				}
+
 		}
 
-	}		
+
+			if (destroy)
+			{
+				delete entity;
+				iterator = entityArray->erase(iterator);
+			}
+			else
+			{
+				++iterator;
+			}
+
+		
+	}
+
 }
-
-
 
 
 RenderSystem::RenderSystem() :_window(glfwGetCurrentContext()), _cameraSystem(&CameraSystem::getCameraSystem()), _firstRender(true)

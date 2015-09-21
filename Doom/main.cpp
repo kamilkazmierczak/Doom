@@ -22,6 +22,13 @@ using namespace glm;
 //}
 //#define PI 3.1415926535897932
 
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+#include <glm/gtx/vector_angle.hpp>
+#include <glm/gtx/string_cast.hpp>
+
+
 #include <vector>
 
 int main(int argc, char **argv)
@@ -31,6 +38,14 @@ int main(int argc, char **argv)
 	gameManager->runGameLoop();
 	GameManager::destroyGameManager();
 
+
+	/*vec3 rr = vec3(0.0f, 0.0f, 0.0f);
+	vec3 tt = vec3(0.0f, 1.0f, 1.0f);
+
+
+	GLfloat dis = glm::distance(rr, tt);
+
+	cout << dis << endl;*/
 
 	//glfwInit();
 	//GLfloat lastTime = glfwGetTime();

@@ -3,7 +3,7 @@
 #include "ResourceManager.h"
 #include "PlayerInputSystem.h"
 #include "IObject.h"
-#include "SphereObject.h"
+#include "BulletObject.h"
 #include "Sphere.h"
 #include "ModelObject.h"
 #include "Model.h"
@@ -54,7 +54,7 @@ Scene::Scene()
 
 	////NEW IObject (testing)
 	//sphere
-	//IObject *sphere = new SphereObject(new Sphere(0.05f, 15, 15));
+	//IObject *sphere = new BulletObject(new Sphere(0.05f, 15, 15));
 	//entity = new Entity(sphere, makeVector3(0.0f, -0.5f, -3.5f),ENTITY_BULLET);
 	////entity->setScale(makeVector3(1.2f, 1.2f, 1.2f));
 	//entity->setVelocity(makeVector3(0.0f, 0.0f, -0.008f));
