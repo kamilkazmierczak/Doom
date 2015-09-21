@@ -36,43 +36,11 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 		//nie jestem pewien czy te podstawienie tu powinno byc
 		//w obiektach pod ten wskaznik podstawiam aktualne realne ale innych obiektow
 		realCurrentVertices = entity->getRealVertices(); 
-
-
-		//TESTY Z KAMERA
+		
 		if (_firstRender != true)
 		{
-			if (entity->getType() != ENTITY_BULLET &&
-				!(entity->getVertexBuffer() != NULL &&
-				entity->getVertexBuffer()->getTextureLoader() != NULL &&
-				entity->getVertexBuffer()->getTextureLoader()->getTextureType() == TX_SKYBOX))
-			{
-				if (entity->getRealVertices() == nullptr)
-					cout << "Cos jest nie tak #Camera_1" << endl;
-
-				for (vector<ThreeVertices>::iterator iterator = realCurrentVertices->begin(); iterator != realCurrentVertices->end(); iterator++)
-				{
-					vec3 *real[3];
-					//przelec po wszystkich trojkatach danego obiektu
-					for (int k = 0; k < realCurrentVertices->size(); k++)
-					{
-						real[0] = &realCurrentVertices->at(k).a;
-						real[1] = &realCurrentVertices->at(k).b;
-						real[2] = &realCurrentVertices->at(k).c;
-
-						_cameraSystem->getCurrentCamera()->CheckCameraCollision(*real, 3);
-					}
-				}
-			}
-		}
-		//#TESTY Z KAMERA
-
-
-
-
-
-
-
-
+			_cameraSystem->reactOnMap(entity);	
+		}	
 
 		//VertexBuffer
 		if (entity->getVertexBuffer() != NULL)

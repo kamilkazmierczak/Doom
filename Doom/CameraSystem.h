@@ -12,6 +12,8 @@ private:
 public:
 	Camera *getCurrentCamera();
 	void setCurrentCamera(Camera *newCamera);
+	void reactOnMap(Entity *entity);
+
 
 	static CameraSystem& getCameraSystem();
 	static void destroyCameraSystem();
