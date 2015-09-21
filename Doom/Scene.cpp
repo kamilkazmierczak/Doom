@@ -60,8 +60,8 @@ Scene::Scene()
 	//entity->setVelocity(makeVector3(0.0f, 0.0f, -0.008f));
 	//_children->push_back(entity);
 
-	//model
-	IObject *model = new ModelObject(new Model("Models/dalek/Dalek.obj"), new EnemyIntelligence());
+	//dalek1
+	IObject *model = new ModelObject(resourceManager->getDalek(), new EnemyIntelligence());
 	entity = new Entity(model, makeVector3(-5.0f, -1.5f, -8.5f), ENTITY_ENEMY);
 	vec2 u = vec2(0.0f, 1.0f); //wektor wskazujacy kierunek wzroku modelu
 	vec2 v = normalize(vec2(CameraPosition.x, CameraPosition.z) - vec2(entity->getPosition().x, entity->getPosition().z));
@@ -69,6 +69,16 @@ Scene::Scene()
 	entity->setRotation(makeVector3(0.0f, entity->getRotation().y + angle, 0.0f));
 	entity->setScale(makeVector3(0.007f, 0.007f, 0.007f));
 	_children->push_back(entity);
+
+	//dalek2
+	//model = new ModelObject(resourceManager->getDalek(), new EnemyIntelligence());
+	//entity = new Entity(model, makeVector3(5.0f, -1.5f, -8.5f), ENTITY_ENEMY);
+	//u = vec2(0.0f, 1.0f); //wektor wskazujacy kierunek wzroku modelu
+	//v = normalize(vec2(CameraPosition.x, CameraPosition.z) - vec2(entity->getPosition().x, entity->getPosition().z));
+	//angle = -1 * 180 / pi<GLfloat>() * fmodf(atan2(u.x*v.y - v.x*u.y, u.x*v.x + u.y*v.y), 2 * pi<GLfloat>());
+	//entity->setRotation(makeVector3(0.0f, entity->getRotation().y + angle, 0.0f));
+	//entity->setScale(makeVector3(0.007f, 0.007f, 0.007f));
+	//_children->push_back(entity);
 
 
 	//model - tardis

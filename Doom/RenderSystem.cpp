@@ -181,18 +181,6 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 						{
 							cout << "trafiony" << endl;
 							cout << "#" << endl;
-
-								////sprawdzenie czy czasami to nie jest moj naboj
-								//vec3 bulletDirection = vec3(entity->getMovementDirection().x, entity->getMovementDirection().y, entity->getMovementDirection().z);
-								//vec3 cameraDirection = _cameraSystem->getCurrentCamera()->getCenter();
-								//vec2 u = vec2(bulletDirection.x,bulletDirection.z);
-								//vec2 v = vec2(cameraDirection.x, cameraDirection.z);
-								//GLfloat angle = -1 * 180 / pi<GLfloat>() * fmodf(atan2(u.x*v.y - v.x*u.y, u.x*v.x + u.y*v.y), 2 * pi<GLfloat>());
-								//if (!(angle > 90.0f || angle > -90.0f))
-								//{
-								//	//usun naboj ktory mnie trafil
-								//	sphereObj->destroy();
-								//
 							sphereObj->destroy();
 						}
 						
@@ -242,10 +230,9 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 									{
 										cout << "kolizja sfery" << endl;
 
-										if (sphereObj->getBulletType() == BU_PLAYER)
-										{
-											sphereObj->destroy();
-										}
+										
+										sphereObj->destroy();
+										
 										
 
 
@@ -268,7 +255,7 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 												//cout << "koniec umierania" << endl;
 												if (enemyObj->getHealth() > 0.0f)
 												{
-													enemyObj->changeHealth(-100.0f);
+													enemyObj->changeHealth(-BulletDamage);
 												}
 											}
 

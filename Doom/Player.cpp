@@ -1,7 +1,7 @@
 #include "Player.h"
 
 
-Player::Player() : _health(100.0f), _ammo(maxAmmo)
+Player::Player() : _health(100.0f), _ammo(MaxAmmo)
 {	
 	CameraSystem *cameraSystem = &CameraSystem::getCameraSystem();
 	_cameraSystem = cameraSystem;
@@ -38,9 +38,9 @@ GLfloat Player::getAmmo()
 
 void Player::setAmmo(GLfloat newAmmo)
 {
-	if (_ammo + newAmmo >maxAmmo)
+	if (_ammo + newAmmo >MaxAmmo)
 	{
-		_ammo = maxAmmo;
+		_ammo = MaxAmmo;
 	}
 	else
 	{

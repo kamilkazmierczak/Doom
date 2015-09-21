@@ -48,7 +48,7 @@ void EnemyIntelligence::shoot(Entity* entity)
 	vec3 position = vec3(entity->getPosition().x + 0.2f, entity->getPosition().y + 0.7f, entity->getPosition().z);
 
 	//testy
-	position = position + 0.7f * direction;
+	position = position + 0.8f * direction;
 
 	IObject *sphere = new BulletObject(resourceManager->getBullet(),BU_ENEMY);
 

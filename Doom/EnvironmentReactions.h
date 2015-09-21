@@ -7,6 +7,10 @@
 class EnvironmentReactions
 {
 private:
+
+	void takeAmmo();
+	void createWave();
+	
 	EnvironmentReactions();
 	~EnvironmentReactions();
 

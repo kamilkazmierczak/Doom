@@ -13,6 +13,22 @@ EnvironmentReactions::~EnvironmentReactions()
 
 void EnvironmentReactions::react()
 {
+	takeAmmo();
+	createWave();
+}
+
+
+void EnvironmentReactions::createWave()
+{
+
+}
+
+
+
+
+void EnvironmentReactions::takeAmmo()
+{
+
 	CameraSystem *cameraSystem = &CameraSystem::getCameraSystem();
 	vec3 cameraPosition = cameraSystem->getCurrentCamera()->getPosition();
 
@@ -26,9 +42,12 @@ void EnvironmentReactions::react()
 	if (distance_ < gunReactRadius)
 	{
 		Player *player = &Player::getPlayer();
-		player->setAmmo(maxAmmo);
+		player->setAmmo(MaxAmmo);
 	}
+
 }
+
+
 
 EnvironmentReactions& EnvironmentReactions::getEnvironmentReactions()
 {

@@ -10,6 +10,7 @@
 #include "Test.h"
 #include "Constants.h"
 
+
 #include <typeinfo>
 
 
@@ -29,10 +30,16 @@ Sphere* ResourceManager::getBullet()
 	return _bullet;
 }
 
+Model* ResourceManager::getDalek()
+{
+	return _dalek;
+}
+
 ResourceManager::ResourceManager()
 {
 
 	_bullet = new Sphere(BulletRadius, 15, 15);
+	_dalek = new Model("Models/dalek/Dalek.obj");
 
 
 	//Shaders

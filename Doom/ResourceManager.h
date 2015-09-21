@@ -4,6 +4,7 @@
 #include "VertexBuffer.h"
 #include "ShaderData.h"
 #include "Sphere.h"
+#include "Model.h"
 
 using namespace std;
 
@@ -16,6 +17,7 @@ private:
 
 	//temporary (potem to jakos inaczej zrob)
 	Sphere *_bullet;
+	Model *_dalek;
 
 	//void loadVertices(GLvoid *table, GLsizeiptr size, vector<ThreeVertices>*Vertices, GLsizeiptr dataSize);
 
@@ -28,6 +30,7 @@ public:
 
 	//temporary (potem to jakos inaczej zrob)
 	Sphere *getBullet();
+	Model *getDalek();
 	
 
 	static ResourceManager& getResourceManager();
