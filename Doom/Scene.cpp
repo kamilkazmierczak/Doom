@@ -62,7 +62,7 @@ Scene::Scene()
 
 	//model
 	IObject *model = new ModelObject(new Model("Models/dalek/Dalek.obj"), new EnemyIntelligence());
-	entity = new Entity(model, makeVector3(-5.0f, -1.5f, 0.0f), ENTITY_ENEMY);
+	entity = new Entity(model, makeVector3(-5.0f, -1.5f, -8.5f), ENTITY_ENEMY);
 	vec2 u = vec2(0.0f, 1.0f); //wektor wskazujacy kierunek wzroku modelu
 	vec2 v = normalize(vec2(CameraPosition.x, CameraPosition.z) - vec2(entity->getPosition().x, entity->getPosition().z));
 	GLfloat angle = -1 * 180 / pi<GLfloat>() * fmodf(atan2(u.x*v.y - v.x*u.y, u.x*v.x + u.y*v.y), 2 * pi<GLfloat>());
@@ -72,60 +72,60 @@ Scene::Scene()
 
 
 	//model - tardis
-	model = new ModelObject(new Model("Models/tardis/TARDIS.obj"), NULL);
-	entity = new Entity(model, makeVector3(8.7f, -1.5f, 8.5f), ENTITY_MAP);
-	entity->setRotation(makeVector3(0.0f, -90.0f, 0.0f));
-	entity->setScale(makeVector3(0.5f, 0.5f, 0.5f));
-	_children->push_back(entity);
+	//IObject *model = new ModelObject(new Model("Models/tardis/TARDIS.obj"), NULL);
+	//entity = new Entity(model, makeVector3(8.7f, -1.5f, 8.5f), ENTITY_MAP);
+	//entity->setRotation(makeVector3(0.0f, -90.0f, 0.0f));
+	//entity->setScale(makeVector3(0.5f, 0.5f, 0.5f));
+	//_children->push_back(entity);
 
 	//model - gun
-	model = new ModelObject(new Model("Models/gun/freeze_gun.obj"), NULL);
-	entity = new Entity(model, makeVector3(8.7f, -0.3f, -1.2f), ENTITY_MAP);
-	entity->setScale(makeVector3(0.007f, 0.007f, 0.007f));
-	entity->setRotationVelocity(makeVector3(0.0f, -1.0f, 0.0f));
-	_children->push_back(entity);
+	//model = new ModelObject(new Model("Models/gun/freeze_gun.obj"), NULL);
+	//entity = new Entity(model, makeVector3(8.7f, -0.3f, -1.2f), ENTITY_MAP);
+	//entity->setScale(makeVector3(0.007f, 0.007f, 0.007f));
+	//entity->setRotationVelocity(makeVector3(0.0f, -1.0f, 0.0f));
+	//_children->push_back(entity);
 
 	//drewniana skrzynka
-	model = new ModelObject(new Model("Models/woodenbox/Wooden_Box.obj"), NULL);
-	entity = new Entity(model, makeVector3(8.7f, -1.5f, -1.5f), ENTITY_MAP);
-	entity->setRotation(makeVector3(0.0f, -90.0f, 0.0f));
-	entity->setScale(makeVector3(0.5f, 0.5f, 0.5f));
-	_children->push_back(entity);
+	//model = new ModelObject(new Model("Models/woodenbox/Wooden_Box.obj"), NULL);
+	//entity = new Entity(model, makeVector3(8.7f, -1.5f, -1.5f), ENTITY_MAP);
+	//entity->setRotation(makeVector3(0.0f, -90.0f, 0.0f));
+	//entity->setScale(makeVector3(0.5f, 0.5f, 0.5f));
+	//_children->push_back(entity);
 
 	//pudelko z nabojami
-	model = new ModelObject(new Model("Models/ammobox/box.obj"), NULL);
-	entity = new Entity(model, makeVector3(8.7f, -0.6f, -2.0f), ENTITY_MAP);
-	entity->setRotation(makeVector3(0.0f, -45.0f, 0.0f));
-	entity->setScale(makeVector3(0.007f, 0.007f, 0.007f));
-	_children->push_back(entity);
+	//model = new ModelObject(new Model("Models/ammobox/box.obj"), NULL);
+	//entity = new Entity(model, makeVector3(8.7f, -0.6f, -2.0f), ENTITY_MAP);
+	//entity->setRotation(makeVector3(0.0f, -45.0f, 0.0f));
+	//entity->setScale(makeVector3(0.007f, 0.007f, 0.007f));
+	//_children->push_back(entity);
 	
 	//kartony
-	model = new ModelObject(new Model("Models/boxes/untitled.obj"), NULL);
-	entity = new Entity(model, makeVector3(-8.7f, -1.5f, +10.5f), ENTITY_MAP);
-	entity->setRotation(makeVector3(0.0f, -180.0f, 0.0f));
-	entity->setScale(makeVector3(0.5f, 0.5f, 0.5f));
-	_children->push_back(entity);
+	//model = new ModelObject(new Model("Models/boxes/untitled.obj"), NULL);
+	//entity = new Entity(model, makeVector3(-8.7f, -1.5f, +10.5f), ENTITY_MAP);
+	//entity->setRotation(makeVector3(0.0f, -180.0f, 0.0f));
+	//entity->setScale(makeVector3(0.5f, 0.5f, 0.5f));
+	//_children->push_back(entity);
 
 	//miecz
-	model = new ModelObject(new Model("Models/sword/Sword.obj"), NULL);
-	entity = new Entity(model, makeVector3(9.45f, -0.6f, -0.1f), ENTITY_MAP);
-	entity->setRotation(makeVector3(0.0f, 0.0f, 70.0f));
-	entity->setScale(makeVector3(0.07f, 0.07f, 0.07f));
-	_children->push_back(entity);
+	//model = new ModelObject(new Model("Models/sword/Sword.obj"), NULL);
+	//entity = new Entity(model, makeVector3(9.45f, -0.6f, -0.1f), ENTITY_MAP);
+	//entity->setRotation(makeVector3(0.0f, 0.0f, 70.0f));
+	//entity->setScale(makeVector3(0.07f, 0.07f, 0.07f));
+	//_children->push_back(entity);
 
 	//samolot (wczytuje sie 1,5min)
-	model = new ModelObject(new Model("Models/starcruiser/Starcruiser military.obj"), NULL);
-	entity = new Entity(model, makeVector3(-10.0f, 4.0f, 0.0f), ENTITY_MAP);
-	entity->setRotation(makeVector3(0.0f, 135.0f, 17.0f));
-	entity->setScale(makeVector3(0.02f, 0.02f, 0.02f));
-	entity->setVelocity(makeVector3(0.003f,0.0f,-0.003f));
-	_children->push_back(entity);
+	//model = new ModelObject(new Model("Models/starcruiser/Starcruiser military.obj"), NULL);
+	//entity = new Entity(model, makeVector3(-10.0f, 4.0f, 0.0f), ENTITY_MAP);
+	//entity->setRotation(makeVector3(0.0f, 135.0f, 17.0f));
+	//entity->setScale(makeVector3(0.02f, 0.02f, 0.02f));
+	//entity->setVelocity(makeVector3(0.003f,0.0f,-0.003f));
+	//_children->push_back(entity);
 
 	//beczka
-	model = new ModelObject(new Model("Models/b1/barrel.obj"), NULL);
-	entity = new Entity(model, makeVector3(-8.7f, -1.5f, 1.5f), ENTITY_MAP);
-	entity->setScale(makeVector3(0.6f, 0.6f, 0.6f));
-	_children->push_back(entity);
+	//model = new ModelObject(new Model("Models/b1/barrel.obj"), NULL);
+	//entity = new Entity(model, makeVector3(-8.7f, -1.5f, 1.5f), ENTITY_MAP);
+	//entity->setScale(makeVector3(0.6f, 0.6f, 0.6f));
+	//_children->push_back(entity);
 
 	//lampa  z wielkim Bounding box
 	//IObject *model = new ModelObject(new Model("Models/lampbb/Light Pole.obj"), NULL);
@@ -140,11 +140,25 @@ Scene::Scene()
 	//_children->push_back(entity);
 
 	//r2d2
-	model = new ModelObject(new Model("Models/r2d2/untitled.obj"), NULL);
-	entity = new Entity(model, makeVector3(0.0f, -1.5f, +13.8f), ENTITY_MAP);
-	entity->setScale(makeVector3(0.7f, 0.7f, 0.7f));
-	entity->setRotationVelocity(makeVector3(0.0f, 1.0f, 0.0f));
-	_children->push_back(entity);
+	//model = new ModelObject(new Model("Models/r2d2/untitled.obj"), NULL);
+	//entity = new Entity(model, makeVector3(0.0f, -1.5f, +13.8f), ENTITY_MAP);
+	//entity->setScale(makeVector3(0.7f, 0.7f, 0.7f));
+	//entity->setRotationVelocity(makeVector3(0.0f, 1.0f, 0.0f));
+	//_children->push_back(entity);
+
+	//portal 1
+	//model = new ModelObject(new Model("Models/portalbutton/portalbutton.obj"), NULL);
+	//entity = new Entity(model, makeVector3(-5.0f, 0.9f, -8.5f), ENTITY_MAP);
+	//entity->setRotation(makeVector3(-10.0f, 0.0f, 180.0f));
+	//entity->setScale(makeVector3(0.02f, 0.02f, 0.02f));
+	//_children->push_back(entity);
+
+	//portal 2
+	//model = new ModelObject(new Model("Models/portalbutton/portalbutton.obj"), NULL);
+	//entity = new Entity(model, makeVector3(5.0f, 0.9f, -8.5f), ENTITY_MAP);
+	//entity->setRotation(makeVector3(-10.0f, 0.0f, 180.0f));
+	//entity->setScale(makeVector3(0.02f, 0.02f, 0.02f));
+	//_children->push_back(entity);
 	
 
 	//WALLS
