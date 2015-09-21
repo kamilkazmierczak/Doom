@@ -17,8 +17,7 @@ private:
 
 	//temporary (potem to jakos inaczej zrob)
 	Sphere *_bullet;
-	Model *_dalek;
-
+	vector<Model*> *_dalekArray;
 	//void loadVertices(GLvoid *table, GLsizeiptr size, vector<ThreeVertices>*Vertices, GLsizeiptr dataSize);
 
 	ResourceManager();
@@ -30,7 +29,7 @@ public:
 
 	//temporary (potem to jakos inaczej zrob)
 	Sphere *getBullet();
-	Model *getDalek();
+	vector<Model*> *getDalekArray();
 	
 
 	static ResourceManager& getResourceManager();

@@ -148,7 +148,7 @@ void PlayerInputSystem::mouseButtonCallback(GLFWwindow* window, int button, int 
 			}
 			else
 			{
-				cout << "patrzysz na srodek" << endl;
+				//cout << "patrzysz na srodek" << endl;
 				//chyba
 				entity->setVelocity(makeVector3(BulletSpeed, BulletSpeed, BulletSpeed));
 			}
@@ -157,8 +157,8 @@ void PlayerInputSystem::mouseButtonCallback(GLFWwindow* window, int button, int 
 			_lastShootTime = glfwGetTime();
 			player->setAmmo(-1.0f);
 
-			cout << "Ammo left:" << endl;
-			cout << player->getAmmo() << endl;
+			//cout << "Ammo left:" << endl;
+			//cout << player->getAmmo() << endl;
 
 		}
 	} 

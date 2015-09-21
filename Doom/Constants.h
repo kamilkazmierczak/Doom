@@ -14,7 +14,7 @@ const GLfloat TimeToEscape = 1.5f; //czas z jakim dalek ignoruje obecnosc kamery
 const GLfloat ReloadTime = 0.0f;
 const GLfloat MaxAmmo = 15.0f;
 const GLfloat BulletDamage = 100.0f; //1.0f //  zycie = 100 //ale wykrywa kilka kolizji - nie chce mi sie tego przerabiac
-
+const int NumberOfDaleks = 4;
 
 /*
 #error C1189: #error :  gl.h included before glew.h

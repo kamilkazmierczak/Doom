@@ -30,16 +30,22 @@ Sphere* ResourceManager::getBullet()
 	return _bullet;
 }
 
-Model* ResourceManager::getDalek()
+vector<Model*>* ResourceManager::getDalekArray()
 {
-	return _dalek;
+	return _dalekArray;
 }
+
 
 ResourceManager::ResourceManager()
 {
 
 	_bullet = new Sphere(BulletRadius, 15, 15);
-	_dalek = new Model("Models/dalek/Dalek.obj");
+	_dalekArray = new vector<Model*>();
+
+	for (int i = 0; i < NumberOfDaleks; i++)
+	{
+		_dalekArray->push_back(new Model("Models/dalek/Dalek.obj"));
+	}
 
 
 	//Shaders

@@ -228,7 +228,7 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 									bool bCollided = SpherePolygonCollision(*real, sphereCentreReal, 3, sphereObj->getRadius());
 									if (bCollided)
 									{
-										cout << "kolizja sfery" << endl;
+										//cout << "kolizja sfery" << endl;
 
 										
 										sphereObj->destroy();
@@ -468,11 +468,14 @@ void RenderSystem::update(vector<Entity *> *entityArray)
 			ModelObject *enemyObj = nullptr;
 			try { enemyObj = dynamic_cast<ModelObject*>(entity->getObject()); }
 			catch (bad_cast& bc){ cerr << "bad_cast caught: " << bc.what() << endl; }
+			EnvironmentReactions *environment = &EnvironmentReactions::getEnvironmentReactions();
+
 
 			if (enemyObj->getHealth() <= 0.0f)
 			{
 				cout << "ktos tu umarl" << endl;
 				destroy = true;
+				environment->countDalek();
 			}
 
 		}
