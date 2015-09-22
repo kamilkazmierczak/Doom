@@ -63,32 +63,52 @@ ResourceManager::ResourceManager()
 	_shaderArray->push_back(lampShader);
 												
 	Light light1;
-	light1.position = vec3(0.0f, 2.0f, 5.0f);
-	light1.ambient = vec3(0.2f, 0.2f, 0.2f);
+	light1.position = vec3(3.0f, 0.0f, 8.0f);
+	/*light1.ambient = vec3(0.2f, 0.2f, 0.2f); //srednie
 	light1.diffuse = vec3(0.5f, 0.5f, 0.5f);
-	light1.specular = vec3(0.5f, 0.5f, 0.5f);
-	//light.ambient = vec3(0.05f, 0.05f, 0.05f);
-	//light.diffuse = vec3(1.0f, 1.0f, 1.0f);
-	//light.specular = vec3(1.0f, 1.0f, 1.0f);
+	light1.specular = vec3(0.5f, 0.5f, 0.5f);*/
+
+	light1.ambient = vec3(0.4f, 0.4f, 0.4f);
+	light1.diffuse = vec3(0.5f, 0.5f, 0.5f);
+	light1.specular = vec3(0.3f, 0.3f, 0.3f);
+
+	/*light1.ambient = vec3(0.05f, 0.05f, 0.05f);
+	light1.diffuse = vec3(1.0f, 1.0f, 1.0f);
+	light1.specular = vec3(1.0f, 1.0f, 1.0f);*/
 
 	//light2
-	Light light2;
-	light2.position = vec3(0.0f, 2.0f, -6.0f);
-	light2.ambient = vec3(0.2f, 0.2f, 0.2f);
-	light2.diffuse = vec3(0.5f, 0.5f, 0.5f);
-	light2.specular = vec3(0.5f, 0.5f, 0.5f);
-	//light.ambient = vec3(0.05f, 0.05f, 0.05f);
-	//light.diffuse = vec3(1.0f, 1.0f, 1.0f);
-	//light.specular = vec3(1.0f, 1.0f, 1.0f);
+	Light sun;
+	sun.position = vec3(0.0f, 60.0f, -120.0f);
+	/*sun.position = vec3(-3.0f, 0.0f, -8.0f);
+
+	sun.ambient = vec3(0.4f, 0.4f, 0.4f);
+	sun.diffuse = vec3(0.5f, 0.5f, 0.5f);
+	sun.specular = vec3(0.3f, 0.3f, 0.3f);*/
+
+	//lekkie
+	//light2.ambient = vec3(0.2f, 0.2f, 0.2f);
+	//light2.diffuse = vec3(0.5f, 0.5f, 0.5f);
+	//light2.specular = vec3(0.5f, 0.5f, 0.5f);
+	
+	//mocne
+	//sun.ambient = vec3(0.05f, 0.05f, 0.05f);
+	//sun.diffuse = vec3(1.0f, 1.0f, 1.0f);
+	//sun.specular = vec3(1.0f, 1.0f, 1.0f);
+
+	//good
+	sun.ambient = vec3(0.05f, 0.05f, 0.05f);
+	sun.diffuse = vec3(0.2f, 0.2f, 0.2f);
+	sun.specular = vec3(0.5f, 0.5f, 0.5f);
+
 
 	Material material;
-	//material.specular = vec3(0.5f, 0.5f, 0.5f);
-	material.specular = vec3(0.0f, 0.0f, 0.0f);
+	material.specular = vec3(0.5f, 0.5f, 0.5f);
+	//material.specular = vec3(0.0f, 0.0f, 0.0f);
 	material.shininess = 32.0f;
 
 	vector<Light> *lights = new vector<Light>();
 	lights->push_back(light1);
-	lights->push_back(light2);
+	lights->push_back(sun);
 
 
 	//1

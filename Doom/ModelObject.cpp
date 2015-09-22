@@ -81,34 +81,40 @@ void ModelObject::configShader(mat4& model, mat4& view, mat4& projection)
 	// Point light 1
 	glUniform3f(_shader->getUniformLocation("pointLights[0].position"), lamp1Position.x, lamp1Position.y, lamp1Position.z);
 
-	glUniform3f(_shader->getUniformLocation("pointLights[0].ambient"), 0.05f, 0.05f, 0.05f);
-	glUniform3f(_shader->getUniformLocation("pointLights[0].diffuse"), 1.0f, 1.0f, 1.0f);
-	glUniform3f(_shader->getUniformLocation("pointLights[0].specular"), 1.0f, 1.0f, 1.0f);
-	//glUniform3f(_shader->getUniformLocation("pointLights[0].ambient"), 
-	//	0.2f, 
-	//	0.2f, 
-	//	0.2f);
-	//glUniform3f(_shader->getUniformLocation("pointLights[0].diffuse"), 
-	//	0.5f, 
-	//	0.5f, 
-	//	0.5f);
-	//glUniform3f(_shader->getUniformLocation("pointLights[0].specular"), 
-	//	0.5f, 
-	//	0.5f, 
-	//	0.5f);
+	glUniform3f(_shader->getUniformLocation("pointLights[0].ambient"), 
+		resourceManager->getVertexBufferArray()->at(5)->getShaderData()->get_uLightArray()->at(0).ambient.x,
+		resourceManager->getVertexBufferArray()->at(5)->getShaderData()->get_uLightArray()->at(0).ambient.y,
+		resourceManager->getVertexBufferArray()->at(5)->getShaderData()->get_uLightArray()->at(0).ambient.z);
+	glUniform3f(_shader->getUniformLocation("pointLights[0].diffuse"), 
+		resourceManager->getVertexBufferArray()->at(5)->getShaderData()->get_uLightArray()->at(0).diffuse.x,
+		resourceManager->getVertexBufferArray()->at(5)->getShaderData()->get_uLightArray()->at(0).diffuse.y,
+		resourceManager->getVertexBufferArray()->at(5)->getShaderData()->get_uLightArray()->at(0).diffuse.z);
+	glUniform3f(_shader->getUniformLocation("pointLights[0].specular"), 
+		resourceManager->getVertexBufferArray()->at(5)->getShaderData()->get_uLightArray()->at(0).specular.x,
+		resourceManager->getVertexBufferArray()->at(5)->getShaderData()->get_uLightArray()->at(0).specular.y,
+		resourceManager->getVertexBufferArray()->at(5)->getShaderData()->get_uLightArray()->at(0).specular.z);
 
 
-	glUniform1f(_shader->getUniformLocation("pointLights[0].constant"), 1.0f);
-	glUniform1f(_shader->getUniformLocation("pointLights[0].linear"), 0.009);
-	glUniform1f(_shader->getUniformLocation("pointLights[0].quadratic"), 0.0032);
+
 	// Point light 2
 	glUniform3f(_shader->getUniformLocation("pointLights[1].position"), lamp2Position.x, lamp2Position.y, lamp2Position.z);
-	glUniform3f(_shader->getUniformLocation("pointLights[1].ambient"), 0.05f, 0.05f, 0.05f);
-	glUniform3f(_shader->getUniformLocation("pointLights[1].diffuse"), 1.0f, 1.0f, 1.0f);
-	glUniform3f(_shader->getUniformLocation("pointLights[1].specular"), 1.0f, 1.0f, 1.0f);
-	glUniform1f(_shader->getUniformLocation("pointLights[1].constant"), 1.0f);
-	glUniform1f(_shader->getUniformLocation("pointLights[1].linear"), 0.009);
-	glUniform1f(_shader->getUniformLocation("pointLights[1].quadratic"), 0.0032);
+
+
+	glUniform3f(_shader->getUniformLocation("pointLights[1].ambient"), 
+		resourceManager->getVertexBufferArray()->at(5)->getShaderData()->get_uLightArray()->at(1).ambient.x,
+		resourceManager->getVertexBufferArray()->at(5)->getShaderData()->get_uLightArray()->at(1).ambient.y,
+		resourceManager->getVertexBufferArray()->at(5)->getShaderData()->get_uLightArray()->at(1).ambient.z);
+
+	glUniform3f(_shader->getUniformLocation("pointLights[1].diffuse"),
+		resourceManager->getVertexBufferArray()->at(5)->getShaderData()->get_uLightArray()->at(1).diffuse.x,
+		resourceManager->getVertexBufferArray()->at(5)->getShaderData()->get_uLightArray()->at(1).diffuse.y,
+		resourceManager->getVertexBufferArray()->at(5)->getShaderData()->get_uLightArray()->at(1).diffuse.z);
+
+	glUniform3f(_shader->getUniformLocation("pointLights[1].specular"),
+		resourceManager->getVertexBufferArray()->at(5)->getShaderData()->get_uLightArray()->at(1).specular.x,
+		resourceManager->getVertexBufferArray()->at(5)->getShaderData()->get_uLightArray()->at(1).specular.y,
+		resourceManager->getVertexBufferArray()->at(5)->getShaderData()->get_uLightArray()->at(1).specular.z);
+
 
 
 	//przekazanie do shadera
