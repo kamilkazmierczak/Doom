@@ -35,21 +35,27 @@ void PlayerInputSystem::update()
 	_deltaTime = currentFrame - _lastFrame;
 	_lastFrame = currentFrame;
 
-	
-	if (_currentCamera != NULL && glfwGetInputMode(_window, GLFW_CURSOR) == GLFW_CURSOR_DISABLED)
-	{
-		// Camera controls
-		if (glfwGetKey(_window, GLFW_KEY_W))
-			_currentCamera->ProcessKeyboard(FORWARD, _deltaTime);	
-		if (glfwGetKey(_window, GLFW_KEY_S))
-			_currentCamera->ProcessKeyboard(BACKWARD, _deltaTime);
-		if (glfwGetKey(_window, GLFW_KEY_A))
-			_currentCamera->ProcessKeyboard(LEFT, _deltaTime);
-		if (glfwGetKey(_window, GLFW_KEY_D))
-			_currentCamera->ProcessKeyboard(RIGHT, _deltaTime);
-	}
-	
+	Player *player = &Player::getPlayer();
+	EnvironmentReactions *environment = &EnvironmentReactions::getEnvironmentReactions();
 
+
+	if (player->getHealth() > 0 && !environment->getAllEnemyDeadStatus())
+	{
+
+		if (_currentCamera != NULL && glfwGetInputMode(_window, GLFW_CURSOR) == GLFW_CURSOR_DISABLED)
+		{
+			// Camera controls
+			if (glfwGetKey(_window, GLFW_KEY_W))
+				_currentCamera->ProcessKeyboard(FORWARD, _deltaTime);
+			if (glfwGetKey(_window, GLFW_KEY_S))
+				_currentCamera->ProcessKeyboard(BACKWARD, _deltaTime);
+			if (glfwGetKey(_window, GLFW_KEY_A))
+				_currentCamera->ProcessKeyboard(LEFT, _deltaTime);
+			if (glfwGetKey(_window, GLFW_KEY_D))
+				_currentCamera->ProcessKeyboard(RIGHT, _deltaTime);
+		}
+
+	}
 	
 	
 }

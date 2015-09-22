@@ -13,21 +13,24 @@ MovementSystem::~MovementSystem()
 
 void MovementSystem::update(vector<Entity*> *entityArray)
 {
-	for (vector<Entity *>::iterator iterator = entityArray->begin(); iterator != entityArray->end(); iterator++)
+	Player *player = &Player::getPlayer();
+
+	if (player->getHealth() > 0)
 	{
-		Entity *entity = *iterator;
-		Vector3 oldPosition = entity->getPosition();
+		for (vector<Entity *>::iterator iterator = entityArray->begin(); iterator != entityArray->end(); iterator++)
+		{
+			Entity *entity = *iterator;
+			Vector3 oldPosition = entity->getPosition();
 
-		entity->setPosition(addVector3(entity->getPosition(), entity->getVelocity()));
-		entity->setScale(addVector3(entity->getScale(), entity->getScaleVelocity()));
-		entity->setRotation(addVector3(entity->getRotation(), entity->getRotationVelocity()));
+			entity->setPosition(addVector3(entity->getPosition(), entity->getVelocity()));
+			entity->setScale(addVector3(entity->getScale(), entity->getScaleVelocity()));
+			entity->setRotation(addVector3(entity->getRotation(), entity->getRotationVelocity()));
 
-		vec3 movementDirection = normalize(vec3(entity->getPosition().x, entity->getPosition().y, entity->getPosition().z)
-											- vec3(oldPosition.x, oldPosition.y, oldPosition.z));
-		entity->setMovementDirection(makeVector3(movementDirection.x, movementDirection.y, movementDirection.z));
-
+			vec3 movementDirection = normalize(vec3(entity->getPosition().x, entity->getPosition().y, entity->getPosition().z)
+				- vec3(oldPosition.x, oldPosition.y, oldPosition.z));
+			entity->setMovementDirection(makeVector3(movementDirection.x, movementDirection.y, movementDirection.z));
+		}
 	}
-
 }
 
 

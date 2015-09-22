@@ -396,14 +396,20 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 
 				if (entity->getType() == ENTITY_ENEMY)
 				{
-					//Player *player = &Player::getPlayer();
-					if (EnemyMovementEnabled/* && player->getHealth()>0.0f*/)
+					
+					if (EnemyMovementEnabled)
 					{
 						modelObj->getAi()->move(entity, DalekSpeed);
 					}
 					
 				}
 		
+				if (entity->getType() == ENTITY_R2R2)
+				{
+					modelObj->getAi()->move(entity, R2R2Speed);
+				}
+
+
 				//#ARTIFICIAL INTELLIGENCE
 
 

@@ -90,6 +90,7 @@
     <ClCompile Include="MovementSystem.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerInputSystem.cpp" />
+    <ClCompile Include="R2D2Intelligence.cpp" />
     <ClCompile Include="RenderSystem.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Scene.cpp" />
@@ -124,6 +125,7 @@
     <ClInclude Include="MovementSystem.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerInputSystem.h" />
+    <ClInclude Include="R2D2Intelligence.h" />
     <ClInclude Include="RenderSystem.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="Scene.h" />
