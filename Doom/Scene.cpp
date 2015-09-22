@@ -97,11 +97,11 @@ Scene::Scene()
 	_children->push_back(entity);*/
 
 	//model - gun
-	model = new ModelObject(new Model("Models/gun/freeze_gun.obj"), NULL);
+	/*model = new ModelObject(new Model("Models/gun/freeze_gun.obj"), NULL);
 	entity = new Entity(model, makeVector3(8.7f, -0.3f, -1.2f), ENTITY_MAP);
 	entity->setScale(makeVector3(0.007f, 0.007f, 0.007f));
 	entity->setRotationVelocity(makeVector3(0.0f, -1.0f, 0.0f));
-	_children->push_back(entity);
+	_children->push_back(entity);*/
 
 	//drewniana skrzynka
 	/*model = new ModelObject(new Model("Models/woodenbox/Wooden_Box.obj"), NULL);

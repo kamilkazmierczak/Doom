@@ -396,7 +396,8 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 
 				if (entity->getType() == ENTITY_ENEMY)
 				{
-					if (EnemyMovementEnabled)
+					//Player *player = &Player::getPlayer();
+					if (EnemyMovementEnabled/* && player->getHealth()>0.0f*/)
 					{
 						modelObj->getAi()->move(entity, DalekSpeed);
 					}
@@ -543,16 +544,40 @@ void RenderSystem::renderTextInformation()
 	TextRender *textRender = &TextRender::getTextRender();
 	Player *player = &Player::getPlayer();
 
-	textRender->renderText("Health: ", 25.0f, 25.0f, 1.0f, glm::vec3(0.5, 0.8f, 0.2f));
-	textRender->renderText("Ammo: ", WIDTH - 235.0f, 25.0f, 1.0f, glm::vec3(0.5, 0.8f, 0.2f));
-
 	GLfloat healthf = player->getHealth();
 	GLfloat ammof = player->getAmmo();
 	string health = to_string(healthf).substr(0, to_string(healthf).find_last_of("."));
 	string ammo = to_string(ammof).substr(0, to_string(ammof).find_last_of("."));
 
-	textRender->renderText(health, 180.0f, 25.0f, 1.0f, glm::vec3(0.5, 0.8f, 0.2f));
-	textRender->renderText(ammo, WIDTH - 80.0f, 25.0f, 1.0f, glm::vec3(0.5, 0.8f, 0.2f));
+
+	if (healthf<=30.0f)
+	{
+		textRender->renderText("Health: ", 25.0f, 25.0f, 1.0f, glm::vec3(1.0, 0.0f, 0.0f));
+		textRender->renderText(health, 195.0f, 25.0f, 1.0f, glm::vec3(1.0, 0.0f, 0.0f));
+	}
+	else
+	{
+		textRender->renderText("Health: ", 25.0f, 25.0f, 1.0f, glm::vec3(0.5, 0.8f, 0.2f));
+		textRender->renderText(health, 195.0f, 25.0f, 1.0f, glm::vec3(0.5, 0.8f, 0.2f));
+	}
+
+	textRender->renderText("Ammo: ", WIDTH - 223.0f, 25.0f, 1.0f, glm::vec3(0.0, 0.5f, 1.0f));
+	textRender->renderText(ammo, WIDTH - 68.0f, 25.0f, 1.0f, glm::vec3(0.0, 0.5f, 1.0f));
+
+
+	EnvironmentReactions *environment = &EnvironmentReactions::getEnvironmentReactions();
+	if (environment->getAllEnemyDeadStatus() == true)
+	{
+		textRender->renderText("VICTORY!", (WIDTH / 2) - 185.0f, HEIGHT / 2, 2.0f, glm::vec3(1.0, 0.5f, 0.0f));
+	}else if(healthf <= 0.0f)
+	{
+		textRender->renderText("GAME OVER", (WIDTH / 2) - 250.0f, HEIGHT / 2, 2.0f, glm::vec3(1.0, 0.0f, 0.0f));
+	}
+
+
+	//textRender->renderText("GAME OVER", (WIDTH/2)-250.0f, HEIGHT/2, 2.0f, glm::vec3(1.0, 0.0f, 0.0f));
+	//textRender->renderText("VICTORY!", (WIDTH / 2) - 185.0f, HEIGHT / 2, 2.0f, glm::vec3(1.0, 0.5f, 0.0f));
+
 
 	//textRender->renderText("(C) LearnOpenGL.com", 540.0f, 570.0f, 0.5f, glm::vec3(0.3, 0.7f, 0.9f));
 }

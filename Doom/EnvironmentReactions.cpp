@@ -1,7 +1,7 @@
 #include "EnvironmentReactions.h"
 
 
-EnvironmentReactions::EnvironmentReactions() :_deadDalekNumber(0)
+EnvironmentReactions::EnvironmentReactions() :_deadDalekNumber(0), _allEnemyDead(false)
 {
 }
 
@@ -26,8 +26,8 @@ void EnvironmentReactions::createWave()
 
 	if (_deadDalekNumber >= NumberOfDaleks - 1)
 	{
-		//if (_deadDalekNumber >= NumberOfDaleks)
-			//cout << "wygrales" << endl;
+		if (_deadDalekNumber >= NumberOfDaleks)
+			_allEnemyDead = true;
 	}
 	else //sprawdz czy jest koniecznosc i wygeneruj dalka
 	{
@@ -96,6 +96,10 @@ void EnvironmentReactions::takeAmmo()
 
 }
 
+bool EnvironmentReactions::getAllEnemyDeadStatus()
+{
+	return _allEnemyDead;
+}
 
 
 EnvironmentReactions& EnvironmentReactions::getEnvironmentReactions()

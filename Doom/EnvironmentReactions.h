@@ -15,14 +15,16 @@ private:
 
 	int _deadDalekNumber;
 	
+	bool _allEnemyDead;
+
 	EnvironmentReactions();
 	~EnvironmentReactions();
 
 public:
 
 	void react();
-	
 	void countDalek();
+	bool getAllEnemyDeadStatus();
 
 
 	static EnvironmentReactions& getEnvironmentReactions();

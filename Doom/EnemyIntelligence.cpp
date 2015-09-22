@@ -13,6 +13,7 @@ EnemyIntelligence::~EnemyIntelligence()
 
 void EnemyIntelligence::move(Entity* entity, GLfloat speed)
 {
+
 	if (_collisionTime + TimeToEscape < glfwGetTime())
 	{
 		//go to camera
