@@ -32,6 +32,7 @@ private:
 
 	void update(vector<Entity *> *entityArray);
 	void checkForNewObjects(vector<Entity *> *entityArray);
+	void renderTextInformation();
 
 	bool _firstRender;
 

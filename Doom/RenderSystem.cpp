@@ -5,6 +5,7 @@
 #include "CollisionDetection.h"
 #include "Player.h"
 #include "EnvironmentReactions.h"
+#include "TextRender.h"
 #include <glm/gtx/vector_angle.hpp>
 #include <glm/gtx/string_cast.hpp>
 using namespace glm;
@@ -22,6 +23,9 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 	projection = perspective(radians(_cameraSystem->getCurrentCamera()->Zoom), (GLfloat)WIDTH / (GLfloat)HEIGHT, 0.1f, 100.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	
+	
+
 	//wywal _currentCamera i uzywaj _cameraSystem;
 	//_cameraSystem->getCurrentCamera()->getCenter();
 	view = _cameraSystem->getCurrentCamera()->GetViewMatrix();
@@ -31,6 +35,7 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 	for (vector<Entity *>::iterator iterator = entityArray->begin(); iterator != entityArray->end(); iterator++)
 	{
 		glEnable(GL_DEPTH_TEST); //tego tu nie powinno byc ale jakims cudem sie wylacza samo wiec trzeba wlaczac
+		
 		Entity *entity = *iterator;
 		distance = std::distance(entityArray->begin(), iterator);
 		entity->loadRealVertices(); //to pobiera efet dzialania funkji loadRealVertices(model) (dla obiektow)
@@ -278,8 +283,11 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 		
 						if (bulletRadius + _cameraSystem->getCurrentCamera()->getRadius() > spheresDistance)
 						{
-							cout << "trafiony" << endl;
-							cout << "#" << endl;
+							//cout << "trafiony" << endl;
+							//cout << "#" << endl;
+							player->changeHealth(-DalekBulletDamage);
+
+
 							sphereObj->destroy();
 						}
 						
@@ -514,6 +522,7 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 
 
 	}
+	renderTextInformation();
 	glfwSwapBuffers(_window);
 	_firstRender = false;
 	if (_firstRender != true)
@@ -524,6 +533,28 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 
 	glfwPollEvents();
 	i = 0;
+}
+
+
+
+
+void RenderSystem::renderTextInformation()
+{
+	TextRender *textRender = &TextRender::getTextRender();
+	Player *player = &Player::getPlayer();
+
+	textRender->renderText("Health: ", 25.0f, 25.0f, 1.0f, glm::vec3(0.5, 0.8f, 0.2f));
+	textRender->renderText("Ammo: ", WIDTH - 235.0f, 25.0f, 1.0f, glm::vec3(0.5, 0.8f, 0.2f));
+
+	GLfloat healthf = player->getHealth();
+	GLfloat ammof = player->getAmmo();
+	string health = to_string(healthf).substr(0, to_string(healthf).find_last_of("."));
+	string ammo = to_string(ammof).substr(0, to_string(ammof).find_last_of("."));
+
+	textRender->renderText(health, 180.0f, 25.0f, 1.0f, glm::vec3(0.5, 0.8f, 0.2f));
+	textRender->renderText(ammo, WIDTH - 80.0f, 25.0f, 1.0f, glm::vec3(0.5, 0.8f, 0.2f));
+
+	//textRender->renderText("(C) LearnOpenGL.com", 540.0f, 570.0f, 0.5f, glm::vec3(0.3, 0.7f, 0.9f));
 }
 
 

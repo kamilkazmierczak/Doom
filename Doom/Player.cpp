@@ -28,7 +28,13 @@ GLfloat Player::getHealth()
 
 void Player::changeHealth(GLfloat change)
 {
-	_health += change;
+	if (_health+change < 0)
+	{
+		_health = 0.0f;
+	}else
+	{
+		_health += change;
+	}
 }
 
 GLfloat Player::getAmmo()

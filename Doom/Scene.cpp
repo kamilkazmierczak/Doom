@@ -77,14 +77,14 @@ Scene::Scene()
 	_children->push_back(entity);
 
 	//dalek2
-	//model = new ModelObject(resourceManager->getDalekArray()->at(1), new EnemyIntelligence());
-	//entity = new Entity(model, makeVector3(5.0f, -1.5f, -8.5f), ENTITY_ENEMY);
-	//u = vec2(0.0f, 1.0f); //wektor wskazujacy kierunek wzroku modelu
-	//v = normalize(vec2(CameraPosition.x, CameraPosition.z) - vec2(entity->getPosition().x, entity->getPosition().z));
-	//angle = -1 * 180 / pi<GLfloat>() * fmodf(atan2(u.x*v.y - v.x*u.y, u.x*v.x + u.y*v.y), 2 * pi<GLfloat>());
-	//entity->setRotation(makeVector3(0.0f, entity->getRotation().y + angle, 0.0f));
-	//entity->setScale(makeVector3(0.007f, 0.007f, 0.007f));
-	//_children->push_back(entity);
+	model = new ModelObject(resourceManager->getDalekArray()->at(1), new EnemyIntelligence());
+	entity = new Entity(model, makeVector3(5.0f, -1.5f, -8.5f), ENTITY_ENEMY);
+	u = vec2(0.0f, 1.0f); //wektor wskazujacy kierunek wzroku modelu
+	v = normalize(vec2(CameraPosition.x, CameraPosition.z) - vec2(entity->getPosition().x, entity->getPosition().z));
+	angle = -1 * 180 / pi<GLfloat>() * fmodf(atan2(u.x*v.y - v.x*u.y, u.x*v.x + u.y*v.y), 2 * pi<GLfloat>());
+	entity->setRotation(makeVector3(0.0f, entity->getRotation().y + angle, 0.0f));
+	entity->setScale(makeVector3(0.007f, 0.007f, 0.007f));
+	_children->push_back(entity);
 
 
 
@@ -97,11 +97,11 @@ Scene::Scene()
 	_children->push_back(entity);*/
 
 	//model - gun
-	/*model = new ModelObject(new Model("Models/gun/freeze_gun.obj"), NULL);
+	model = new ModelObject(new Model("Models/gun/freeze_gun.obj"), NULL);
 	entity = new Entity(model, makeVector3(8.7f, -0.3f, -1.2f), ENTITY_MAP);
 	entity->setScale(makeVector3(0.007f, 0.007f, 0.007f));
 	entity->setRotationVelocity(makeVector3(0.0f, -1.0f, 0.0f));
-	_children->push_back(entity);*/
+	_children->push_back(entity);
 
 	//drewniana skrzynka
 	/*model = new ModelObject(new Model("Models/woodenbox/Wooden_Box.obj"), NULL);
@@ -111,11 +111,11 @@ Scene::Scene()
 	_children->push_back(entity);*/
 
 	//pudelko z nabojami
-	//model = new ModelObject(new Model("Models/ammobox/box.obj"), NULL);
-	//entity = new Entity(model, makeVector3(8.7f, -0.6f, -2.0f), ENTITY_MAP);
-	//entity->setRotation(makeVector3(0.0f, -45.0f, 0.0f));
-	//entity->setScale(makeVector3(0.007f, 0.007f, 0.007f));
-	//_children->push_back(entity);
+	/*model = new ModelObject(new Model("Models/ammobox/box.obj"), NULL);
+	entity = new Entity(model, makeVector3(8.7f, -0.6f, -2.0f), ENTITY_MAP);
+	entity->setRotation(makeVector3(0.0f, -45.0f, 0.0f));
+	entity->setScale(makeVector3(0.007f, 0.007f, 0.007f));
+	_children->push_back(entity);*/
 	
 	//kartony
 	/*model = new ModelObject(new Model("Models/boxes/untitled.obj"), NULL);
@@ -140,10 +140,10 @@ Scene::Scene()
 	//_children->push_back(entity);
 
 	//beczka
-	//model = new ModelObject(new Model("Models/b1/barrel.obj"), NULL);
-	//entity = new Entity(model, makeVector3(-8.7f, -1.5f, 1.5f), ENTITY_MAP);
-	//entity->setScale(makeVector3(0.6f, 0.6f, 0.6f));
-	//_children->push_back(entity);
+	/*model = new ModelObject(new Model("Models/b1/barrel.obj"), NULL);
+	entity = new Entity(model, makeVector3(-8.7f, -1.5f, 1.5f), ENTITY_MAP);
+	entity->setScale(makeVector3(0.6f, 0.6f, 0.6f));
+	_children->push_back(entity);*/
 
 	//lampa  z wielkim Bounding box
 	//IObject *model = new ModelObject(new Model("Models/lampbb/Light Pole.obj"), NULL);
@@ -230,6 +230,8 @@ Scene::Scene()
 	entity = new Entity(resourceManager->getVertexBufferArray()->at(15), lightPosition2, ENTITY_MAP);
 	//entity->setScale(makeVector3(0.2f, 0.2f, 0.2f));
 	entity->setScale(makeVector3(3.2f, 3.2f, 3.2f));
+	//potem ustaw na (tego i tak nie widac bo jest poza Skybox
+	//entity->setScale(makeVector3(0.0f, 0.0f, 0.0f));
 
 	_children->push_back(entity);
 

@@ -30,6 +30,7 @@ using namespace glm;
 
 
 #include <vector>
+#include <string>
 
 int main(int argc, char **argv)
 {
@@ -37,6 +38,16 @@ int main(int argc, char **argv)
 	GameManager *gameManager = &GameManager::getGameManager();
 	gameManager->runGameLoop();
 	GameManager::destroyGameManager();
+
+
+	//GLfloat ammo = 1123.56123f;
+
+
+
+	//string text = to_string(ammo).substr(0, to_string(ammo).find_last_of("."));
+
+
+	//cout << text << endl;
 
 
 	/*vec3 rr = vec3(0.0f, 0.0f, 0.0f);

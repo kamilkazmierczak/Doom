@@ -26,8 +26,8 @@ void EnvironmentReactions::createWave()
 
 	if (_deadDalekNumber >= NumberOfDaleks - 1)
 	{
-		if (_deadDalekNumber >= NumberOfDaleks)
-			cout << "wygrales" << endl;
+		//if (_deadDalekNumber >= NumberOfDaleks)
+			//cout << "wygrales" << endl;
 	}
 	else //sprawdz czy jest koniecznosc i wygeneruj dalka
 	{
