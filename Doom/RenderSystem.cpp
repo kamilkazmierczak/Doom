@@ -46,7 +46,15 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 		
 		if (_firstRender != true)
 		{
-			_cameraSystem->reactOnMap(entity);
+			if (entity->getType() != ENTITY_GUN)
+			{
+				_cameraSystem->reactOnMap(entity);
+			}
+			else
+			{
+				//setGunPosition(entity);
+			}
+
 			EnvironmentReactions *environment = &EnvironmentReactions::getEnvironmentReactions();
 			environment->react();
 		}	
@@ -307,7 +315,11 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 							otherEntity->loadRealVertices();
 
 							if (otherEntity->getType() == ENTITY_BULLET)
+							{
+								sphereObj->toDestroy();
 								continue;
+							}
+
 
 							if (otherEntity->getVertexBuffer() != NULL &&
 								otherEntity->getVertexBuffer()->getTextureLoader() != NULL &&
@@ -544,6 +556,51 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 
 
 
+void RenderSystem::setGunPosition(Entity* entity)
+{
+	CameraSystem *cameraSystem = &CameraSystem::getCameraSystem();
+	vec3 cameraPosition = cameraSystem->getCurrentCamera()->getPosition();
+	vec3 cameraCenter = cameraSystem->getCurrentCamera()->getCenter();
+	vec3 cameraUp = cameraSystem->getCurrentCamera()->getUp();
+
+
+	vec2 u = vec2(0.0f, -1.0f);
+	vec2 v = vec2(cameraCenter.x, cameraCenter.z);
+	GLfloat CameraAngle = -1 * 180 / pi<GLfloat>() * fmodf(atan2(u.x*v.y - v.x*u.y, u.x*v.x + u.y*v.y), 2 * pi<GLfloat>());
+
+
+	glm::mat4 gunPos = glm::mat4(1.0f);
+
+	gunPos = glm::translate(gunPos, cameraPosition);
+	gunPos = glm::translate(gunPos, cameraCenter);
+
+	gunPos = glm::translate(gunPos, glm::rotateY(glm::vec3(1.35, 0.0f, 1.0f),
+		(glm::radians(CameraAngle) + glm::radians(90.0f))));
+
+
+	vec4 gunPosition = vec4(1.0f);
+	gunPosition = gunPos * gunPosition;
+
+	entity->setPosition(makeVector3(gunPosition.x-1.0f, gunPosition.y-1.0f, gunPosition.z-1.0f));
+
+
+	u = vec2(0.0f, 1.0f); //wektor wskazujacy kierunek wzroku modelu
+	v = normalize(vec2(cameraCenter.x, cameraCenter.z));
+	GLfloat angleX = -1 * 180 / pi<GLfloat>() * fmodf(atan2(u.x*v.y - v.x*u.y, u.x*v.x + u.y*v.y), 2 * pi<GLfloat>());
+	
+	u = vec2(1.0f, 0.0f); //wektor wskazujacy kierunek wzroku modelu
+	v = normalize(vec2(1.0f, cameraCenter.y));
+	GLfloat angleY = -1 * 180 / pi<GLfloat>() * fmodf(atan2(u.x*v.y - v.x*u.y, u.x*v.x + u.y*v.y), 2 * pi<GLfloat>());
+	
+
+	entity->setRotation(makeVector3(-angleY, angleX, entity->getRotation().z));
+
+
+}
+
+
+
+
 
 void RenderSystem::renderTextInformation()
 {
@@ -580,6 +637,8 @@ void RenderSystem::renderTextInformation()
 		textRender->renderText("GAME OVER", (WIDTH / 2) - 250.0f, HEIGHT / 2, 2.0f, glm::vec3(1.0, 0.0f, 0.0f));
 	}
 
+
+	//textRender->renderText("PAUSE", (WIDTH / 2) - 135.0f, HEIGHT / 2, 2.0f, glm::vec3(1.0, 0.7f, 0.2f));
 
 	//textRender->renderText("GAME OVER", (WIDTH/2)-250.0f, HEIGHT/2, 2.0f, glm::vec3(1.0, 0.0f, 0.0f));
 	//textRender->renderText("VICTORY!", (WIDTH / 2) - 185.0f, HEIGHT / 2, 2.0f, glm::vec3(1.0, 0.5f, 0.0f));

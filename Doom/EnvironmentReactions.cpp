@@ -77,6 +77,7 @@ void EnvironmentReactions::countDalek()
 
 void EnvironmentReactions::takeAmmo()
 {
+	Player *player = &Player::getPlayer();
 
 	CameraSystem *cameraSystem = &CameraSystem::getCameraSystem();
 	vec3 cameraPosition = cameraSystem->getCurrentCamera()->getPosition();
@@ -88,9 +89,9 @@ void EnvironmentReactions::takeAmmo()
 
 	GLfloat distance_ = glm::distance(gunPosition, cameraPosition);
 
-	if (distance_ < gunReactRadius)
+	if (distance_ < gunReactRadius && player->getAmmo()<=0)
 	{
-		Player *player = &Player::getPlayer();
+		//Player *player = &Player::getPlayer();
 		player->setAmmo(MaxAmmo);
 	}
 

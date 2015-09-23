@@ -56,6 +56,33 @@ void PlayerInputSystem::update()
 		}
 
 	}
+
+
+
+	//if (_currentCamera != NULL && glfwGetInputMode(_window, GLFW_CURSOR) == GLFW_CURSOR_DISABLED)
+	//{
+	//	//Pause off
+	//	GameManager *gameManager = &GameManager::getGameManager();
+
+	//	if (glfwGetKey(_window, GLFW_KEY_P) && gameManager->getPausedState()==true)
+	//	{
+	//		cout << "wciiiiisnieto" << endl;
+	//		GameManager *gameManager = &GameManager::getGameManager();
+	//		gameManager->setPauseState(false);
+	//	}
+	//		
+	//}
+
+
+
+	
+
+
+	//	//cout << "wcisnieto pauze" << endl;
+
+	//	//cout << "pause" << endl;
+	//}
+
 	
 	
 }
@@ -79,6 +106,33 @@ void PlayerInputSystem::keyCallback(GLFWwindow* window, int key, int scancode, i
 			glfwSetInputMode(glfwGetCurrentContext(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 		}
 	}
+
+	if (key == GLFW_KEY_P && action == GLFW_PRESS)
+	{
+		GameManager *gameManager = &GameManager::getGameManager();
+
+		if (gameManager->getPauseState()==true)
+		{
+			gameManager->setPauseState(false);
+		}
+		else
+		{
+			gameManager->setPauseState(true);
+			TextRender *textRender = &TextRender::getTextRender();
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+			textRender->renderText("PAUSE", (WIDTH / 2) - 135.0f, HEIGHT / 2, 2.0f, glm::vec3(1.0, 0.7f, 0.2f));
+			glfwSwapBuffers(_window);
+		}
+
+		
+	}
+
+	if (key == GLFW_KEY_ENTER && action == GLFW_PRESS)
+	{
+		GameManager *gameManager = &GameManager::getGameManager();
+		gameManager->setPauseState(false);
+	}
+
 	
 }
 

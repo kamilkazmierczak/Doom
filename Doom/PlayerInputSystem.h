@@ -2,6 +2,7 @@
 #include <iostream>
 #include "Entity.h"
 #include "EnvironmentReactions.h"
+#include "TextRender.h"
 #include "Camera.h"
 #include <GLFW/glfw3.h>
 

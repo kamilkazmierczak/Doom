@@ -83,6 +83,16 @@ public:
 		return this->Position;
 	}
 
+	glm::vec3 getPositionFront()
+	{
+		return (this->Position + this->Front);
+	}
+
+	glm::vec3 getUp()
+	{
+		return this->Up;
+	}
+
 	GLfloat getRadius()
 	{
 		return _radius;

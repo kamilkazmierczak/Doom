@@ -15,6 +15,8 @@ class GameManager
 private:
 
 	bool _running;
+	bool _pause;
+	//bool _paused; //przez dziwne zachowanie glfw nie da sie inaczej
 	RenderSystem *_renderSystem;
 	ResourceManager *_resourceManager;
 	MovementSystem *_movementSystem;
@@ -41,6 +43,9 @@ public:
 	void runGameLoop();
 	GLfloat getDeltaTime();
 	Scene *getScene();
+
+	bool getPauseState();
+	void setPauseState(bool option);
 
 	static GameManager& getGameManager();
 	static void destroyGameManager();

@@ -8,9 +8,13 @@
 GameManager::GameManager(bool running)
 	:_running(running), _window(glfwGetCurrentContext()), _renderSystem(&RenderSystem::getRenderSystem()),
 	_resourceManager(&ResourceManager::getResourceManager()), _movementSystem(&MovementSystem::getMovementSystem()),
-	_cameraSystem(&CameraSystem::getCameraSystem()), _scene(new Scene), _playerInputSystem(&PlayerInputSystem::getPlayerInputSystem())
+	_cameraSystem(&CameraSystem::getCameraSystem()), _scene(new Scene), _playerInputSystem(&PlayerInputSystem::getPlayerInputSystem()),
+	_pause(true)
 {
-
+	TextRender *textRender = &TextRender::getTextRender();
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	textRender->renderText("PRESS ENTER", (WIDTH / 2) - 290.0f, HEIGHT / 2, 2.0f, glm::vec3(1.0, 0.7f, 0.2f));
+	glfwSwapBuffers(_window);
 }
 
 
@@ -29,26 +33,27 @@ void GameManager::runGameLoop()
 	GLfloat lastTime = glfwGetTime(); 
 	_deltaTime = 0.0f; // Time between current frame and last frame
 
-	while (_running){
-		
-		GLfloat currentTime = glfwGetTime();
-		_deltaTime += (currentTime - lastTime) * UpdatesPerSecond;
-		lastTime = currentTime;
-		
-		while (_deltaTime >= 1.0f){
-			_running = !glfwWindowShouldClose(_window);
-			_movementSystem->update(_scene->getChildren());
-			_playerInputSystem->update();
-
-			--_deltaTime;
-		}
-
-		
 	
 
+	while (_running)
+	{	
+			GLfloat currentTime = glfwGetTime();
+			_deltaTime += (currentTime - lastTime) * UpdatesPerSecond;
+			lastTime = currentTime;
 
-		_renderSystem->render(_scene->getChildren());
-		
+			while (_deltaTime >= 1.0f)
+			{
+				_running = !glfwWindowShouldClose(_window);
+				_movementSystem->update(_scene->getChildren());
+				_playerInputSystem->update();
+
+				--_deltaTime;
+			}
+
+			if (_pause == false)	
+				_renderSystem->render(_scene->getChildren());
+			
+			glfwPollEvents();
 	}
 }
 
@@ -118,6 +123,16 @@ void GameManager::destroyGameManager()
 	glfwTerminate();
 }
 
+
+bool GameManager::getPauseState()
+{
+	return _pause;
+}
+
+void GameManager::setPauseState(bool option)
+{
+	_pause = option;
+}
 
 void GameManager::hi()
 {

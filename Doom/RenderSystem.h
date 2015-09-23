@@ -33,8 +33,10 @@ private:
 	void update(vector<Entity *> *entityArray);
 	void checkForNewObjects(vector<Entity *> *entityArray);
 	void renderTextInformation();
+	void setGunPosition(Entity* entity);
 
-	bool _firstRender;
+
+	bool _firstRender; //zmien na freshRender
 
 	RenderSystem();
 	~RenderSystem();

@@ -9,6 +9,7 @@ enum Entity_type {
 	ENTITY_ENEMY,
 	ENTITY_MAP,
 	ENTITY_R2R2,
+	ENTITY_GUN,
 	ENTITY_TEST
 };
 
