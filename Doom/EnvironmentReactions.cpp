@@ -1,7 +1,8 @@
 #include "EnvironmentReactions.h"
+#include "GameManager.h"
 
 
-EnvironmentReactions::EnvironmentReactions() :_deadDalekNumber(0), _allEnemyDead(false)
+EnvironmentReactions::EnvironmentReactions() :_deadDalekNumber(0), _allEnemyDead(false), _resetInformation(false)
 {
 }
 
@@ -17,12 +18,29 @@ void EnvironmentReactions::react()
 	createWave();
 }
 
+void EnvironmentReactions::resetInformation()
+{
+	_resetInformation = true;
+	_allEnemyDead = false;
+	_deadDalekNumber = 0;
+}
+
 
 void EnvironmentReactions::createWave()
 {
 	static int nrOfDeadDaleks = 0;
 	static int portal = 0;
 	static int dalekArray = 2; //bo dwa sa tworzone przez scene ten bd 3
+
+
+	if (_resetInformation)
+	{
+		nrOfDeadDaleks = 0;
+		portal = 0;
+		dalekArray = 2;
+		_resetInformation = false;
+	}
+
 
 	if (_deadDalekNumber >= NumberOfDaleks - 1)
 	{

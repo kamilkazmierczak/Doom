@@ -25,7 +25,7 @@ void EnemyIntelligence::move(Entity* entity, GLfloat speed)
 		moveSomewhere(entity, speed);
 	}
 
-	if (rand() % 100 + 1 <2)
+	if (rand() % 200 + 1 <ShootingConstant)
 	{
 		shoot(entity);
 	} 
@@ -66,7 +66,7 @@ void EnemyIntelligence::shoot(Entity* entity)
 	}
 	else
 	{
-		cout << "patrzysz na srodek" << endl;
+		cout << "patrzysz na srodekk" << endl;
 		//chyba
 		newEntity->setVelocity(makeVector3(BulletSpeed, BulletSpeed, BulletSpeed));
 	}

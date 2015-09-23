@@ -1,4 +1,5 @@
 #pragma once
+//#include "GameManager.h"
 #include "CameraSystem.h"
 #include "Player.h"
 #include "ModelObject.h"
@@ -16,6 +17,7 @@ private:
 	int _deadDalekNumber;
 	
 	bool _allEnemyDead;
+	bool _resetInformation;
 
 	EnvironmentReactions();
 	~EnvironmentReactions();
@@ -25,7 +27,7 @@ public:
 	void react();
 	void countDalek();
 	bool getAllEnemyDeadStatus();
-
+	void resetInformation();
 
 	static EnvironmentReactions& getEnvironmentReactions();
 	static void destroyEnvironmentReactions();

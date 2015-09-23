@@ -133,6 +133,22 @@ void PlayerInputSystem::keyCallback(GLFWwindow* window, int key, int scancode, i
 		gameManager->setPauseState(false);
 	}
 
+	if (key == GLFW_KEY_R && action == GLFW_PRESS)
+	{
+		GameManager *gameManager = &GameManager::getGameManager();
+
+		if (gameManager->getRestartState() == true)
+		{
+			gameManager->setRestartState(false);
+		}
+		else
+		{
+			gameManager->setRestartState(true);
+		}
+
+	}
+
+
 	
 }
 

@@ -1,5 +1,5 @@
 #include "MovementSystem.h"
-
+#include "EnvironmentReactions.h"
 
 MovementSystem::MovementSystem()
 {
@@ -14,8 +14,9 @@ MovementSystem::~MovementSystem()
 void MovementSystem::update(vector<Entity*> *entityArray)
 {
 	Player *player = &Player::getPlayer();
+	EnvironmentReactions *environment = &EnvironmentReactions::getEnvironmentReactions();
 
-	if (player->getHealth() > 0)
+	if (player->getHealth() > 0 && !environment->getAllEnemyDeadStatus())
 	{
 		for (vector<Entity *>::iterator iterator = entityArray->begin(); iterator != entityArray->end(); iterator++)
 		{

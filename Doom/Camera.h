@@ -83,6 +83,22 @@ public:
 		return this->Position;
 	}
 
+	//void setPosition(glm::vec3 newPosition)
+	//{
+	//	this->Position = newPosition;
+	//}
+
+	void resetCamera()
+	{
+		this->Position.x = CameraPosition.x;
+		this->Position.y = CameraPosition.y;
+		this->Position.z = CameraPosition.z;
+		this->WorldUp = glm::vec3(0.0f, 1.0f, 0.0f);
+		this->Yaw = YAW;
+		this->Pitch = PITCH;
+		this->updateCameraVectors();
+	}
+
 	glm::vec3 getPositionFront()
 	{
 		return (this->Position + this->Front);

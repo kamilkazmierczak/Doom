@@ -16,6 +16,7 @@ private:
 
 	bool _running;
 	bool _pause;
+	bool _restart;
 	//bool _paused; //przez dziwne zachowanie glfw nie da sie inaczej
 	RenderSystem *_renderSystem;
 	ResourceManager *_resourceManager;
@@ -41,11 +42,16 @@ private:
 public:
 
 	void runGameLoop();
+	void restartGame();
+
 	GLfloat getDeltaTime();
 	Scene *getScene();
 
 	bool getPauseState();
 	void setPauseState(bool option);
+
+	bool getRestartState();
+	void setRestartState(bool option);
 
 	static GameManager& getGameManager();
 	static void destroyGameManager();

@@ -34,6 +34,7 @@ private:
 	void checkForNewObjects(vector<Entity *> *entityArray);
 	void renderTextInformation();
 	void setGunPosition(Entity* entity);
+	//void restartGame(); //przenies to do gamemanager albo gdzis
 
 
 	bool _firstRender; //zmien na freshRender
@@ -47,6 +48,8 @@ public:
 	//void setCurrentCamera(Camera *newCamera); //to tez przecieza camera system wszystko ma
 
 	vector<Entity *> *getNewObjects();
+
+	void setFreshRender();
 
 	void render(vector<Entity *> *entityArray);
 	static RenderSystem& getRenderSystem();

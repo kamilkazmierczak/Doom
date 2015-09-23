@@ -8,6 +8,9 @@
 #include "TextRender.h"
 #include <glm/gtx/vector_angle.hpp>
 #include <glm/gtx/string_cast.hpp>
+
+//#include "GameManager.h"
+
 using namespace glm;
 
 void RenderSystem::render(vector<Entity*> *entityArray)
@@ -22,6 +25,7 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 
 	projection = perspective(radians(_cameraSystem->getCurrentCamera()->Zoom), (GLfloat)WIDTH / (GLfloat)HEIGHT, 0.1f, 100.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 
 	
 	
@@ -555,6 +559,24 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 }
 
 
+//void  RenderSystem::restartGame()
+//{
+//	GameManager *gameManager = &GameManager::getGameManager();
+//
+//	if (gameManager->getRestartState()==true)
+//	{
+//		cout << "restart" << endl;
+//	}
+//	else
+//	{
+//		cout << "play" << endl;
+//	}
+//
+//}
+
+
+
+
 
 void RenderSystem::setGunPosition(Entity* entity)
 {
@@ -665,7 +687,10 @@ void RenderSystem::checkForNewObjects(vector<Entity *> *entityArray)
 }
 
 
-
+void RenderSystem::setFreshRender()
+{
+	_firstRender = true;
+}
 
 void RenderSystem::update(vector<Entity *> *entityArray)
 {
@@ -741,15 +766,7 @@ RenderSystem::~RenderSystem()
 
 }
 
-//Camera* RenderSystem::getCurrentCamera()
-//{
-//	return _currentCamera;
-//}
-//
-//void RenderSystem::setCurrentCamera(Camera *newCamera)
-//{
-//	_currentCamera = newCamera;
-//}
+
 
 
 RenderSystem& RenderSystem::getRenderSystem()
