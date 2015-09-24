@@ -57,7 +57,7 @@ ShaderInterface::ShaderInterface(const GLchar *VS, const GLchar *FS)
 
 ShaderInterface::~ShaderInterface()
 {
-	//delete shader; //DANGER (moze nie funkcjonowac poprawnie z moim Shader.h
+	//delete shader;
 }
 
 

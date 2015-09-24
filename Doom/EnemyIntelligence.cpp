@@ -43,19 +43,15 @@ void EnemyIntelligence::shoot(Entity* entity)
 	vec3 direction = vec3(entity->getMovementDirection().x, entity->getMovementDirection().y, entity->getMovementDirection().z);
 	//tworzenie naboju 
 	vec3 center = vec3(entity->getMovementDirection().x, entity->getMovementDirection().y, entity->getMovementDirection().z);
-												//te 0.2 nie dziala idealnie bo teraz strzela z roznych miejsc
-												//ale lepiej to wyglada niz ze srodka
-												//jak bd czas zrob zeby zawsze strzelal z swojej broni
+												
 	vec3 position = vec3(entity->getPosition().x + 0.2f, entity->getPosition().y + 0.7f, entity->getPosition().z);
 
-	//testy
 	position = position + 0.8f * direction;
 
 	IObject *sphere = new BulletObject(resourceManager->getBullet(),BU_ENEMY);
 
 	Entity *newEntity = new Entity(sphere, makeVector3(position.x, position.y, position.z), ENTITY_BULLET);
 
-	//GLfloat bulletSpeed = 0.008f;
 	GLfloat max = std::max(std::abs(center.x), std::max(std::abs(center.y), std::abs(center.z)));
 
 	if (max != 0)
@@ -66,8 +62,6 @@ void EnemyIntelligence::shoot(Entity* entity)
 	}
 	else
 	{
-		cout << "patrzysz na srodekk" << endl;
-		//chyba
 		newEntity->setVelocity(makeVector3(BulletSpeed, BulletSpeed, BulletSpeed));
 	}
 
@@ -107,7 +101,6 @@ void EnemyIntelligence::moveToCamera(Entity* entity, GLfloat speed)
 	}
 	else
 	{
-		//chyba teraz patrze na srodek
 		entity->setVelocity(makeVector3(speed, 0.0f, speed));
 	}
 	
@@ -164,7 +157,5 @@ void EnemyIntelligence::moveWhenCollision(Entity *entity, GLfloat speed)
 	vec2 returnSpeed = -vec2(u2.x * cos(glm::radians(angle2)) - u2.y * sin(glm::radians(angle2)), u2.x * sin(glm::radians(angle2)) + u2.y * cos(glm::radians(angle2)));
 	_returnSpeed = makeVector3(returnSpeed.x, 0.0f, returnSpeed.y);
 	_resetRotation = true;
-
-
 
 }

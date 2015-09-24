@@ -2,7 +2,7 @@
 
 #include "IObject.h"
 #include "Sphere.h"
-//#include "ShaderInterface.h"
+
 
 #include <iostream>
 
@@ -19,9 +19,9 @@ class BulletObject : public IObject
 private:
 	GLuint VAO3;
 	Sphere *_sphere;
-	ShaderInterface *_shader; //na razie stala (tworzona w konstruktorze)
+	ShaderInterface *_shader;
 	bool _destroy;
-	Bullet_Type  _bulletType;//lepiej to zrobic jako dwie klasy dzidziczace z klasy BulletObject #nie ma czasu
+	Bullet_Type  _bulletType;
 
 public:
 	void draw();
@@ -32,9 +32,6 @@ public:
 	Object_Type getObjectType();
 	Bullet_Type getBulletType();
 
-
-
-	//tylko BulletObject
 	float getRadius();
 
 	BulletObject(Sphere* sphere, Bullet_Type type);

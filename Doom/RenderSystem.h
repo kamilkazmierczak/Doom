@@ -1,6 +1,6 @@
 #pragma once
 #include <iostream>
-#define GLFW_INCLUDE_GLU //raczej zakazane bo chyba to gluLookAt
+#define GLFW_INCLUDE_GLU
 
 #include <vector>
 #include "ShaderInterface.h"
@@ -8,12 +8,10 @@
 #include "ResourceManager.h"
 #include "Entity.h"
 #include "CameraSystem.h"
-// GLM Mathematics
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <GLFW/glfw3.h>
-//#include "GameManager.h" //po wysokosc i szerokosc do raczej zakazanych funkcji
 using namespace std;
 
 class RenderSystem
@@ -23,29 +21,18 @@ private:
 
 	GLFWwindow *_window;
 	CameraSystem *_cameraSystem;
-
-	//przenies to jak i cala detekcje kolizji do ModelObject
-	//ArtificialIntelligence *_Ai;
-	//Camera *_currentCamera;
-
 	vector<Entity *> *_newObjects;
 
 	void update(vector<Entity *> *entityArray);
 	void checkForNewObjects(vector<Entity *> *entityArray);
 	void renderTextInformation();
 	void setGunPosition(Entity* entity);
-	//void restartGame(); //przenies to do gamemanager albo gdzis
-
-
-	bool _firstRender; //zmien na freshRender
+	bool _firstRender; 
 
 	RenderSystem();
 	~RenderSystem();
 
 public:
-
-	//Camera *getCurrentCamera();   // po co mi to tutaj?
-	//void setCurrentCamera(Camera *newCamera); //to tez przecieza camera system wszystko ma
 
 	vector<Entity *> *getNewObjects();
 

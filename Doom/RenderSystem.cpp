@@ -9,7 +9,6 @@
 #include <glm/gtx/vector_angle.hpp>
 #include <glm/gtx/string_cast.hpp>
 
-//#include "GameManager.h"
 
 using namespace glm;
 
@@ -26,16 +25,10 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 	projection = perspective(radians(_cameraSystem->getCurrentCamera()->Zoom), (GLfloat)WIDTH / (GLfloat)HEIGHT, 0.1f, 100.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-
-	
-	
-
-	//wywal _currentCamera i uzywaj _cameraSystem;
-	//_cameraSystem->getCurrentCamera()->getCenter();
 	view = _cameraSystem->getCurrentCamera()->GetViewMatrix();
-	//_currentCamera->GetViewMatrix();
+	
 
-	//
+	
 	for (vector<Entity *>::iterator iterator = entityArray->begin(); iterator != entityArray->end(); iterator++)
 	{
 		glEnable(GL_DEPTH_TEST); //tego tu nie powinno byc ale jakims cudem sie wylacza samo wiec trzeba wlaczac
@@ -44,8 +37,6 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 		distance = std::distance(entityArray->begin(), iterator);
 		entity->loadRealVertices(); //to pobiera efet dzialania funkji loadRealVertices(model) (dla obiektow)
 
-		//nie jestem pewien czy te podstawienie tu powinno byc
-		//w obiektach pod ten wskaznik podstawiam aktualne realne ale innych obiektow
 		realCurrentVertices = entity->getRealVertices(); 
 		
 		if (_firstRender != true)
@@ -64,16 +55,11 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 		}	
 
 
-
-
-
 		//VertexBuffer
 		if (entity->getVertexBuffer() != NULL)
 		{
 		entity->getVertexBuffer()->getShader()->use();
 
-
-		//zeby sie rowno krecilo we wszystkie strony to rotate(mode,....,vec3(1.0f, 1.0f, 1.0f));
 		model = translate(model, vec3(entity->getPosition().x, entity->getPosition().y, entity->getPosition().z));
 		model = rotate(model, radians(entity->getRotation().x), vec3(1.0f, 0.0f, 0.0f));
 		model = rotate(model, radians(entity->getRotation().y), vec3(0.0f, 1.0f, 0.0f));
@@ -81,33 +67,6 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 		model = scale(model, vec3(entity->getScale().x, entity->getScale().y, entity->getScale().z));
 
 		entity->getVertexBuffer()->loadRealVertices(model);
-
-		
-		//COLLISION DETECTION
-		//vec3 u = vec3(0.0f, 0.0f, 1.0f);
-		//vec3 u2 = vec3(1.0f, 0.0f, 1.0f);
-		////double angle = AngleBetweenVectors(v1, v2);
-		//vec3 v =/* u +*/ u2;
-	
-		//GLfloat angle = glm::orientedAngle(normalize(v1), normalize(newv), vec3(0.0f, 0.0f, 0.0f));
-		//GLfloat angle =glm::orientedAngle(normalize(vec2(newv.x, newv.z)), normalize(vec2(v1.x, v1.z)));
-		/*GLfloat angle;
-		cout << "GLM" << endl;
-		angle = glm::orientedAngle(normalize(vec2(u.x, u.z)), normalize(vec2(v.x, v.z)));
-		cout << angle << endl;
-		cout << "atan2" << endl;
-		angle = atan2(v.z, v.x) - atan2(u.z, u.x);
-		cout << angle << endl;
-
-		cout << "##" << endl;*/
-	/*	cout << newv.x << endl;
-		cout << newv.y << endl;
-		cout << newv.z << endl;*/
-
-	
-		
-
-		//END OF COLLISION DETECTION
 
 
 			//SKYBOX
@@ -135,21 +94,6 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 			entity->getVertexBuffer()->getShaderData()->get_uColorValue().z,
 			entity->getVertexBuffer()->getShaderData()->get_uColorValue().w);
 
-	/*	glUniform3f((entity->getVertexBuffer()->getShader())->get_uLightPosition(),
-			entity->getVertexBuffer()->getShaderData()->get_uLightPosition().x,
-			entity->getVertexBuffer()->getShaderData()->get_uLightPosition().y,
-			entity->getVertexBuffer()->getShaderData()->get_uLightPosition().z);
-
-		glUniform3f((entity->getVertexBuffer()->getShader())->get_uLightPosition2(),
-			entity->getVertexBuffer()->getShaderData()->get_uLightPosition2().x,
-			entity->getVertexBuffer()->getShaderData()->get_uLightPosition2().y,
-			entity->getVertexBuffer()->getShaderData()->get_uLightPosition2().z);*/
-
-
-	/*	glUniform3f((entity->getVertexBuffer()->getShader())->get_uLightPosition2(),
-		entity->getVertexBuffer()->getShaderData()->get_uLightPosition2().x,
-		entity->getVertexBuffer()->getShaderData()->get_uLightPosition2().y,
-		entity->getVertexBuffer()->getShaderData()->get_uLightPosition2().z);*/
 
 		glUniform3f((entity->getVertexBuffer()->getShader())->getUniformLocation("uViewPosition"),
 			_cameraSystem->getCurrentCamera()->getPosition().x,
@@ -202,8 +146,6 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 				entity->getVertexBuffer()->getShaderData()->get_uLightArray()->at(1).specular.z);
 
 
-
-
 			glUniform3f((entity->getVertexBuffer()->getShader())->getUniformLocation("material.specular"),
 				entity->getVertexBuffer()->getShaderData()->get_uMaterial().specular.x,
 				entity->getVertexBuffer()->getShaderData()->get_uMaterial().specular.y,
@@ -211,35 +153,7 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 
 			glUniform1f((entity->getVertexBuffer()->getShader())->getUniformLocation("material.shininess"),
 				entity->getVertexBuffer()->getShaderData()->get_uMaterial().shininess);
-
-
-		/*glUniform3f((entity->getVertexBuffer()->getShader())->getUniformLocation("light.ambient"),
-			entity->getVertexBuffer()->getShaderData()->get_uLight().ambient.x,
-			entity->getVertexBuffer()->getShaderData()->get_uLight().ambient.y,
-			entity->getVertexBuffer()->getShaderData()->get_uLight().ambient.z);
-
-		glUniform3f((entity->getVertexBuffer()->getShader())->getUniformLocation("light.diffuse"),
-			entity->getVertexBuffer()->getShaderData()->get_uLight().diffuse.x,
-			entity->getVertexBuffer()->getShaderData()->get_uLight().diffuse.y,
-			entity->getVertexBuffer()->getShaderData()->get_uLight().diffuse.z);
-
-		glUniform3f((entity->getVertexBuffer()->getShader())->getUniformLocation("light.specular"),
-			entity->getVertexBuffer()->getShaderData()->get_uLight().specular.x,
-			entity->getVertexBuffer()->getShaderData()->get_uLight().specular.y,
-			entity->getVertexBuffer()->getShaderData()->get_uLight().specular.z);
-
 		
-		glUniform3f((entity->getVertexBuffer()->getShader())->getUniformLocation("material.specular"),
-			entity->getVertexBuffer()->getShaderData()->get_uMaterial().specular.x,
-			entity->getVertexBuffer()->getShaderData()->get_uMaterial().specular.y,
-			entity->getVertexBuffer()->getShaderData()->get_uMaterial().specular.z);
-		
-		glUniform1f((entity->getVertexBuffer()->getShader())->getUniformLocation("material.shininess"),
-			entity->getVertexBuffer()->getShaderData()->get_uMaterial().shininess);*/
-
-		
-
-			
 		entity->getVertexBuffer()->renderVertexBuffer();	
 		
 		//SKYBOX
@@ -265,8 +179,6 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 			model = scale(model, vec3(entity->getScale().x, entity->getScale().y, entity->getScale().z));
 
 			entity->getObject()->configShader(model,view,projection); //uruchamia tez shader->Use()
-
-	
 
 
 			//SPHERE
@@ -295,11 +207,7 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 		
 						if (bulletRadius + _cameraSystem->getCurrentCamera()->getRadius() > spheresDistance)
 						{
-							//cout << "trafiony" << endl;
-							//cout << "#" << endl;
 							player->changeHealth(-DalekBulletDamage);
-
-
 							sphereObj->destroy();
 						}
 						
@@ -352,17 +260,11 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 									if (bCollided)
 									{
 										//cout << "kolizja sfery" << endl;
-
-										
 										sphereObj->destroy();
 										
-										
-
-
 										if (otherEntity->getType() == ENTITY_MAP)
 										{
 											//cout << "udzerzyles w mape" << endl;
-											//cout << "end" << endl;
 										}
 
 										if (otherEntity->getType() == ENTITY_ENEMY)
@@ -375,7 +277,7 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 											if (sphereObj->getBulletType() == BU_PLAYER)
 											{
 												cout << enemyObj->getHealth() << endl;
-												//cout << "koniec umierania" << endl;
+												
 												if (enemyObj->getHealth() > 0.0f)
 												{
 													enemyObj->changeHealth(-BulletDamage);
@@ -394,12 +296,12 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 						}
 					}
 				  }
-					//cout << "koniec kolizji ze sfera" << endl;
+					
 				}
-			}//koniec zabawy ze sfera
+			}
 
 
-			//MODEL (nie testowane)
+			//MODEL
 			if (entity->getObject()->getObjectType() == OB_MODEL)
 			{
 				ModelObject *modelObj = nullptr;
@@ -477,9 +379,6 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 											real[1] = &realCurrentVertices->at(k).b;
 											real[2] = &realCurrentVertices->at(k).c;
 
-											//ze wzgledu na ulomnosc funkcji IntersectedPolygon
-											//trzeba jej przekazac wspolrzedne lini
-											//wiec dla trojkata beda to 3 linie
 											vec3 *realLine[2];
 											for (int t = 0; t < 3; t++)
 											{
@@ -497,19 +396,9 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 												_realLine[0] = *realLine[0];
 												_realLine[1] = *realLine[1];
 
-
-												//tu sie dzieje cos dziwnego, ale mozesz przekazac
-												///myReal bez kopiowanie bez sensu, ale NIE MOZESZ
-												//przekazac *realLine bo jakies cuda sie dzieja
-												//i wykrywa kolizje gdy jej nie ma
-
 												bool bCollided = IntersectedPolygon(_myReal, _realLine, 3);
-												//bool bCollided = IntersectedPolygon(*myReal,*realLine, 3);
 												if (bCollided)
 												{
-													//cout << "kolizja modelu" << endl;
-
-													//cout << "moje" << endl;
 
 													if (entity->getType() == ENTITY_ENEMY)
 													{
@@ -525,7 +414,7 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 										}
 									}
 								}
-								//cout << "koniec kolizji z modele" << endl;
+								
 							}
 						}
 					}//Koniec detekcji
@@ -536,7 +425,6 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 
 
 			entity->getObject()->draw();
-			//chyba
 			model = mat4(); 
 		}
 
@@ -557,24 +445,6 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 	glfwPollEvents();
 	i = 0;
 }
-
-
-//void  RenderSystem::restartGame()
-//{
-//	GameManager *gameManager = &GameManager::getGameManager();
-//
-//	if (gameManager->getRestartState()==true)
-//	{
-//		cout << "restart" << endl;
-//	}
-//	else
-//	{
-//		cout << "play" << endl;
-//	}
-//
-//}
-
-
 
 
 
@@ -659,14 +529,6 @@ void RenderSystem::renderTextInformation()
 		textRender->renderText("GAME OVER", (WIDTH / 2) - 250.0f, HEIGHT / 2, 2.0f, glm::vec3(1.0, 0.0f, 0.0f));
 	}
 
-
-	//textRender->renderText("PAUSE", (WIDTH / 2) - 135.0f, HEIGHT / 2, 2.0f, glm::vec3(1.0, 0.7f, 0.2f));
-
-	//textRender->renderText("GAME OVER", (WIDTH/2)-250.0f, HEIGHT/2, 2.0f, glm::vec3(1.0, 0.0f, 0.0f));
-	//textRender->renderText("VICTORY!", (WIDTH / 2) - 185.0f, HEIGHT / 2, 2.0f, glm::vec3(1.0, 0.5f, 0.0f));
-
-
-	//textRender->renderText("(C) LearnOpenGL.com", 540.0f, 570.0f, 0.5f, glm::vec3(0.3, 0.7f, 0.9f));
 }
 
 
@@ -698,17 +560,10 @@ void RenderSystem::update(vector<Entity *> *entityArray)
 	for (vector<Entity *>::iterator iterator = entityArray->begin(); iterator != entityArray->end();/**/)
 	{
 		Entity *entity = *iterator;
-
-		//DESTRUKCJE
 		bool destroy = false;
-
 
 		if (entity->getType() == ENTITY_ENEMY)
 		{
-
-			//nie istnieje koniecznosc by to sprawdzac (enemy jest modelem i jest OB_MODEL)
-			//if (entity->getObject() != NULL)
-			//if (entity->getObject()->getObjectType() == OB_MODEL)
 
 			ModelObject *enemyObj = nullptr;
 			try { enemyObj = dynamic_cast<ModelObject*>(entity->getObject()); }

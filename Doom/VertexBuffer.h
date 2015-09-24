@@ -25,7 +25,7 @@ private:
 	ShaderData *_shaderData;
 	TextureLoader *_textureLoader;
 	GLenum _mode;
-	GLsizei _count; //do liczenia wierzczholkow (w sensie trojkat =3 ) //dla glDrawArrays
+	GLsizei _count; //do liczenia wierzczholkow (w sensie trojkat =3 )
 	GLsizei _stride; // dla VAO
 	GLuint VAO;
 	GLvoid *_positionOffset;

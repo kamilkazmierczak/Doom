@@ -1,24 +1,16 @@
 #pragma once
 
-//TO MOZE POWODOWAC PROBLEMY
 #define GLEW_STATIC
 #include <GL/glew.h>
-//#PROBLEMY  //tylko po to bo GLuint nie dziala, ale w Doom pewnie bd ok
-
 #include <ft2build.h>
 #include FT_FREETYPE_H  
-
-
 #include <string>
 #include <map>
-
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-
 #include "shader.h"
 #include "Constants.h"
-
 #include <GLFW/glfw3.h>
 
 

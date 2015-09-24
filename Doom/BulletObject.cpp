@@ -7,25 +7,24 @@ BulletObject::BulletObject(Sphere *sphere, Bullet_Type type) :_sphere(sphere), _
 	_shader = new ShaderInterface("sphere.vs", "sphere.frag");
 	
 
-
 	GLuint VBO3, EBO3;
 	glGenVertexArrays(1, &VAO3);
 	glGenBuffers(1, &VBO3);
 	glGenBuffers(1, &EBO3);
-	// Bind the Vertex Array Object first, then bind and set vertex buffer(s) and attribute pointer(s).
+
 	glBindVertexArray(VAO3);
 
 	glBindBuffer(GL_ARRAY_BUFFER, VBO3);
 	glBufferData(GL_ARRAY_BUFFER, _sphere->getVertives().size() * sizeof(vec3), _sphere->getVertives().data(), GL_STATIC_DRAW);
 
-	//EBO
+	
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO3);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, _sphere->getIndices().size() * sizeof(GLuint), _sphere->getIndices().data(), GL_STATIC_DRAW);
 
 
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
 	glEnableVertexAttribArray(0);
-	//SFERA KONFIGURACJA END
+
 
 }
 
@@ -37,7 +36,6 @@ BulletObject::~BulletObject()
 
 void BulletObject::draw()
 {
-	//cout << "Rysuje z klasy BulletObject" << endl;
 	glBindVertexArray(VAO3);
 	glDrawElements(GL_TRIANGLES, _sphere->GetTotalIndices(), GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);

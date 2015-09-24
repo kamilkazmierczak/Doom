@@ -1,8 +1,6 @@
 #include "GameManager.h"
 #include "Constants.h"
 #include <time.h>
-// Window dimensions
-
 
 
 GameManager::GameManager(bool running)
@@ -39,7 +37,6 @@ void GameManager::restartGame()
 	player->setAmmo(MaxAmmo);
 	player->changeHealth(MaxHealth);
 
-	//cameraSystem->getCurrentCamera()->setPosition(vec3(CameraPosition.x, CameraPosition.y, CameraPosition.z));
 	
 	cameraSystem->getCurrentCamera()->resetCamera();
 	renderSystem->setFreshRender();
@@ -104,12 +101,6 @@ void GameManager::restartGame()
 	entity->setScale(makeVector3(0.007f, 0.007f, 0.007f));
 	entityArray->push_back(entity);
 
-
-
-
-
-
-
 	setRestartState(false);
 }
 
@@ -121,7 +112,7 @@ void GameManager::runGameLoop()
 {
 	// Deltatime
 	GLfloat lastTime = glfwGetTime(); 
-	_deltaTime = 0.0f; // Time between current frame and last frame
+	_deltaTime = 0.0f;
 
 	
 
@@ -133,11 +124,14 @@ void GameManager::runGameLoop()
 
 			while (_deltaTime >= 1.0f)
 			{
-				_running = !glfwWindowShouldClose(_window);
-				_movementSystem->update(_scene->getChildren());
-				_playerInputSystem->update();
-
-				--_deltaTime;
+				if (_pause == false)
+				{
+					_running = !glfwWindowShouldClose(_window);
+					_movementSystem->update(_scene->getChildren());
+					_playerInputSystem->update();
+				}
+					--_deltaTime;
+				
 			}
 
 			if (_pause == false)	
@@ -173,11 +167,9 @@ GameManager& GameManager::getGameManager()
 
 	if (gameManager == NULL){
 
-		// Init GLFW
 		glfwInit();
 
 		srand(time(NULL));
-		// Set all the required options for GLFW
 		
 		glfwWindowHint(GLFW_DEPTH_BITS, 24);
 		glfwWindowHint(GLFW_RED_BITS, 8);
@@ -193,9 +185,28 @@ GameManager& GameManager::getGameManager()
 		glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 		
 
-		// Create a GLFWwindow object that we can use for GLFW's functions
-		GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "DOOM", nullptr, nullptr);
-		glfwMakeContextCurrent(window);
+		const GLFWvidmode *mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+		GLfloat monitorWidth = mode->width;
+		GLfloat monitorHeight = mode->height;
+		GLfloat centerX = monitorWidth / 2;
+		GLfloat centerY = monitorHeight / 2;
+
+		char decision;
+		cout << "Fullscreen? (y/n)" << endl;
+		cin >> decision;
+
+		if (decision == 'y')
+		{
+			GLFWwindow* window = glfwCreateWindow(monitorWidth, monitorHeight, "DOOM", glfwGetPrimaryMonitor(), nullptr);
+			glfwMakeContextCurrent(window);		
+		}
+		else if (decision == 'n')
+		{
+			GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "DOOM", nullptr , nullptr);
+			glfwSetWindowPos(window, centerX - (WIDTH / 2), centerY - (HEIGHT / 2));
+			glfwMakeContextCurrent(window);
+		}
+
 
 		//do wyswietlania tekstu
 		glEnable(GL_BLEND);

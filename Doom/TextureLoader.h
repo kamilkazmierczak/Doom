@@ -24,8 +24,6 @@ private:
 	void loadTexture(char* location);
 	void loadSkybox();
 
-
-	//zmien to na jakis wskaznik (*faces)
 	GLuint loadCubemap(vector<const GLchar*> faces);
 
 public:

@@ -24,22 +24,14 @@ Scene::Scene()
 	entity = new Entity(resourceManager->getVertexBufferArray()->at(3), makeVector3(NULL, NULL, NULL),ENTITY_MAP);
 	_children->push_back(entity);
 
-	//triangle //testowy
-	//entity = new Entity(resourceManager->getVertexBufferArray()->at(0), makeVector3(0.0f, 0.0f, 4.0f),ENTITY_TEST);
-	////entity->setScale(makeVector3(2.0f, 2.0f, 2.0f));
-	////entity->setRotationVelocity(makeVector3(0.0f, 1.0f, 1.0f));
-	////entity->setVelocity(makeVector3(0.0f, 0.0f, -0.007f));
-	////entity->setRotation(makeVector3(0.0f, 0.0f, 180.0f));
-	//_children->push_back(entity);
-
-	//container1 //chyba
+	//container1
 	entity = new Entity(resourceManager->getVertexBufferArray()->at(1), makeVector3(-8.7f, 0.6f, 1.5f), ENTITY_MAP);
 	entity->setRotation(makeVector3(0.0f, 0.0f, 90.0f));//to jest kat o jaki obrocic dla danej osi
 	entity->setScale(makeVector3(0.6f, 0.6f, 0.6f));
 	entity->setRotationVelocity(makeVector3(1.0f, 1.0f, 1.0f));
 	_children->push_back(entity);
 
-	//container2 //chyba
+	//container2
 	entity = new Entity(resourceManager->getVertexBufferArray()->at(2), makeVector3(2.0f, -1.0f, 3.0f),ENTITY_MAP);
 	entity->setScale(makeVector3(1.0f, 1.0f, 1.0f));
 	_children->push_back(entity);
@@ -54,22 +46,10 @@ Scene::Scene()
 		resourceManager->getVertexBufferArray()->at(5)->getShaderData()->get_uLightArray()->at(0).position.y,
 		resourceManager->getVertexBufferArray()->at(5)->getShaderData()->get_uLightArray()->at(0).position.z);
 
-	entity = new Entity(resourceManager->getVertexBufferArray()->at(5), lightPosition1 ,ENTITY_MAP);
-	entity->setScale(makeVector3(0.2f, 0.2f, 0.2f));
-	_children->push_back(entity);
-
-	////NEW IObject (testing)
-	//sphere
-	//IObject *sphere = new BulletObject(new Sphere(0.05f, 15, 15));
-	//entity = new Entity(sphere, makeVector3(0.0f, -0.5f, -3.5f),ENTITY_BULLET);
-	////entity->setScale(makeVector3(1.2f, 1.2f, 1.2f));
-	//entity->setVelocity(makeVector3(0.0f, 0.0f, -0.008f));
-	//_children->push_back(entity);
 
 	//dalek1
 	IObject *model = new ModelObject(resourceManager->getDalekArray()->at(0), new EnemyIntelligence());
 	entity = new Entity(model, makeVector3(-5.0f, -1.5f, -8.5f), ENTITY_ENEMY);
-	//entity = new Entity(model, makeVector3(0.0f, -1.5f, 0.0f), ENTITY_ENEMY);
 	vec2 u = vec2(0.0f, 1.0f); //wektor wskazujacy kierunek wzroku modelu
 	vec2 v = normalize(vec2(CameraPosition.x, CameraPosition.z) - vec2(entity->getPosition().x, entity->getPosition().z));
 	GLfloat angle = -1 * 180 / pi<GLfloat>() * fmodf(atan2(u.x*v.y - v.x*u.y, u.x*v.x + u.y*v.y), 2 * pi<GLfloat>());
@@ -88,8 +68,6 @@ Scene::Scene()
 	_children->push_back(entity);
 
 
-
-
 	//model - tardis
 	model = new ModelObject(new Model("Models/tardis/TARDIS.obj"), NULL);
 	entity = new Entity(model, makeVector3(8.7f, -1.5f, 8.5f), ENTITY_MAP);
@@ -104,18 +82,6 @@ Scene::Scene()
 	entity->setRotationVelocity(makeVector3(0.0f, -1.0f, 0.0f));
 	_children->push_back(entity);
 
-	//model - Playergun
-	//IObject *model = new ModelObject(new Model("Models/gun/freeze_gun.obj"), NULL);
-	//entity = new Entity(model, makeVector3(CameraPosition.x, CameraPosition.y, CameraPosition.z), ENTITY_GUN);
-	//entity->setScale(makeVector3(0.02f, 0.02f, 0.02f));
-	//_children->push_back(entity);
-
-	//model - gun ???
-	/*model = new ModelObject(new Model("Models/gun/freeze_gun.obj"), NULL);
-	entity = new Entity(model, makeVector3(8.7f, -0.3f, -1.2f), ENTITY_MAP);
-	entity->setScale(makeVector3(0.02f, 0.02f, 0.02f));
-	entity->setRotation(makeVector3(45.0f, 45.0f, 0.0f));
-	_children->push_back(entity);*/
 
 	//drewniana skrzynka
 	model = new ModelObject(new Model("Models/woodenbox/Wooden_Box.obj"), NULL);
@@ -159,17 +125,12 @@ Scene::Scene()
 	entity->setScale(makeVector3(0.6f, 0.6f, 0.6f));
 	_children->push_back(entity);
 
-	//lampa  z wielkim Bounding box
-	//IObject *model = new ModelObject(new Model("Models/lampbb/Light Pole.obj"), NULL);
-	//entity = new Entity(model, makeVector3(0.0f, 0.0f, 0.0f), ENTITY_MAP);
-	//entity->setScale(makeVector3(0.3f, 0.3f, 0.3f));
-	//_children->push_back(entity);
 
 	//lampa 
-	//IObject *model = new ModelObject(new Model("Models/lamp/little_brown_lamp.obj"), NULL);
-	//entity = new Entity(model, makeVector3(0.0f, 0.0f, 0.0f), ENTITY_MAP);
-	//entity->setScale(makeVector3(0.007f, 0.007f, 0.007f));
-	//_children->push_back(entity);
+	model = new ModelObject(new Model("Models/lamp/little_brown_lamp.obj"), NULL);
+	entity = new Entity(model, makeVector3(lightPosition1.x, lightPosition1.y-0.25f, lightPosition1.z), ENTITY_MAP);
+	entity->setScale(makeVector3(0.007f, 0.007f, 0.007f));
+	_children->push_back(entity);
 
 	//r2d2
 	model = new ModelObject(new Model("Models/r2d2/untitled.obj"), new R2D2Intelligence());
@@ -243,15 +204,11 @@ Scene::Scene()
 		resourceManager->getVertexBufferArray()->at(5)->getShaderData()->get_uLightArray()->at(1).position.z);
 
 	entity = new Entity(resourceManager->getVertexBufferArray()->at(15), lightPosition2, ENTITY_MAP);
-	//entity->setScale(makeVector3(0.2f, 0.2f, 0.2f));
 	entity->setScale(makeVector3(3.2f, 3.2f, 3.2f));
-	//potem ustaw na (tego i tak nie widac bo jest poza Skybox
-	//entity->setScale(makeVector3(0.0f, 0.0f, 0.0f));
+
 
 	_children->push_back(entity);
 
-
-	//Camera *camera = new Camera(vec3(0.0f, 0.0f, 3.0f));
 	Camera *camera = new Camera(CameraPosition);
 	PlayerInputSystem *playerInputSystem = &PlayerInputSystem::getPlayerInputSystem();
 	playerInputSystem->setCurrentCamera(camera);
