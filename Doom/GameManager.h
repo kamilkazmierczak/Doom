@@ -17,29 +17,24 @@ private:
 	bool _running;
 	bool _pause;
 	bool _restart;
-	//bool _paused; //przez dziwne zachowanie glfw nie da sie inaczej
 	RenderSystem *_renderSystem;
 	ResourceManager *_resourceManager;
 	MovementSystem *_movementSystem;
 	CameraSystem *_cameraSystem;
 	GLFWwindow *_window;
-
-
-
 	PlayerInputSystem *_playerInputSystem;
-
-
 	Scene *_scene;
-
-
 	GLfloat _deltaTime;
 
 	GameManager(bool running);
 	~GameManager();
-	//rutututu
+
 	void hi();
 
 public:
+
+	static GLuint _Width;
+	static GLuint _Height;
 
 	void runGameLoop();
 	void restartGame();

@@ -16,14 +16,12 @@ private:
 	GLfloat _deltaTime;
 	GLfloat _lastFrame;
 	bool _firstMouse;
-
 	GLfloat _lastShootTime;
-
 	Vector3 _eyeVector;
-
 	Camera *_currentCamera;
-	//Entity *_currentPlayer;
 	GLFWwindow *_window;
+
+	void generateShoot();
 
 	void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mode);
 	void mouseCallback(GLFWwindow* window, double xpos, double ypos);
@@ -35,8 +33,7 @@ private:
 
 public:
 	void update();
-	
-	//void setCurrentPlayer(Entity *newPlayer);
+
 	void setCurrentCamera(Camera *newCamera);
 
 	static PlayerInputSystem& getPlayerInputSystem();

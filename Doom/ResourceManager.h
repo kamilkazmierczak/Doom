@@ -15,10 +15,8 @@ private:
 	vector<VertexBuffer *> *_vertexBufferArray;
 	ShaderData *shaderData;
 
-	//temporary (potem to jakos inaczej zrob)
 	Sphere *_bullet;
 	vector<Model*> *_dalekArray;
-	//void loadVertices(GLvoid *table, GLsizeiptr size, vector<ThreeVertices>*Vertices, GLsizeiptr dataSize);
 
 	ResourceManager();
 	~ResourceManager();
@@ -27,11 +25,9 @@ public:
 	vector<ShaderInterface *> *getShaderArray();
 	vector<VertexBuffer *> *getVertexBufferArray();
 
-	//temporary (potem to jakos inaczej zrob)
 	Sphere *getBullet();
 	vector<Model*> *getDalekArray();
 	
-
 	static ResourceManager& getResourceManager();
 	static void destroyResourceManager();
 

@@ -34,7 +34,6 @@ public:
 
 	float getRadius();
 
-
 	vector <vec3> getVertives();
 	vector <GLuint> getIndices();
 

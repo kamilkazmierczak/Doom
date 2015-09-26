@@ -9,7 +9,6 @@ private:
 	GLfloat _health;
 	GLfloat _ammo;
 	CameraSystem *_cameraSystem;
-	//Vector3 _position;
 
 	Player();
 	~Player();

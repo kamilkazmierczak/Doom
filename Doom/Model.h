@@ -1,7 +1,4 @@
-
-
 #pragma once
-// Std. Includes
 #include <string>
 #include <fstream>
 #include <sstream>
@@ -9,8 +6,8 @@
 #include <map>
 #include <vector>
 using namespace std;
-// GL Includes
-#include <GL/glew.h> // Contains all the necessery OpenGL includes
+
+#include <GL/glew.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/string_cast.hpp>
@@ -32,8 +29,6 @@ using namespace glm;
 class Model
 {
 public:
-	/*  Functions   */
-	// Constructor, expects a filepath to a 3D model.
 	Model(GLchar* path) :_firstMesh(true)
 	{
 		bbShader = new Shader("boundingbox.vs", "boundingbox.frag");
@@ -42,14 +37,12 @@ public:
 		
 	}
 
-	// Draws the model, and thus all its meshes
 	void Draw(Shader *shader,mat4& model, mat4& view, mat4& projection)
 	{
 		_gameModel = model;
 		_gameView = view;
 		_gameProjection = projection;
 
-		//gameShader = shader;
 		for (GLuint i = 0; i < this->meshes.size(); i++)
 			this->meshes[i].Draw(shader);
 
@@ -64,7 +57,6 @@ public:
 	void loadRealVertices(mat4& model)
 	{
 		_myRealVertices->clear();
-		//std::vector<ThreeVertices>().swap(*RealVertices); //podobno dziala szybciej niz clear()
 		ThreeVertices data;
 		vec3 point = vec3(0.0f);
 		vec4 point4 = vec4(0.0f);
@@ -89,38 +81,16 @@ public:
 
 			_myRealVertices->push_back(data);
 		}
-
-
-
-		//for (vector<ThreeVertices>::iterator iterator = _myRealVertices->begin(); iterator != _myRealVertices->end(); iterator++)
-		//{
-		//	cout << "#############NEW ONE##############" << endl;
-		//	cout << iterator->a.x << endl;
-		//	cout << iterator->a.y << endl;
-		//	cout << iterator->a.z << endl;
-		//	cout << "##" << endl;
-		//	cout << iterator->b.x << endl;
-		//	cout << iterator->b.y << endl;
-		//	cout << iterator->b.z << endl;
-		//	cout << "##" << endl;
-		//	cout << iterator->c.x << endl;
-		//	cout << iterator->c.y << endl;
-		//	cout << iterator->c.z << endl;
-		//	cout << "##" << endl;
-		//}
-
-
 	}
 
 
 private:
-	/*  Model Data  */
+
 	vector<Mesh> meshes;
 	string directory;
-	vector<Texture> textures_loaded;	// Stores all the textures loaded so far, optimization to make sure textures aren't loaded more than once.
+	vector<Texture> textures_loaded;
 	bool _firstMesh;
 	Shader *bbShader;
-	//Shader *gameShader; //Przerob to na wskaznik pozniej
 	glm::mat4 _gameModel;
 	glm::mat4 _gameView;
 	glm::mat4 _gameProjection;
@@ -129,7 +99,7 @@ private:
 	//do detekcji kolizji
 	vector <ThreeVertices> *_myVertices;
 	vector <ThreeVertices> *_myRealVertices;
-	int nrOfVertices; //i tak zawsze tyle samo (BB)
+	int nrOfVertices;
 
 	//Bounding box
 	glm::mat4 modelTransform; //macierz modelu 
@@ -139,24 +109,18 @@ private:
 		min_z = 0.0f, max_z = 0.0f;
 
 
-	/*  Functions   */
-	// Loads a model with supported ASSIMP extensions from file and stores the resulting meshes in the meshes vector.
-
 	GLint TextureFromFile(const char* path, string directory)
 	{
-		//Generate texture ID and load texture data 
 		string filename = string(path);
 		filename = directory + '/' + filename;
 		GLuint textureID;
 		glGenTextures(1, &textureID);
 		int width, height;
 		unsigned char* image = SOIL_load_image(filename.c_str(), &width, &height, 0, SOIL_LOAD_RGB);
-		// Assign texture to ID
 		glBindTexture(GL_TEXTURE_2D, textureID);
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
 		glGenerateMipmap(GL_TEXTURE_2D);
 
-		// Parameters
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
@@ -168,16 +132,8 @@ private:
 
 
 
-
 	void configcube()
 	{
-		//tego tu byc nie powinno ale dodac tego jako include nie moge bo widzi
-		//jakies multiple declarations
-
-		//jak bd czas to postaraj sie to przeniesc poza te funkcje
-		//oraz niech za kazdym razem kazdy model nie kopiuje sobie
-		//prawdziwych wierzcholkow tylko niech kazdy uzywa
-		//wskaznika do wektora z nimi bo kazdy ma te same
 		VertexDataP vertices[] = {
 			-0.5f, -0.5f, -0.5f,
 			0.5f, -0.5f, -0.5f,
@@ -259,25 +215,6 @@ private:
 			}
 		}
 
-
-		/*for (vector<ThreeVertices>::iterator iterator = _myVertices->begin(); iterator != _myVertices->end(); iterator++)
-		{
-			cout << iterator->a.x << endl;
-			cout << iterator->a.y << endl;
-			cout << iterator->a.z << endl;
-			cout << "##" << endl;
-			cout << iterator->b.x << endl;
-			cout << iterator->b.y << endl;
-			cout << iterator->b.z << endl;
-			cout << "##" << endl;
-			cout << iterator->c.x << endl;
-			cout << iterator->c.y << endl;
-			cout << iterator->c.z << endl;
-			cout << "##" << endl;
-		}*/
-
-
-
 		GLuint VBO;
 		glGenVertexArrays(1, &BBVAO);
 		glGenBuffers(1, &VBO);
@@ -287,10 +224,10 @@ private:
 		glBindBuffer(GL_ARRAY_BUFFER, VBO);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-		// Position attribute
+		
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
 		glEnableVertexAttribArray(0);
-		glBindVertexArray(0); // Unbind VAO
+		glBindVertexArray(0);
 	}
 
 
@@ -301,11 +238,10 @@ private:
 
 		glm::mat4 newModel = _gameModel * modelTransform;
 
-		// Get their uniform location
 		GLint modelLoc = glGetUniformLocation(bbShader->Program, "model");
 		GLint viewLoc = glGetUniformLocation(bbShader->Program, "view");
 		GLint projLoc = glGetUniformLocation(bbShader->Program, "projection");
-		// Pass the matrices to the shader
+		
 		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(_gameView));
 		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(_gameProjection));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(newModel));
@@ -315,8 +251,8 @@ private:
 		{
 			glBindVertexArray(BBVAO);
 			glLineWidth(5.0f);
-			glDrawArrays(GL_LINES, 0, 36); //daje dziwny wynik ale to jest tylko dla testow wiec moze byc
-			glBindVertexArray(0);		   //tak i tak trzeba to stad wywalic
+			glDrawArrays(GL_LINES, 0, 36); 
+			glBindVertexArray(0);		   
 		}
 
 	}
@@ -325,19 +261,18 @@ private:
 	
 	void loadModel(string path)
 	{
-		// Read file via ASSIMP
+	
 		Assimp::Importer importer;
 		const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenNormals);
-		// Check for errors
-		if (!scene || scene->mFlags == AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) // if is Not Zero
+		
+		if (!scene || scene->mFlags == AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) 
 		{
 			cout << "ERROR::ASSIMP:: " << importer.GetErrorString() << endl;
 			return;
 		}
-		// Retrieve the directory path of the filepath
+		
 		this->directory = path.substr(0, path.find_last_of('/'));
 
-		// Process ASSIMP's root node recursively
 		this->processNode(scene->mRootNode, scene);
 
 		glm::vec3 size = glm::vec3(max_x - min_x, max_y - min_y, max_z - min_z);
@@ -351,18 +286,16 @@ private:
 
 	}
 
-	// Processes a node in a recursive fashion. Processes each individual mesh located at the node and repeats this process on its children nodes (if any).
+	
 	void processNode(aiNode* node, const aiScene* scene)
 	{
-		// Process each mesh located at the current node
+		
 		for (GLuint i = 0; i < node->mNumMeshes; i++)
 		{
-			// The node object only contains indices to index the actual objects in the scene. 
-			// The scene contains all the data, node is just to keep stuff organized (like relations between nodes).
 			aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
 			this->meshes.push_back(this->processMesh(mesh, scene));
 		}
-		// After we've processed all of the meshes (if any) we then recursively process each of the children nodes
+		
 		for (GLuint i = 0; i < node->mNumChildren; i++)
 		{
 			this->processNode(node->mChildren[i], scene);
@@ -372,18 +305,17 @@ private:
 
 	Mesh processMesh(aiMesh* mesh, const aiScene* scene)
 	{
-		// Data to fill
+		
 		vector<Vertex> vertices;
 		vector<GLuint> indices;
 		vector<Texture> textures;
 
-		// Walk through each of the mesh's vertices
+		
 		for (GLuint i = 0; i < mesh->mNumVertices; i++)
 		{
 			Vertex vertex;
-			glm::vec3 vector; // We declare a placeholder vector since assimp uses its own vector class that doesn't directly convert to glm's vec3 class so we transfer the data to this placeholder glm::vec3 first.
-			// Positions
-			
+			glm::vec3 vector;
+				
 			//Bounding Box
 			if (_firstMesh)
 			{
@@ -409,12 +341,11 @@ private:
 			vector.y = mesh->mNormals[i].y;
 			vector.z = mesh->mNormals[i].z;
 			vertex.Normal = vector;
-			// Texture Coordinates
-			if (mesh->mTextureCoords[0]) // Does the mesh contain texture coordinates?
+	
+			if (mesh->mTextureCoords[0]) 
 			{
 				glm::vec2 vec;
-				// A vertex can contain up to 8 different texture coordinates. We thus make the assumption that we won't 
-				// use models where a vertex can have multiple texture coordinates so we always take the first set (0).
+	
 				vec.x = mesh->mTextureCoords[0][i].x;
 				vec.y = mesh->mTextureCoords[0][i].y;
 				vertex.TexCoords = vec;
@@ -423,39 +354,29 @@ private:
 				vertex.TexCoords = glm::vec2(0.0f, 0.0f);
 			vertices.push_back(vertex);
 		}
-		// Now wak through each of the mesh's faces (a face is a mesh its triangle) and retrieve the corresponding vertex indices.
+		
 		for (GLuint i = 0; i < mesh->mNumFaces; i++)
 		{
 			aiFace face = mesh->mFaces[i];
-			// Retrieve all indices of the face and store them in the indices vector
+		
 			for (GLuint j = 0; j < face.mNumIndices; j++)
 				indices.push_back(face.mIndices[j]);
 		}
-		// Process materials
+	
 		if (mesh->mMaterialIndex >= 0)
 		{
 			aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
-			// We assume a convention for sampler names in the shaders. Each diffuse texture should be named
-			// as 'texture_diffuseN' where N is a sequential number ranging from 1 to MAX_SAMPLER_NUMBER. 
-			// Same applies to other texture as the following list summarizes:
-			// Diffuse: texture_diffuseN
-			// Specular: texture_specularN
-			// Normal: texture_normalN
 
-			// 1. Diffuse maps
 			vector<Texture> diffuseMaps = this->loadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
 			textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
-			// 2. Specular maps
+	
 			vector<Texture> specularMaps = this->loadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
 			textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
 		}
 
-		// Return a mesh object created from the extracted mesh data
 		return Mesh(vertices, indices, textures);
 	}
 
-	// Checks all material textures of a given type and loads the textures if they're not loaded yet.
-	// The required info is returned as a Texture struct.
 	vector<Texture> loadMaterialTextures(aiMaterial* mat, aiTextureType type, string typeName)
 	{
 		vector<Texture> textures;
@@ -463,25 +384,25 @@ private:
 		{
 			aiString str;
 			mat->GetTexture(type, i, &str);
-			// Check if texture was loaded before and if so, continue to next iteration: skip loading a new texture
+			
 			GLboolean skip = false;
 			for (GLuint j = 0; j < textures_loaded.size(); j++)
 			{
 				if (textures_loaded[j].path == str)
 				{
 					textures.push_back(textures_loaded[j]);
-					skip = true; // A texture with the same filepath has already been loaded, continue to next one. (optimization)
+					skip = true; 
 					break;
 				}
 			}
 			if (!skip)
-			{   // If texture hasn't been loaded already, load it
+			{   
 				Texture texture;
 				texture.id = TextureFromFile(str.C_Str(), this->directory);
 				texture.type = typeName;
 				texture.path = str;
 				textures.push_back(texture);
-				this->textures_loaded.push_back(texture);  // Store it as texture loaded for entire model, to ensure we won't unnecesery load duplicate textures.
+				this->textures_loaded.push_back(texture);
 			}
 		}
 		return textures;

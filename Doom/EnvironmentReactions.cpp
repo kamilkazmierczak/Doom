@@ -56,7 +56,7 @@ void EnvironmentReactions::createWave()
 			vec3 dalekPostion;
 			if (portalNr == 0)
 			{
-				dalekPostion = vec3(-5.0f, -1.5f, -8.5f); //to tez powinno byc pobrane a nie recznie
+				dalekPostion = vec3(-5.0f, -1.5f, -8.5f); 
 			}
 			else
 			{
@@ -100,8 +100,6 @@ void EnvironmentReactions::takeAmmo()
 	CameraSystem *cameraSystem = &CameraSystem::getCameraSystem();
 	vec3 cameraPosition = cameraSystem->getCurrentCamera()->getPosition();
 
-	//To powinno byc inaczej powinien sam sobie pobrac informacje gdzie jest bron
-	//ale to tylko jedna reakcja na bron wiec moze tak byc
 	vec3 gunPosition = vec3(8.7f, -0.3f, -1.2f);
 	GLfloat gunReactRadius = 1.5f;
 
@@ -109,7 +107,6 @@ void EnvironmentReactions::takeAmmo()
 
 	if (distance_ < gunReactRadius && player->getAmmo()<=0)
 	{
-		//Player *player = &Player::getPlayer();
 		player->setAmmo(MaxAmmo);
 	}
 

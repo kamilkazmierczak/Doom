@@ -1,5 +1,4 @@
 #pragma once
-//#include "GameManager.h"
 #include "CameraSystem.h"
 #include "Player.h"
 #include "ModelObject.h"

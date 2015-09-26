@@ -24,13 +24,11 @@ class ShaderData
 {
 private:
 	Vector4 _uColorValue;
-	//Vector3 _uLightPosition;
-	//Vector3 _uLightPosition2;
 	vector<Light> *_uLightArray; 
 	Material _uMaterial;
 
 public:
-	ShaderData(vector<Light>* light, Material material, Vector4 newColor/*, Vector3 newPosition, Vector3 newPosition2*/);
+	ShaderData(vector<Light>* light, Material material, Vector4 newColor);
 	~ShaderData();
 
 	Vector4 get_uColorValue();
@@ -41,12 +39,5 @@ public:
 
 	Material get_uMaterial();
 	void set_uMaterial(Material newMaterial);
-
-	//Vector3 get_uLightPosition();
-	//void set_uLightPosition(Vector3 newLight);
-
-	//Vector3 get_uLightPosition2();
-	//void set_uLightPosition2(Vector3 newLight);
-
 };
 

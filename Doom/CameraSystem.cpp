@@ -49,8 +49,6 @@ void CameraSystem::reactOnMap(Entity *entity)
 void CameraSystem::setCurrentCamera(Camera *newCamera)
 {
 	_currentCamera = newCamera;
-	//RenderSystem *renderSystem = &RenderSystem::getRenderSystem();
-	//renderSystem->setCurrentCamera(_currentCamera);
 }
 
 CameraSystem& CameraSystem::getCameraSystem()

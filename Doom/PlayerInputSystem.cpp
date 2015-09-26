@@ -10,17 +10,9 @@
 using namespace std;
 
 PlayerInputSystem::PlayerInputSystem() 
-:_window(glfwGetCurrentContext()), _mouseLastX(WIDTH / 2.0), _mouseLastY(HEIGHT / 2.0), _firstMouse(true),
+:_window(glfwGetCurrentContext()), _mouseLastX(DefaultWidth / 2.0), _mouseLastY(DefaultHeight / 2.0), _firstMouse(true),
 _deltaTime(0.0f), _lastFrame(0.0f), _lastShootTime(glfwGetTime())
 {
-	//glfwGetCursorPos(_window, &_lastMousePosition.x, &_lastMousePosition.y);
-	/*
-	_mouseLastX = WIDTH / 2.0;
-	_mouseLastY = HEIGHT / 2.0;
-	_firstMouse = true;
-	_deltaTime = 0.0f;
-	_lastFrame = 0.0f;
-	*/
 }
 
 
@@ -44,7 +36,6 @@ void PlayerInputSystem::update()
 
 		if (_currentCamera != NULL && glfwGetInputMode(_window, GLFW_CURSOR) == GLFW_CURSOR_DISABLED)
 		{
-			// Camera controls
 			if (glfwGetKey(_window, GLFW_KEY_W))
 				_currentCamera->ProcessKeyboard(FORWARD, _deltaTime);
 			if (glfwGetKey(_window, GLFW_KEY_S))
@@ -56,35 +47,6 @@ void PlayerInputSystem::update()
 		}
 
 	}
-
-
-
-	//if (_currentCamera != NULL && glfwGetInputMode(_window, GLFW_CURSOR) == GLFW_CURSOR_DISABLED)
-	//{
-	//	//Pause off
-	//	GameManager *gameManager = &GameManager::getGameManager();
-
-	//	if (glfwGetKey(_window, GLFW_KEY_P) && gameManager->getPausedState()==true)
-	//	{
-	//		cout << "wciiiiisnieto" << endl;
-	//		GameManager *gameManager = &GameManager::getGameManager();
-	//		gameManager->setPauseState(false);
-	//	}
-	//		
-	//}
-
-
-
-	
-
-
-	//	//cout << "wcisnieto pauze" << endl;
-
-	//	//cout << "pause" << endl;
-	//}
-
-	
-	
 }
 
 
@@ -97,15 +59,13 @@ _currentCamera = newCamera;
 
 void PlayerInputSystem::keyCallback(GLFWwindow* window, int key, int scancode, int action, int mode)
 {
-	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
+	
+	GLuint WIDTH = GameManager::_Width;
+	GLuint HEIGHT = GameManager::_Height;
 
-		if (GLFW_CURSOR_DISABLED == glfwGetInputMode(_window, GLFW_CURSOR)) {
-			glfwSetInputMode(glfwGetCurrentContext(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-		}
-		else {
-			glfwSetInputMode(glfwGetCurrentContext(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-		}
-	}
+	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+		glfwSetWindowShouldClose(window, GL_TRUE);
+
 
 	if (key == GLFW_KEY_P && action == GLFW_PRESS)
 	{
@@ -145,7 +105,16 @@ void PlayerInputSystem::keyCallback(GLFWwindow* window, int key, int scancode, i
 		{
 			gameManager->setRestartState(true);
 		}
+	}
 
+	
+	Player *player = &Player::getPlayer();
+	if ((_lastShootTime + ReloadTime < glfwGetTime()) && player->getAmmo() > 0)
+	{
+		if (key == GLFW_KEY_SPACE && action == GLFW_PRESS)
+		{
+			generateShoot();
+		}
 	}
 
 
@@ -172,7 +141,7 @@ void PlayerInputSystem::mouseCallback(GLFWwindow* window, double xpos, double yp
 	}
 
 	GLfloat xoffset = xpos - _mouseLastX;
-	GLfloat yoffset = _mouseLastY - ypos;  // Reversed since y-coordinates go from bottom to left
+	GLfloat yoffset = _mouseLastY - ypos; 
 
 	_mouseLastX = xpos;
 	_mouseLastY = ypos;
@@ -186,56 +155,11 @@ void PlayerInputSystem::mouseCallback(GLFWwindow* window, double xpos, double yp
 void PlayerInputSystem::mouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
 {
 	Player *player = &Player::getPlayer();
-
 	if ((_lastShootTime + ReloadTime < glfwGetTime()) && player->getAmmo() > 0)
 	{
 		if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
 		{
-			//cout << "nacisnieto LPM" << endl;
-			ResourceManager *resourceManager = &ResourceManager::getResourceManager();
-			RenderSystem *renderSystem = &RenderSystem::getRenderSystem();
-			CameraSystem *cameraSystem = &CameraSystem::getCameraSystem();
-			Player *player = &Player::getPlayer();
-			//dostep do wektorow
-			//gameManager->getScene()->getChildren()
-			//renderSystem->getNewObjects()
-
-
-			//tworzenie naboju 
-			vec3 center = cameraSystem->getCurrentCamera()->getCenter();
-			vec3 position = cameraSystem->getCurrentCamera()->getPosition();
-			vec3 viewDirection = cameraSystem->getCurrentCamera()->getCenter();
-			//position += viewDirection * 2.0f;
-
-
-			IObject *sphere = new BulletObject(resourceManager->getBullet(), BU_PLAYER);
-
-			Entity *entity = new Entity(sphere, makeVector3(position.x, position.y, position.z), ENTITY_BULLET);
-
-
-			//GLfloat bulletSpeed = 0.008f;
-			GLfloat max = std::max(std::abs(center.x), std::max(std::abs(center.y), std::abs(center.z)));
-
-			if (max != 0)
-			{
-				entity->setVelocity(makeVector3((center.x / max)*BulletSpeed,
-					(center.y / max)*BulletSpeed,
-					(center.z / max)*BulletSpeed));
-			}
-			else
-			{
-				//cout << "patrzysz na srodek" << endl;
-				//chyba
-				entity->setVelocity(makeVector3(BulletSpeed, BulletSpeed, BulletSpeed));
-			}
-
-			renderSystem->getNewObjects()->push_back(entity);
-			_lastShootTime = glfwGetTime();
-			player->setAmmo(-1.0f);
-
-			//cout << "Ammo left:" << endl;
-			//cout << player->getAmmo() << endl;
-
+			generateShoot();
 		}
 	} 
 }
@@ -276,9 +200,6 @@ PlayerInputSystem& PlayerInputSystem::getPlayerInputSystem()
 		glfwSetCursorPosCallback(glfwGetCurrentContext(), *mouseCallbackFun);
 		glfwSetMouseButtonCallback(glfwGetCurrentContext(), *mouseButtonCallbackFun);
 
-
-		//glfwSetMouseallback(glfwGetCurrentContext(), *mouseCallbackFun);
-		//glfwSetKeyCallback();
 		glfwSetInputMode(glfwGetCurrentContext(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 		playerInputSystem = new PlayerInputSystem();
@@ -291,4 +212,37 @@ void PlayerInputSystem::destroyPlayerInputSystem()
 {
 	PlayerInputSystem *playerInputSystem = &getPlayerInputSystem();
 	delete playerInputSystem;
+}
+
+
+void PlayerInputSystem::generateShoot()
+{
+	ResourceManager *resourceManager = &ResourceManager::getResourceManager();
+	RenderSystem *renderSystem = &RenderSystem::getRenderSystem();
+	CameraSystem *cameraSystem = &CameraSystem::getCameraSystem();
+	Player *player = &Player::getPlayer();
+
+	//tworzenie naboju 
+	vec3 center = cameraSystem->getCurrentCamera()->getCenter();
+	vec3 position = cameraSystem->getCurrentCamera()->getPosition();
+	vec3 viewDirection = cameraSystem->getCurrentCamera()->getCenter();
+	IObject *sphere = new BulletObject(resourceManager->getBullet(), BU_PLAYER);
+	Entity *entity = new Entity(sphere, makeVector3(position.x, position.y, position.z), ENTITY_BULLET);
+
+	GLfloat max = std::max(std::abs(center.x), std::max(std::abs(center.y), std::abs(center.z)));
+
+	if (max != 0)
+	{
+		entity->setVelocity(makeVector3((center.x / max)*BulletSpeed,
+			(center.y / max)*BulletSpeed,
+			(center.z / max)*BulletSpeed));
+	}
+	else
+	{
+		entity->setVelocity(makeVector3(BulletSpeed, BulletSpeed, BulletSpeed));
+	}
+
+	renderSystem->getNewObjects()->push_back(entity);
+	_lastShootTime = glfwGetTime();
+	player->setAmmo(-1.0f);
 }
