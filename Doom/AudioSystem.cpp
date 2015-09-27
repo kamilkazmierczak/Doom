@@ -38,6 +38,7 @@ AudioSystem& AudioSystem::getAudioSystem()
 		_audioFiles->insert(pair<string, string>("playerhit", "Audio/playerhit.mp3"));
 		_audioFiles->insert(pair<string, string>("gameover", "Audio/gameover.mp3"));
 		_audioFiles->insert(pair<string, string>("victory", "Audio/victory.mp3"));
+		_audioFiles->insert(pair<string, string>("reload", "Audio/reload.mp3"));
 
 		audioSystem = new AudioSystem();
 	}
@@ -107,10 +108,16 @@ void AudioSystem::playVictory()
 	_engine->play2D(findPatch("victory"));
 }
 
+void  AudioSystem::playReload()
+{
+	_engine->play2D(findPatch("reload"));
+}
+
 void AudioSystem::stopAllSounds()
 {
 	_engine->stopAllSounds();
 }
+
 
 void AudioSystem::play2DAudio()
 {

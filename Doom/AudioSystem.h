@@ -33,6 +33,7 @@ public:
 	void playPlayerHit();
 	void playGameOver();
 	void playVictory();
+	void playReload();
 
 	void stopAllSounds();
 

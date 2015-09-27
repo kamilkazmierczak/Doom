@@ -50,9 +50,19 @@ Scene::Scene()
 		resourceManager->getVertexBufferArray()->at(5)->getShaderData()->get_uLightArray()->at(0).position.z);
 
 
+	//samolot (wczytuje sie 1,5min)
+	/*IObject *model = new ModelObject(new Model("Models/starcruiser/Starcruiser military.obj"), NULL);
+	entity = new Entity(model, makeVector3(-10.0f, 4.0f, 0.0f), ENTITY_PLANE, new PlaneAudio());
+	entity->setRotation(makeVector3(0.0f, 135.0f, 17.0f));
+	entity->setScale(makeVector3(0.02f, 0.02f, 0.02f));
+	entity->setVelocity(makeVector3(0.003f, 0.0f, -0.003f));
+	_children->push_back(entity);*/
+
+	GLfloat time = glfwGetTime();
+
 	//dalek1
 	IObject *model = new ModelObject(resourceManager->getDalekArray()->at(0), new EnemyIntelligence());
-	entity = new Entity(model, makeVector3(-5.0f, -1.5f, -8.5f), ENTITY_ENEMY, new EnemyAudio(glfwGetTime()));
+	entity = new Entity(model, makeVector3(-5.0f, -1.5f, -8.5f), ENTITY_ENEMY, new EnemyAudio(time));
 	vec2 u = vec2(0.0f, 1.0f); //wektor wskazujacy kierunek wzroku modelu
 	vec2 v = normalize(vec2(CameraPosition.x, CameraPosition.z) - vec2(entity->getPosition().x, entity->getPosition().z));
 	GLfloat angle = -1 * 180 / pi<GLfloat>() * fmodf(atan2(u.x*v.y - v.x*u.y, u.x*v.x + u.y*v.y), 2 * pi<GLfloat>());
@@ -62,7 +72,7 @@ Scene::Scene()
 
 	//dalek2
 	model = new ModelObject(resourceManager->getDalekArray()->at(1), new EnemyIntelligence());
-	entity = new Entity(model, makeVector3(5.0f, -1.5f, -8.5f), ENTITY_ENEMY, new EnemyAudio(glfwGetTime()+4.0f));
+	entity = new Entity(model, makeVector3(5.0f, -1.5f, -8.5f), ENTITY_ENEMY, new EnemyAudio(time+7.0f));
 	u = vec2(0.0f, 1.0f); //wektor wskazujacy kierunek wzroku modelu
 	v = normalize(vec2(CameraPosition.x, CameraPosition.z) - vec2(entity->getPosition().x, entity->getPosition().z));
 	angle = -1 * 180 / pi<GLfloat>() * fmodf(atan2(u.x*v.y - v.x*u.y, u.x*v.x + u.y*v.y), 2 * pi<GLfloat>());
@@ -114,13 +124,7 @@ Scene::Scene()
 	entity->setScale(makeVector3(0.07f, 0.07f, 0.07f));
 	_children->push_back(entity);*/
 
-	//samolot (wczytuje sie 1,5min)
-	//model = new ModelObject(new Model("Models/starcruiser/Starcruiser military.obj"), NULL);
-	//entity = new Entity(model, makeVector3(-10.0f, 4.0f, 0.0f), ENTITY_PLANE, new PlaneAudio());
-	//entity->setRotation(makeVector3(0.0f, 135.0f, 17.0f));
-	//entity->setScale(makeVector3(0.02f, 0.02f, 0.02f));
-	//entity->setVelocity(makeVector3(0.003f,0.0f,-0.003f));
-	//_children->push_back(entity);
+	
 
 	//beczka
 	/*model = new ModelObject(new Model("Models/b1/barrel.obj"), NULL);

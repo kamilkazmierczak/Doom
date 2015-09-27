@@ -20,6 +20,7 @@ private:
 	bool _resetInformation;
 	bool _gameOver;
 	
+	AudioSystem *_audioSystem;
 
 	EnvironmentReactions();
 	~EnvironmentReactions();

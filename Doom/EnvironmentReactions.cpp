@@ -3,7 +3,8 @@
 #include "GameManager.h"
 
 
-EnvironmentReactions::EnvironmentReactions() :_deadDalekNumber(0), _allEnemyDead(false), _resetInformation(false), _gameOver(false)
+EnvironmentReactions::EnvironmentReactions() :_deadDalekNumber(0), _allEnemyDead(false), _resetInformation(false), _gameOver(false),
+_audioSystem(&AudioSystem::getAudioSystem())
 {
 }
 
@@ -24,18 +25,18 @@ void EnvironmentReactions::playSounds()
 {
 	//static bool played = false;
 	Player *player = &Player::getPlayer();
-	AudioSystem *audioSystem = &AudioSystem::getAudioSystem();
+	//AudioSystem *audioSystem = &AudioSystem::getAudioSystem();
 
 	if (!_gameOver)
 	{
 		if (_allEnemyDead == true)
 		{//Victory
-			audioSystem->playVictory();
+			_audioSystem->playVictory();
 			_gameOver = true;
 		}
 		else if (player->getHealth() <= 0.0f)
 		{//GameOver
-			audioSystem->playGameOver();
+			_audioSystem->playGameOver();
 			_gameOver = true;
 		}
 	}
@@ -50,8 +51,8 @@ void EnvironmentReactions::resetInformation()
 	_deadDalekNumber = 0;
 	_gameOver = false;
 
-	AudioSystem *audioSystem = &AudioSystem::getAudioSystem();
-	audioSystem->stopAllSounds();
+	//AudioSystem *audioSystem = &AudioSystem::getAudioSystem();
+	_audioSystem->stopAllSounds();
 }
 
 
@@ -142,6 +143,7 @@ void EnvironmentReactions::takeAmmo()
 	if (distance_ < gunReactRadius && player->getAmmo()<=0)
 	{
 		player->setAmmo(MaxAmmo);
+		_audioSystem->playReload();
 	}
 
 }

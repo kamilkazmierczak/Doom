@@ -331,31 +331,31 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 
 				//AUDIO
 
-				//if (entity->getType() == ENTITY_R2R2)
-				//{
-				//	R2D2Audio *r2d2Audio = nullptr;
-				//	try { r2d2Audio = dynamic_cast<R2D2Audio*>(entity->getAudioSystem()); }
-				//	catch (bad_cast& bc){ cerr << "bad_cast caught: " << bc.what() << endl; }
-				//	vec3 position = vec3(entity->getPosition().x, entity->getPosition().y, entity->getPosition().z);
-				//	r2d2Audio->play3DAudio(position, _cameraSystem->getCurrentCamera()->getPosition(), _cameraSystem->getCurrentCamera()->getCenter());
-				//}
-				//if (entity->getType() == ENTITY_ENEMY)
-				//{
-				//	EnemyAudio *enemyAudio = nullptr;
-				//	try { enemyAudio = dynamic_cast<EnemyAudio*>(entity->getAudioSystem()); }
-				//	catch (bad_cast& bc){ cerr << "bad_cast caught: " << bc.what() << endl; }
-				//	vec3 position = vec3(entity->getPosition().x, entity->getPosition().y, entity->getPosition().z);
-				//	enemyAudio->play3DAudio(position, _cameraSystem->getCurrentCamera()->getPosition(), _cameraSystem->getCurrentCamera()->getCenter());
-				//}
-				//if (entity->getType() == ENTITY_PLANE)
-				//{
-				//	/*PlaneAudio *planeAudio = nullptr;
-				//	try { planeAudio = dynamic_cast<PlaneAudio*>(entity->getAudioSystem()); }
-				//	catch (bad_cast& bc){ cerr << "bad_cast caught: " << bc.what() << endl; }
-				//	vec3 position = vec3(entity->getPosition().x, entity->getPosition().y, entity->getPosition().z);
-				//	planeAudio->play3DAudio(position, _cameraSystem->getCurrentCamera()->getPosition(), _cameraSystem->getCurrentCamera()->getCenter());
-				//*/
-				//}
+				if (entity->getType() == ENTITY_R2R2)
+				{
+					R2D2Audio *r2d2Audio = nullptr;
+					try { r2d2Audio = dynamic_cast<R2D2Audio*>(entity->getAudioSystem()); }
+					catch (bad_cast& bc){ cerr << "bad_cast caught: " << bc.what() << endl; }
+					vec3 position = vec3(entity->getPosition().x, entity->getPosition().y, entity->getPosition().z);
+					r2d2Audio->play3DAudio(position, _cameraSystem->getCurrentCamera()->getPosition(), _cameraSystem->getCurrentCamera()->getCenter());
+				}
+				if (entity->getType() == ENTITY_ENEMY)
+				{
+					EnemyAudio *enemyAudio = nullptr;
+					try { enemyAudio = dynamic_cast<EnemyAudio*>(entity->getAudioSystem()); }
+					catch (bad_cast& bc){ cerr << "bad_cast caught: " << bc.what() << endl; }
+					vec3 position = vec3(entity->getPosition().x, entity->getPosition().y, entity->getPosition().z);
+					enemyAudio->play3DAudio(position, _cameraSystem->getCurrentCamera()->getPosition(), _cameraSystem->getCurrentCamera()->getCenter());
+				}
+				if (entity->getType() == ENTITY_PLANE)
+				{
+					PlaneAudio *planeAudio = nullptr;
+					try { planeAudio = dynamic_cast<PlaneAudio*>(entity->getAudioSystem()); }
+					catch (bad_cast& bc){ cerr << "bad_cast caught: " << bc.what() << endl; }
+					vec3 position = vec3(entity->getPosition().x, entity->getPosition().y, entity->getPosition().z);
+					planeAudio->play3DAudio(position, _cameraSystem->getCurrentCamera()->getPosition(), _cameraSystem->getCurrentCamera()->getCenter());
+				
+				}
 
 
 
