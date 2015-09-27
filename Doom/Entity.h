@@ -2,6 +2,7 @@
 #include "VertexBuffer.h"
 #include "Vector3.h"
 #include "IObject.h"
+#include "AudioSystem.h"
 #include <vector>
 
 enum Entity_type {
@@ -10,6 +11,7 @@ enum Entity_type {
 	ENTITY_MAP,
 	ENTITY_R2R2,
 	ENTITY_GUN,
+	ENTITY_PLANE,
 	ENTITY_TEST
 };
 
@@ -19,6 +21,8 @@ class Entity
 private:
 	VertexBuffer *_vertexBuffer = nullptr;
 	IObject *_object = nullptr;
+	AudioSystem *_audioSystem = nullptr;
+
 	Vector3 _position;
 	Vector3 _scale;
 	Vector3 _rotation;
@@ -41,6 +45,7 @@ public:
 	vector <ThreeVertices> *getRealVertices();
 	Entity_type getType();
 
+	AudioSystem* getAudioSystem();
 
 	VertexBuffer *getVertexBuffer();
 	void setVertexBuffer(VertexBuffer *newVertexBuffer);
@@ -77,6 +82,7 @@ public:
 
 	Entity(VertexBuffer *vertexBuffer, Vector3 position, Entity_type type);
 	Entity(IObject *object, Vector3 position, Entity_type type);
+	Entity(IObject *object, Vector3 position, Entity_type type, AudioSystem* audioSystem);
 	~Entity();
 };
 

@@ -18,7 +18,7 @@ const GLfloat MaxHealth = 100.0f;
 const GLfloat BulletDamage = 2.0f; //1.0f
 const GLfloat DalekBulletDamage = 10.0f;
 const GLfloat ShootingConstant = 10.0f;
-const int NumberOfDaleks = 10;
+const int NumberOfDaleks = 3;
 
 /*
 #error C1189: #error :  gl.h included before glew.h

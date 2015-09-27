@@ -1,8 +1,9 @@
 #include "EnvironmentReactions.h"
+#include "EnemyAudio.h"
 #include "GameManager.h"
 
 
-EnvironmentReactions::EnvironmentReactions() :_deadDalekNumber(0), _allEnemyDead(false), _resetInformation(false)
+EnvironmentReactions::EnvironmentReactions() :_deadDalekNumber(0), _allEnemyDead(false), _resetInformation(false), _gameOver(false)
 {
 }
 
@@ -16,13 +17,41 @@ void EnvironmentReactions::react()
 {
 	takeAmmo();
 	createWave();
+	playSounds();
 }
+
+void EnvironmentReactions::playSounds()
+{
+	//static bool played = false;
+	Player *player = &Player::getPlayer();
+	AudioSystem *audioSystem = &AudioSystem::getAudioSystem();
+
+	if (!_gameOver)
+	{
+		if (_allEnemyDead == true)
+		{//Victory
+			audioSystem->playVictory();
+			_gameOver = true;
+		}
+		else if (player->getHealth() <= 0.0f)
+		{//GameOver
+			audioSystem->playGameOver();
+			_gameOver = true;
+		}
+	}
+}
+
+
 
 void EnvironmentReactions::resetInformation()
 {
 	_resetInformation = true;
 	_allEnemyDead = false;
 	_deadDalekNumber = 0;
+	_gameOver = false;
+
+	AudioSystem *audioSystem = &AudioSystem::getAudioSystem();
+	audioSystem->stopAllSounds();
 }
 
 
@@ -69,13 +98,18 @@ void EnvironmentReactions::createWave()
 			CameraSystem *cameraSystem = &CameraSystem::getCameraSystem();
 			vec3 cameraPos = cameraSystem->getCurrentCamera()->getPosition();
 			IObject *model = new ModelObject(resourceManager->getDalekArray()->at(dalekArray++), new EnemyIntelligence());
-			Entity *entity = new Entity(model, makeVector3(dalekPostion.x, dalekPostion.y, dalekPostion.z), ENTITY_ENEMY);
+			Entity *entity = new Entity(model, makeVector3(dalekPostion.x, dalekPostion.y, dalekPostion.z), ENTITY_ENEMY, new EnemyAudio(glfwGetTime()));
 			vec2 u = vec2(0.0f, 1.0f); //wektor wskazujacy kierunek wzroku modelu
 			vec2 v = normalize(vec2(cameraPos.x, cameraPos.z) - vec2(entity->getPosition().x, entity->getPosition().z));
 			GLfloat angle = -1 * 180 / pi<GLfloat>() * fmodf(atan2(u.x*v.y - v.x*u.y, u.x*v.x + u.y*v.y), 2 * pi<GLfloat>());
 			entity->setRotation(makeVector3(0.0f, entity->getRotation().y + angle, 0.0f));
 			entity->setScale(makeVector3(0.007f, 0.007f, 0.007f));
 			renderSystem->getNewObjects()->push_back(entity);
+
+			AudioSystem *audioSystem = &AudioSystem::getAudioSystem();
+			vec3 position = vec3(entity->getPosition().x, entity->getPosition().y, entity->getPosition().z);
+			audioSystem->playEnemyCreate(position, cameraSystem->getCurrentCamera()->getPosition(), cameraSystem->getCurrentCamera()->getCenter());
+
 
 			nrOfDeadDaleks++;
 			portal++;

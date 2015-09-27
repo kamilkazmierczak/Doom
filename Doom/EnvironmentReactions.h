@@ -12,11 +12,14 @@ private:
 
 	void takeAmmo();
 	void createWave();
+	void playSounds();
 
 	int _deadDalekNumber;
 	
 	bool _allEnemyDead;
 	bool _resetInformation;
+	bool _gameOver;
+	
 
 	EnvironmentReactions();
 	~EnvironmentReactions();

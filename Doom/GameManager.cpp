@@ -1,5 +1,8 @@
 #include "GameManager.h"
 #include "Constants.h"
+#include "AudioSystem.h"
+#include "R2D2Audio.h"
+#include "EnemyAudio.h"
 #include <time.h>
 
 
@@ -13,6 +16,9 @@ GameManager::GameManager(bool running)
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	textRender->renderText("PRESS ENTER", (_Width / 2) - 290.0f, _Height / 2, 2.0f, glm::vec3(1.0, 0.7f, 0.2f));
 	glfwSwapBuffers(_window);
+
+
+
 }
 
 
@@ -85,7 +91,7 @@ void GameManager::restartGame()
 
 	//dalek1
 	IObject *model = new ModelObject(resourceManager->getDalekArray()->at(0), new EnemyIntelligence());
-	Entity *entity = new Entity(model, makeVector3(-5.0f, -1.5f, -8.5f), ENTITY_ENEMY);
+	Entity *entity = new Entity(model, makeVector3(-5.0f, -1.5f, -8.5f), ENTITY_ENEMY, new EnemyAudio(glfwGetTime()));
 	vec2 u = vec2(0.0f, 1.0f); //wektor wskazujacy kierunek wzroku modelu
 	vec2 v = normalize(vec2(CameraPosition.x, CameraPosition.z) - vec2(entity->getPosition().x, entity->getPosition().z));
 	GLfloat angle = -1 * 180 / pi<GLfloat>() * fmodf(atan2(u.x*v.y - v.x*u.y, u.x*v.x + u.y*v.y), 2 * pi<GLfloat>());
@@ -95,7 +101,7 @@ void GameManager::restartGame()
 
 	//dalek2
 	model = new ModelObject(resourceManager->getDalekArray()->at(1), new EnemyIntelligence());
-	entity = new Entity(model, makeVector3(5.0f, -1.5f, -8.5f), ENTITY_ENEMY);
+	entity = new Entity(model, makeVector3(5.0f, -1.5f, -8.5f), ENTITY_ENEMY, new EnemyAudio(glfwGetTime()+4.0f));
 	u = vec2(0.0f, 1.0f); //wektor wskazujacy kierunek wzroku modelu
 	v = normalize(vec2(CameraPosition.x, CameraPosition.z) - vec2(entity->getPosition().x, entity->getPosition().z));
 	angle = -1 * 180 / pi<GLfloat>() * fmodf(atan2(u.x*v.y - v.x*u.y, u.x*v.x + u.y*v.y), 2 * pi<GLfloat>());
@@ -116,7 +122,29 @@ void GameManager::runGameLoop()
 	GLfloat lastTime = glfwGetTime(); 
 	_deltaTime = 0.0f;
 
-	
+
+
+	//AudioSystem *audioSystem = &AudioSystem::getAudioSystem();
+	//audioSystem->play2DAudio();
+
+	//AudioSystem *audioSystem = new R2D2Audio();
+	//R2D2Audio *r2audio = nullptr;
+	//try { r2audio = dynamic_cast<R2D2Audio*>(audioSystem); }
+	//catch (bad_cast& bc){ cerr << "bad_cast caught: " << bc.what() << endl; }
+	//r2audio->play2DAudio();
+
+//	R2D2Audio *audioSystem = new R2D2Audio();
+
+	//AudioSystem *audioSystem = new R2D2Audio();
+
+	//R2D2Audio *r2audio = nullptr;
+	//try { r2audio = dynamic_cast<R2D2Audio*>(audioSystem); }
+	//catch (bad_cast& bc){ cerr << "bad_cast caught: " << bc.what() << endl; }
+
+	//r2audio->play2DAudio();
+
+
+
 
 	while (_running)
 	{	
@@ -212,7 +240,8 @@ GameManager& GameManager::getGameManager()
 			_Width = DefaultWidth;
 			_Height = DefaultHeight;
 		}
-
+	
+		AudioSystem *audioSystem = &AudioSystem::getAudioSystem();
 
 		//do wyswietlania tekstu
 		glEnable(GL_BLEND);

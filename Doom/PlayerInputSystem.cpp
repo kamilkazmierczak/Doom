@@ -217,6 +217,8 @@ void PlayerInputSystem::destroyPlayerInputSystem()
 
 void PlayerInputSystem::generateShoot()
 {
+	AudioSystem *audioSystem = &AudioSystem::getAudioSystem();
+	audioSystem->playShoot();
 	ResourceManager *resourceManager = &ResourceManager::getResourceManager();
 	RenderSystem *renderSystem = &RenderSystem::getRenderSystem();
 	CameraSystem *cameraSystem = &CameraSystem::getCameraSystem();

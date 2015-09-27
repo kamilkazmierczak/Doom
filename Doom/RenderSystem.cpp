@@ -7,6 +7,9 @@
 #include "EnvironmentReactions.h"
 #include "TextRender.h"
 #include "GameManager.h"
+#include "R2D2Audio.h"
+#include "EnemyAudio.h"
+#include "PlaneAudio.h"
 #include <glm/gtx/vector_angle.hpp>
 #include <glm/gtx/string_cast.hpp>
 
@@ -31,6 +34,9 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 
 	view = _cameraSystem->getCurrentCamera()->GetViewMatrix();
 	
+
+	//AudioSystem *audioSystem = &AudioSystem::getAudioSystem();
+	//audioSystem->playSample();
 
 	
 	for (vector<Entity *>::iterator iterator = entityArray->begin(); iterator != entityArray->end(); iterator++)
@@ -201,7 +207,7 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 					{
 						//KOLIZJA Z GRACZEM
 						Player* player = &Player::getPlayer();
-						
+						AudioSystem *audioSystem = &AudioSystem::getAudioSystem();
 						vec4 BulletCentreTransform = model* vec4(vec3(0.0f), 1.0f);
 						vec3 BulletCentreReal = vec3(BulletCentreTransform) / BulletCentreTransform.w;
 						GLfloat bulletRadius = sphereObj->getRadius();
@@ -213,8 +219,13 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 						{
 							player->changeHealth(-DalekBulletDamage);
 							sphereObj->destroy();
+							audioSystem->playPlayerHit();
 						}
 						
+						
+						
+
+
 						//# KOLIZJA Z GRACZEM
 					}
 
@@ -280,7 +291,10 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 
 											if (sphereObj->getBulletType() == BU_PLAYER)
 											{
-												cout << enemyObj->getHealth() << endl;
+												//cout << enemyObj->getHealth() << endl;
+												AudioSystem *audioSystem = &AudioSystem::getAudioSystem();
+												vec3 position = vec3(otherEntity->getPosition().x, otherEntity->getPosition().y, otherEntity->getPosition().z);
+												audioSystem->playEnemyHit(position, _cameraSystem->getCurrentCamera()->getPosition(), _cameraSystem->getCurrentCamera()->getCenter());
 												
 												if (enemyObj->getHealth() > 0.0f)
 												{
@@ -314,6 +328,40 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 
 				modelObj->loadRealVertices(model);	
 
+
+				//AUDIO
+
+				//if (entity->getType() == ENTITY_R2R2)
+				//{
+				//	R2D2Audio *r2d2Audio = nullptr;
+				//	try { r2d2Audio = dynamic_cast<R2D2Audio*>(entity->getAudioSystem()); }
+				//	catch (bad_cast& bc){ cerr << "bad_cast caught: " << bc.what() << endl; }
+				//	vec3 position = vec3(entity->getPosition().x, entity->getPosition().y, entity->getPosition().z);
+				//	r2d2Audio->play3DAudio(position, _cameraSystem->getCurrentCamera()->getPosition(), _cameraSystem->getCurrentCamera()->getCenter());
+				//}
+				//if (entity->getType() == ENTITY_ENEMY)
+				//{
+				//	EnemyAudio *enemyAudio = nullptr;
+				//	try { enemyAudio = dynamic_cast<EnemyAudio*>(entity->getAudioSystem()); }
+				//	catch (bad_cast& bc){ cerr << "bad_cast caught: " << bc.what() << endl; }
+				//	vec3 position = vec3(entity->getPosition().x, entity->getPosition().y, entity->getPosition().z);
+				//	enemyAudio->play3DAudio(position, _cameraSystem->getCurrentCamera()->getPosition(), _cameraSystem->getCurrentCamera()->getCenter());
+				//}
+				//if (entity->getType() == ENTITY_PLANE)
+				//{
+				//	/*PlaneAudio *planeAudio = nullptr;
+				//	try { planeAudio = dynamic_cast<PlaneAudio*>(entity->getAudioSystem()); }
+				//	catch (bad_cast& bc){ cerr << "bad_cast caught: " << bc.what() << endl; }
+				//	vec3 position = vec3(entity->getPosition().x, entity->getPosition().y, entity->getPosition().z);
+				//	planeAudio->play3DAudio(position, _cameraSystem->getCurrentCamera()->getPosition(), _cameraSystem->getCurrentCamera()->getCenter());
+				//*/
+				//}
+
+
+
+
+
+
 				//ARTIFICIAL INTELLIGENCE
 
 				if (entity->getType() == ENTITY_ENEMY)
@@ -342,7 +390,6 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 					if (_firstRender != true)
 					{
 						//detekcja
-
 						//Sprawdz wszystkie inne Entity
 						for (vector<Entity *>::iterator iterator = entityArray->begin(); iterator != entityArray->end(); iterator++)
 						{
@@ -501,6 +548,7 @@ void RenderSystem::setGunPosition(Entity* entity)
 void RenderSystem::renderTextInformation()
 {
 	TextRender *textRender = &TextRender::getTextRender();
+	AudioSystem *audioSystem = &AudioSystem::getAudioSystem();
 	Player *player = &Player::getPlayer();
 	GLuint WIDTH = GameManager::_Width;
 	GLuint HEIGHT = GameManager::_Height;
@@ -534,6 +582,11 @@ void RenderSystem::renderTextInformation()
 	{
 		textRender->renderText("GAME OVER", (WIDTH / 2) - 250.0f, HEIGHT / 2, 2.0f, glm::vec3(1.0, 0.0f, 0.0f));
 	}
+
+
+
+	
+
 
 }
 
@@ -579,7 +632,7 @@ void RenderSystem::update(vector<Entity *> *entityArray)
 
 			if (enemyObj->getHealth() <= 0.0f)
 			{
-				cout << "ktos tu umarl" << endl;
+				//cout << "ktos tu umarl" << endl;
 				destroy = true;
 				environment->countDalek();
 			}
