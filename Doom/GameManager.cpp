@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "GameManager.h"
 #include "Constants.h"
 #include "AudioSystem.h"
@@ -205,6 +206,8 @@ GameManager& GameManager::getGameManager()
 		GLfloat centerX = monitorWidth / 2;
 		GLfloat centerY = monitorHeight / 2;
 
+		
+		system("cls");
 		char decision;
 		cout << "Fullscreen? (y/n)" << endl;
 		cin >> decision;
@@ -235,7 +238,6 @@ GameManager& GameManager::getGameManager()
 		glewInit();
 
 		gameManager = new GameManager(true);
-		cout << "GameManager stworzony" << endl;
 	}
 	return *gameManager;
 }
@@ -244,7 +246,6 @@ void GameManager::destroyGameManager()
 {
 	GameManager *gameManager = &getGameManager();
 	delete gameManager;
-	cout << "GameManager zniszczony" << endl;
 
 	GLFWwindow* window = glfwGetCurrentContext();
 	glfwDestroyWindow(window);

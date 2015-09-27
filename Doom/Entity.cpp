@@ -6,23 +6,6 @@ void Entity::loadRealVertices()
 {
 	if (_vertexBuffer != nullptr && _object != nullptr)
 	{
-
-			if (_type == ENTITY_BULLET )
-			{
-				cout << "bullet" << endl;
-			}
-			if (_type == ENTITY_ENEMY)
-			{
-				cout << "enemy" << endl;
-			}
-			if (_type == ENTITY_MAP)
-			{
-				cout << "map" << endl;
-			}
-			cout << _type << endl;
-
-
-
 		cout << "Something wrong with loadRealVertices #1 Entity" << endl;
 	}
 	if (_vertexBuffer == nullptr && _object == nullptr)

@@ -108,7 +108,7 @@ Scene::Scene()
 
 	//model - sofa
 	model = new ModelObject(new Model("Models/sofa/Leather_Sofa.obj"), NULL);
-	entity = new Entity(model, makeVector3(-4.7f, -1.5f, 1.0f), ENTITY_MAP);
+	entity = new Entity(model, makeVector3(-4.0f, -1.5f, 1.0f), ENTITY_MAP);
 	entity->setRotation(makeVector3(0.0f, 45.0f, 0.0f));
 	entity->setScale(makeVector3(0.5f, 0.5f, 0.5f));
 	_children->push_back(entity);

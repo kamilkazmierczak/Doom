@@ -141,7 +141,7 @@ void EnvironmentReactions::takeAmmo()
 	vec3 cameraPosition = cameraSystem->getCurrentCamera()->getPosition();
 
 	vec3 gunPosition = vec3(8.7f, -0.3f, -1.2f);
-	GLfloat gunReactRadius = 1.5f;
+	GLfloat gunReactRadius = 2.0f;
 
 	GLfloat distance_ = glm::distance(gunPosition, cameraPosition);
 

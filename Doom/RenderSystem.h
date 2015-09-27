@@ -28,7 +28,7 @@ private:
 	void renderTextInformation();
 	void setGunPosition(Entity* entity);
 	void playAudio(Entity* entity);
-	void moveToShader(Entity* entity);
+	void moveToShader(Entity* entity, mat4& model, mat4& view, mat4& projection);
 
 	bool _firstRender; 
 

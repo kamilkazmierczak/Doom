@@ -1,6 +1,5 @@
 #pragma once
 #include  <GLFW\glfw3.h>
-//const GLuint WIDTH = 800, HEIGHT = 600;
 const GLuint DefaultWidth = 800, DefaultHeight = 600;
 const GLfloat UpdatesPerSecond = 60.0f;
 const glm::vec3 CameraPosition = glm::vec3(0.0f, 0.0f, 2.0f);

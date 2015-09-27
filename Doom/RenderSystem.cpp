@@ -82,81 +82,8 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 				glDepthMask(GL_FALSE);
 			}
 		
-			//przekazanie do shadera
-			GLint modelLoc = (entity->getVertexBuffer()->getShader())->getUniformLocation("model");
-			GLint viewLoc = (entity->getVertexBuffer()->getShader())->getUniformLocation("view");
-			GLint projLoc = (entity->getVertexBuffer()->getShader())->getUniformLocation("projection");
-
-			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, value_ptr(model));
-			glUniformMatrix4fv(viewLoc, 1, GL_FALSE, value_ptr(view));
-			glUniformMatrix4fv(projLoc, 1, GL_FALSE, value_ptr(projection));
-
-			glUniform4f((entity->getVertexBuffer()->getShader())->get_uColor(),
-				entity->getVertexBuffer()->getShaderData()->get_uColorValue().x,
-				entity->getVertexBuffer()->getShaderData()->get_uColorValue().y,
-				entity->getVertexBuffer()->getShaderData()->get_uColorValue().z,
-				entity->getVertexBuffer()->getShaderData()->get_uColorValue().w);
-
-
-			glUniform3f((entity->getVertexBuffer()->getShader())->getUniformLocation("uViewPosition"),
-				_cameraSystem->getCurrentCamera()->getPosition().x,
-				_cameraSystem->getCurrentCamera()->getPosition().y,
-				_cameraSystem->getCurrentCamera()->getPosition().z);
-
-			//light1
-			glUniform3f((entity->getVertexBuffer()->getShader())->getUniformLocation("light[0].position"),
-				entity->getVertexBuffer()->getShaderData()->get_uLightArray()->at(0).position.x,
-				entity->getVertexBuffer()->getShaderData()->get_uLightArray()->at(0).position.y,
-				entity->getVertexBuffer()->getShaderData()->get_uLightArray()->at(0).position.z);
-
-
-			glUniform3f((entity->getVertexBuffer()->getShader())->getUniformLocation("light[0].ambient"),
-				entity->getVertexBuffer()->getShaderData()->get_uLightArray()->at(0).ambient.x,
-				entity->getVertexBuffer()->getShaderData()->get_uLightArray()->at(0).ambient.y,
-				entity->getVertexBuffer()->getShaderData()->get_uLightArray()->at(0).ambient.z);
-
-			glUniform3f((entity->getVertexBuffer()->getShader())->getUniformLocation("light[0].diffuse"),
-				entity->getVertexBuffer()->getShaderData()->get_uLightArray()->at(0).diffuse.x,
-				entity->getVertexBuffer()->getShaderData()->get_uLightArray()->at(0).diffuse.y,
-				entity->getVertexBuffer()->getShaderData()->get_uLightArray()->at(0).diffuse.z);
-
-			glUniform3f((entity->getVertexBuffer()->getShader())->getUniformLocation("light[0].specular"),
-				entity->getVertexBuffer()->getShaderData()->get_uLightArray()->at(0).specular.x,
-				entity->getVertexBuffer()->getShaderData()->get_uLightArray()->at(0).specular.y,
-				entity->getVertexBuffer()->getShaderData()->get_uLightArray()->at(0).specular.z);
-
-			//light2
-
-			glUniform3f((entity->getVertexBuffer()->getShader())->getUniformLocation("light[1].position"),
-				entity->getVertexBuffer()->getShaderData()->get_uLightArray()->at(1).position.x,
-				entity->getVertexBuffer()->getShaderData()->get_uLightArray()->at(1).position.y,
-				entity->getVertexBuffer()->getShaderData()->get_uLightArray()->at(1).position.z);
-
-
-			glUniform3f((entity->getVertexBuffer()->getShader())->getUniformLocation("light[1].ambient"),
-				entity->getVertexBuffer()->getShaderData()->get_uLightArray()->at(1).ambient.x,
-				entity->getVertexBuffer()->getShaderData()->get_uLightArray()->at(1).ambient.y,
-				entity->getVertexBuffer()->getShaderData()->get_uLightArray()->at(1).ambient.z);
-
-			glUniform3f((entity->getVertexBuffer()->getShader())->getUniformLocation("light[1].diffuse"),
-				entity->getVertexBuffer()->getShaderData()->get_uLightArray()->at(1).diffuse.x,
-				entity->getVertexBuffer()->getShaderData()->get_uLightArray()->at(1).diffuse.y,
-				entity->getVertexBuffer()->getShaderData()->get_uLightArray()->at(1).diffuse.z);
-
-			glUniform3f((entity->getVertexBuffer()->getShader())->getUniformLocation("light[1].specular"),
-				entity->getVertexBuffer()->getShaderData()->get_uLightArray()->at(1).specular.x,
-				entity->getVertexBuffer()->getShaderData()->get_uLightArray()->at(1).specular.y,
-				entity->getVertexBuffer()->getShaderData()->get_uLightArray()->at(1).specular.z);
-
-
-			glUniform3f((entity->getVertexBuffer()->getShader())->getUniformLocation("material.specular"),
-				entity->getVertexBuffer()->getShaderData()->get_uMaterial().specular.x,
-				entity->getVertexBuffer()->getShaderData()->get_uMaterial().specular.y,
-				entity->getVertexBuffer()->getShaderData()->get_uMaterial().specular.z);
-
-			glUniform1f((entity->getVertexBuffer()->getShader())->getUniformLocation("material.shininess"),
-				entity->getVertexBuffer()->getShaderData()->get_uMaterial().shininess);
-		
+			
+		moveToShader(entity, model, view, projection);
 		entity->getVertexBuffer()->renderVertexBuffer();	
 		
 		//SKYBOX
@@ -261,7 +188,6 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 									bool bCollided = SpherePolygonCollision(*real, sphereCentreReal, 3, sphereObj->getRadius());
 									if (bCollided)
 									{
-										//cout << "kolizja sfery" << endl;
 										sphereObj->destroy();
 										
 										if (otherEntity->getType() == ENTITY_MAP)
@@ -436,9 +362,82 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 	i = 0;
 }
 
-void RenderSystem::moveToShader(Entity* entity)
+void RenderSystem::moveToShader(Entity* entity, mat4& model, mat4& view, mat4& projection)
 {
-	
+	//przekazanie do shadera
+	GLint modelLoc = (entity->getVertexBuffer()->getShader())->getUniformLocation("model");
+	GLint viewLoc = (entity->getVertexBuffer()->getShader())->getUniformLocation("view");
+	GLint projLoc = (entity->getVertexBuffer()->getShader())->getUniformLocation("projection");
+
+	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, value_ptr(model));
+	glUniformMatrix4fv(viewLoc, 1, GL_FALSE, value_ptr(view));
+	glUniformMatrix4fv(projLoc, 1, GL_FALSE, value_ptr(projection));
+
+	glUniform4f((entity->getVertexBuffer()->getShader())->get_uColor(),
+		entity->getVertexBuffer()->getShaderData()->get_uColorValue().x,
+		entity->getVertexBuffer()->getShaderData()->get_uColorValue().y,
+		entity->getVertexBuffer()->getShaderData()->get_uColorValue().z,
+		entity->getVertexBuffer()->getShaderData()->get_uColorValue().w);
+
+
+	glUniform3f((entity->getVertexBuffer()->getShader())->getUniformLocation("uViewPosition"),
+		_cameraSystem->getCurrentCamera()->getPosition().x,
+		_cameraSystem->getCurrentCamera()->getPosition().y,
+		_cameraSystem->getCurrentCamera()->getPosition().z);
+
+	//light1
+	glUniform3f((entity->getVertexBuffer()->getShader())->getUniformLocation("light[0].position"),
+		entity->getVertexBuffer()->getShaderData()->get_uLightArray()->at(0).position.x,
+		entity->getVertexBuffer()->getShaderData()->get_uLightArray()->at(0).position.y,
+		entity->getVertexBuffer()->getShaderData()->get_uLightArray()->at(0).position.z);
+
+
+	glUniform3f((entity->getVertexBuffer()->getShader())->getUniformLocation("light[0].ambient"),
+		entity->getVertexBuffer()->getShaderData()->get_uLightArray()->at(0).ambient.x,
+		entity->getVertexBuffer()->getShaderData()->get_uLightArray()->at(0).ambient.y,
+		entity->getVertexBuffer()->getShaderData()->get_uLightArray()->at(0).ambient.z);
+
+	glUniform3f((entity->getVertexBuffer()->getShader())->getUniformLocation("light[0].diffuse"),
+		entity->getVertexBuffer()->getShaderData()->get_uLightArray()->at(0).diffuse.x,
+		entity->getVertexBuffer()->getShaderData()->get_uLightArray()->at(0).diffuse.y,
+		entity->getVertexBuffer()->getShaderData()->get_uLightArray()->at(0).diffuse.z);
+
+	glUniform3f((entity->getVertexBuffer()->getShader())->getUniformLocation("light[0].specular"),
+		entity->getVertexBuffer()->getShaderData()->get_uLightArray()->at(0).specular.x,
+		entity->getVertexBuffer()->getShaderData()->get_uLightArray()->at(0).specular.y,
+		entity->getVertexBuffer()->getShaderData()->get_uLightArray()->at(0).specular.z);
+
+	//light2
+
+	glUniform3f((entity->getVertexBuffer()->getShader())->getUniformLocation("light[1].position"),
+		entity->getVertexBuffer()->getShaderData()->get_uLightArray()->at(1).position.x,
+		entity->getVertexBuffer()->getShaderData()->get_uLightArray()->at(1).position.y,
+		entity->getVertexBuffer()->getShaderData()->get_uLightArray()->at(1).position.z);
+
+
+	glUniform3f((entity->getVertexBuffer()->getShader())->getUniformLocation("light[1].ambient"),
+		entity->getVertexBuffer()->getShaderData()->get_uLightArray()->at(1).ambient.x,
+		entity->getVertexBuffer()->getShaderData()->get_uLightArray()->at(1).ambient.y,
+		entity->getVertexBuffer()->getShaderData()->get_uLightArray()->at(1).ambient.z);
+
+	glUniform3f((entity->getVertexBuffer()->getShader())->getUniformLocation("light[1].diffuse"),
+		entity->getVertexBuffer()->getShaderData()->get_uLightArray()->at(1).diffuse.x,
+		entity->getVertexBuffer()->getShaderData()->get_uLightArray()->at(1).diffuse.y,
+		entity->getVertexBuffer()->getShaderData()->get_uLightArray()->at(1).diffuse.z);
+
+	glUniform3f((entity->getVertexBuffer()->getShader())->getUniformLocation("light[1].specular"),
+		entity->getVertexBuffer()->getShaderData()->get_uLightArray()->at(1).specular.x,
+		entity->getVertexBuffer()->getShaderData()->get_uLightArray()->at(1).specular.y,
+		entity->getVertexBuffer()->getShaderData()->get_uLightArray()->at(1).specular.z);
+
+
+	glUniform3f((entity->getVertexBuffer()->getShader())->getUniformLocation("material.specular"),
+		entity->getVertexBuffer()->getShaderData()->get_uMaterial().specular.x,
+		entity->getVertexBuffer()->getShaderData()->get_uMaterial().specular.y,
+		entity->getVertexBuffer()->getShaderData()->get_uMaterial().specular.z);
+
+	glUniform1f((entity->getVertexBuffer()->getShader())->getUniformLocation("material.shininess"),
+		entity->getVertexBuffer()->getShaderData()->get_uMaterial().shininess);
 }
 
 

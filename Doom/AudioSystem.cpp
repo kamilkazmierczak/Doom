@@ -3,7 +3,6 @@
 
 AudioSystem::AudioSystem()
 {
-	cout << "wywolana" << endl;
 }
 
 

@@ -279,10 +279,7 @@ private:
 		glm::vec3 center = glm::vec3((min_x + max_x) / 2, (min_y + max_y) / 2, (min_z + max_z) / 2);
 		modelTransform = glm::translate(glm::mat4(1), center)* glm::scale(glm::mat4(1), size);
 
-		cout << "#size" << endl;
-		cout << size.x << " " << size.y << " " << size.z << endl;
-		cout << "#center" << endl;
-		cout << center.x << " " << center.y << " " << center.z << endl;
+		cout << "#";
 
 	}
 
