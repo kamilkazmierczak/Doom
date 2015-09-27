@@ -28,15 +28,16 @@ public:
 	void play3DAudio();
 
 	void playShoot();
-	void playEnemyHit(vec3 position, vec3 cameraPosition, vec3 cameraDirection);
-	void playEnemyCreate(vec3 position, vec3 cameraPosition, vec3 cameraDirection);
+	void playEnemyHit(vec3 position);
+	void playEnemyCreate(vec3 position);
 	void playPlayerHit();
 	void playGameOver();
 	void playVictory();
 	void playReload();
+	void playMusic(vec3 position);
 
 	void stopAllSounds();
-
+	void updateListenerPosition(vec3 cameraPosition, vec3 cameraDirection);
 	void playSample();
 	static AudioSystem& getAudioSystem();
 	static void destroyAudioSystem();

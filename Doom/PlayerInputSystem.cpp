@@ -91,6 +91,8 @@ void PlayerInputSystem::keyCallback(GLFWwindow* window, int key, int scancode, i
 	{
 		GameManager *gameManager = &GameManager::getGameManager();
 		gameManager->setPauseState(false);
+		AudioSystem *audioSystem = &AudioSystem::getAudioSystem();
+		audioSystem->playMusic(vec3(-9.2f, -1.5f, 5.5f));
 	}
 
 	if (key == GLFW_KEY_R && action == GLFW_PRESS)

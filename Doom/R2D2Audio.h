@@ -12,7 +12,7 @@ private:
 
 public:
 
-	void play3DAudio(vec3 position, vec3 cameraPosition, vec3 cameraDirection);
+	void play3DAudio(vec3 position);
 
 	R2D2Audio();
 	~R2D2Audio();

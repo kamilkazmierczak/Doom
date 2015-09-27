@@ -27,6 +27,9 @@ private:
 	void checkForNewObjects(vector<Entity *> *entityArray);
 	void renderTextInformation();
 	void setGunPosition(Entity* entity);
+	void playAudio(Entity* entity);
+	void moveToShader(Entity* entity);
+
 	bool _firstRender; 
 
 	RenderSystem();

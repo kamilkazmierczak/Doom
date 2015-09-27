@@ -90,7 +90,6 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ModelObject.cpp" />
     <ClCompile Include="MovementSystem.cpp" />
-    <ClCompile Include="PlaneAudio.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerInputSystem.cpp" />
     <ClCompile Include="R2D2Audio.cpp" />
@@ -129,7 +128,6 @@
     <ClInclude Include="Model.h" />
     <ClInclude Include="ModelObject.h" />
     <ClInclude Include="MovementSystem.h" />
-    <ClInclude Include="PlaneAudio.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerInputSystem.h" />
     <ClInclude Include="R2D2Audio.h" />

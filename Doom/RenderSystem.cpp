@@ -9,7 +9,6 @@
 #include "GameManager.h"
 #include "R2D2Audio.h"
 #include "EnemyAudio.h"
-#include "PlaneAudio.h"
 #include <glm/gtx/vector_angle.hpp>
 #include <glm/gtx/string_cast.hpp>
 
@@ -32,11 +31,16 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 	projection = perspective(radians(_cameraSystem->getCurrentCamera()->Zoom), (GLfloat)WIDTH / (GLfloat)HEIGHT, 0.1f, 100.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	view = _cameraSystem->getCurrentCamera()->GetViewMatrix();
-	
+	view = _cameraSystem->getCurrentCamera()->GetViewMatrix();	
 
-	//AudioSystem *audioSystem = &AudioSystem::getAudioSystem();
-	//audioSystem->playSample();
+	if (_firstRender != true)
+	{
+		for (vector<Entity *>::iterator iterator = entityArray->begin(); iterator != entityArray->end(); iterator++)
+		{
+			(*iterator)->loadRealVertices();
+			_cameraSystem->reactOnMap(*iterator);
+		}
+	}
 
 	
 	for (vector<Entity *>::iterator iterator = entityArray->begin(); iterator != entityArray->end(); iterator++)
@@ -51,15 +55,6 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 		
 		if (_firstRender != true)
 		{
-			if (entity->getType() != ENTITY_GUN)
-			{
-				_cameraSystem->reactOnMap(entity);
-			}
-			else
-			{
-				//setGunPosition(entity);
-			}
-
 			EnvironmentReactions *environment = &EnvironmentReactions::getEnvironmentReactions();
 			environment->react();
 		}	
@@ -87,30 +82,28 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 				glDepthMask(GL_FALSE);
 			}
 		
-		
+			//przekazanie do shadera
+			GLint modelLoc = (entity->getVertexBuffer()->getShader())->getUniformLocation("model");
+			GLint viewLoc = (entity->getVertexBuffer()->getShader())->getUniformLocation("view");
+			GLint projLoc = (entity->getVertexBuffer()->getShader())->getUniformLocation("projection");
 
-		//przekazanie do shadera
-		GLint modelLoc = (entity->getVertexBuffer()->getShader())->getUniformLocation("model");
-		GLint viewLoc = (entity->getVertexBuffer()->getShader())->getUniformLocation("view");
-		GLint projLoc = (entity->getVertexBuffer()->getShader())->getUniformLocation("projection");
+			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, value_ptr(model));
+			glUniformMatrix4fv(viewLoc, 1, GL_FALSE, value_ptr(view));
+			glUniformMatrix4fv(projLoc, 1, GL_FALSE, value_ptr(projection));
 
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, value_ptr(model));
-		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, value_ptr(view));
-		glUniformMatrix4fv(projLoc, 1, GL_FALSE, value_ptr(projection));
-
-		glUniform4f((entity->getVertexBuffer()->getShader())->get_uColor(),
-			entity->getVertexBuffer()->getShaderData()->get_uColorValue().x,
-			entity->getVertexBuffer()->getShaderData()->get_uColorValue().y,
-			entity->getVertexBuffer()->getShaderData()->get_uColorValue().z,
-			entity->getVertexBuffer()->getShaderData()->get_uColorValue().w);
+			glUniform4f((entity->getVertexBuffer()->getShader())->get_uColor(),
+				entity->getVertexBuffer()->getShaderData()->get_uColorValue().x,
+				entity->getVertexBuffer()->getShaderData()->get_uColorValue().y,
+				entity->getVertexBuffer()->getShaderData()->get_uColorValue().z,
+				entity->getVertexBuffer()->getShaderData()->get_uColorValue().w);
 
 
-		glUniform3f((entity->getVertexBuffer()->getShader())->getUniformLocation("uViewPosition"),
-			_cameraSystem->getCurrentCamera()->getPosition().x,
-			_cameraSystem->getCurrentCamera()->getPosition().y,
-			_cameraSystem->getCurrentCamera()->getPosition().z);
+			glUniform3f((entity->getVertexBuffer()->getShader())->getUniformLocation("uViewPosition"),
+				_cameraSystem->getCurrentCamera()->getPosition().x,
+				_cameraSystem->getCurrentCamera()->getPosition().y,
+				_cameraSystem->getCurrentCamera()->getPosition().z);
 
-		//light1
+			//light1
 			glUniform3f((entity->getVertexBuffer()->getShader())->getUniformLocation("light[0].position"),
 				entity->getVertexBuffer()->getShaderData()->get_uLightArray()->at(0).position.x,
 				entity->getVertexBuffer()->getShaderData()->get_uLightArray()->at(0).position.y,
@@ -221,12 +214,6 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 							sphereObj->destroy();
 							audioSystem->playPlayerHit();
 						}
-						
-						
-						
-
-
-						//# KOLIZJA Z GRACZEM
 					}
 
 
@@ -294,19 +281,14 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 												//cout << enemyObj->getHealth() << endl;
 												AudioSystem *audioSystem = &AudioSystem::getAudioSystem();
 												vec3 position = vec3(otherEntity->getPosition().x, otherEntity->getPosition().y, otherEntity->getPosition().z);
-												audioSystem->playEnemyHit(position, _cameraSystem->getCurrentCamera()->getPosition(), _cameraSystem->getCurrentCamera()->getCenter());
+												audioSystem->playEnemyHit(position);
 												
 												if (enemyObj->getHealth() > 0.0f)
 												{
 													enemyObj->changeHealth(-BulletDamage);
 												}
 											}
-
-
 										}
-
-		
-
 									}
 								}	
 								
@@ -328,42 +310,9 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 
 				modelObj->loadRealVertices(model);	
 
-
-				//AUDIO
-
-				if (entity->getType() == ENTITY_R2R2)
-				{
-					R2D2Audio *r2d2Audio = nullptr;
-					try { r2d2Audio = dynamic_cast<R2D2Audio*>(entity->getAudioSystem()); }
-					catch (bad_cast& bc){ cerr << "bad_cast caught: " << bc.what() << endl; }
-					vec3 position = vec3(entity->getPosition().x, entity->getPosition().y, entity->getPosition().z);
-					r2d2Audio->play3DAudio(position, _cameraSystem->getCurrentCamera()->getPosition(), _cameraSystem->getCurrentCamera()->getCenter());
-				}
-				if (entity->getType() == ENTITY_ENEMY)
-				{
-					EnemyAudio *enemyAudio = nullptr;
-					try { enemyAudio = dynamic_cast<EnemyAudio*>(entity->getAudioSystem()); }
-					catch (bad_cast& bc){ cerr << "bad_cast caught: " << bc.what() << endl; }
-					vec3 position = vec3(entity->getPosition().x, entity->getPosition().y, entity->getPosition().z);
-					enemyAudio->play3DAudio(position, _cameraSystem->getCurrentCamera()->getPosition(), _cameraSystem->getCurrentCamera()->getCenter());
-				}
-				if (entity->getType() == ENTITY_PLANE)
-				{
-					PlaneAudio *planeAudio = nullptr;
-					try { planeAudio = dynamic_cast<PlaneAudio*>(entity->getAudioSystem()); }
-					catch (bad_cast& bc){ cerr << "bad_cast caught: " << bc.what() << endl; }
-					vec3 position = vec3(entity->getPosition().x, entity->getPosition().y, entity->getPosition().z);
-					planeAudio->play3DAudio(position, _cameraSystem->getCurrentCamera()->getPosition(), _cameraSystem->getCurrentCamera()->getCenter());
-				
-				}
-
-
-
-
-
+				playAudio(entity);
 
 				//ARTIFICIAL INTELLIGENCE
-
 				if (entity->getType() == ENTITY_ENEMY)
 				{
 					
@@ -378,10 +327,6 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 				{
 					modelObj->getAi()->move(entity, R2R2Speed);
 				}
-
-
-				//#ARTIFICIAL INTELLIGENCE
-
 
 
 				if (entity->getType() != ENTITY_MAP)
@@ -457,10 +402,6 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 													}
 
 												}
-
-
-
-
 											}
 										}
 									}
@@ -470,8 +411,6 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 						}
 					}//Koniec detekcji
 				}
-
-
 			}
 
 
@@ -497,6 +436,38 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 	i = 0;
 }
 
+void RenderSystem::moveToShader(Entity* entity)
+{
+	
+}
+
+
+
+
+void RenderSystem::playAudio(Entity* entity)
+{
+	EnvironmentReactions *environment = &EnvironmentReactions::getEnvironmentReactions();
+	Player *player = &Player::getPlayer();
+	if (environment->getAllEnemyDeadStatus() == false && player->getHealth() > 0.0f)
+	{
+		if (entity->getType() == ENTITY_R2R2)
+		{
+			R2D2Audio *r2d2Audio = nullptr;
+			try { r2d2Audio = dynamic_cast<R2D2Audio*>(entity->getAudioSystem()); }
+			catch (bad_cast& bc){ cerr << "bad_cast caught: " << bc.what() << endl; }
+			vec3 position = vec3(entity->getPosition().x, entity->getPosition().y, entity->getPosition().z);
+			r2d2Audio->play3DAudio(position);
+		}
+		if (entity->getType() == ENTITY_ENEMY)
+		{
+			EnemyAudio *enemyAudio = nullptr;
+			try { enemyAudio = dynamic_cast<EnemyAudio*>(entity->getAudioSystem()); }
+			catch (bad_cast& bc){ cerr << "bad_cast caught: " << bc.what() << endl; }
+			vec3 position = vec3(entity->getPosition().x, entity->getPosition().y, entity->getPosition().z);
+			enemyAudio->play3DAudio(position);
+		}
+	}
+}
 
 
 void RenderSystem::setGunPosition(Entity* entity)

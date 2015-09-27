@@ -12,7 +12,7 @@ EnemyAudio::~EnemyAudio()
 		_music->drop();
 }
 
-void EnemyAudio::play3DAudio(vec3 position, vec3 cameraPosition, vec3 cameraDirection)
+void EnemyAudio::play3DAudio(vec3 position)
 {
 
 	if (_lastPlayTime + _delay < glfwGetTime())
@@ -20,8 +20,8 @@ void EnemyAudio::play3DAudio(vec3 position, vec3 cameraPosition, vec3 cameraDire
 		_lastPlayTime = glfwGetTime();
 
 		_music = _engine->play3D(findPatch("exterminate"), vec3df(0, 0, 0), false, false, true);
-		_music->setMinDistance(4.0f);
-		_engine->setListenerPosition(vec3df(cameraPosition.x, 0, cameraPosition.z), vec3df(-cameraDirection.x, -cameraDirection.y, -cameraDirection.z));
+		_music->setMinDistance(2.5f);
+		//_engine->setListenerPosition(vec3df(cameraPosition.x, 0, cameraPosition.z), vec3df(-cameraDirection.x, -cameraDirection.y, -cameraDirection.z));
 		_music->setPosition(vec3df(position.x, position.y, position.z));
 
 	}

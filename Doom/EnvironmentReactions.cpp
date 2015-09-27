@@ -23,19 +23,24 @@ void EnvironmentReactions::react()
 
 void EnvironmentReactions::playSounds()
 {
-	//static bool played = false;
 	Player *player = &Player::getPlayer();
-	//AudioSystem *audioSystem = &AudioSystem::getAudioSystem();
+	CameraSystem *cameraSystem = &CameraSystem::getCameraSystem();
+
+
+	_audioSystem->updateListenerPosition(cameraSystem->getCurrentCamera()->getPosition(), cameraSystem->getCurrentCamera()->getCenter());
+
 
 	if (!_gameOver)
 	{
 		if (_allEnemyDead == true)
 		{//Victory
+			_audioSystem->stopAllSounds();
 			_audioSystem->playVictory();
 			_gameOver = true;
 		}
 		else if (player->getHealth() <= 0.0f)
 		{//GameOver
+			_audioSystem->stopAllSounds();
 			_audioSystem->playGameOver();
 			_gameOver = true;
 		}
@@ -109,7 +114,7 @@ void EnvironmentReactions::createWave()
 
 			AudioSystem *audioSystem = &AudioSystem::getAudioSystem();
 			vec3 position = vec3(entity->getPosition().x, entity->getPosition().y, entity->getPosition().z);
-			audioSystem->playEnemyCreate(position, cameraSystem->getCurrentCamera()->getPosition(), cameraSystem->getCurrentCamera()->getCenter());
+			audioSystem->playEnemyCreate(position);
 
 
 			nrOfDeadDaleks++;

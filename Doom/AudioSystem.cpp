@@ -39,6 +39,9 @@ AudioSystem& AudioSystem::getAudioSystem()
 		_audioFiles->insert(pair<string, string>("gameover", "Audio/gameover.mp3"));
 		_audioFiles->insert(pair<string, string>("victory", "Audio/victory.mp3"));
 		_audioFiles->insert(pair<string, string>("reload", "Audio/reload.mp3"));
+		_audioFiles->insert(pair<string, string>("music", "Audio/Swashbuckler-Paul_Mottram.mp3"));
+
+
 
 		audioSystem = new AudioSystem();
 	}
@@ -75,19 +78,19 @@ void AudioSystem::playShoot()
 	_engine->play2D(findPatch("gunshoot"));
 }
   
-void AudioSystem::playEnemyHit(vec3 position, vec3 cameraPosition, vec3 cameraDirection)
+void AudioSystem::playEnemyHit(vec3 position)
 {
 	_music = _engine->play3D(findPatch("enemyhit"), vec3df(0, 0, 0), false, false, true);
 	_music->setMinDistance(1.0f);
-	_engine->setListenerPosition(vec3df(cameraPosition.x, 0, cameraPosition.z), vec3df(-cameraDirection.x, -cameraDirection.y, -cameraDirection.z));
+	//_engine->setListenerPosition(vec3df(cameraPosition.x, 0, cameraPosition.z), vec3df(-cameraDirection.x, -cameraDirection.y, -cameraDirection.z));
 	_music->setPosition(vec3df(position.x, position.y, position.z));
 }
 
-void AudioSystem::playEnemyCreate(vec3 position, vec3 cameraPosition, vec3 cameraDirection)
+void AudioSystem::playEnemyCreate(vec3 position)
 {
 	_music = _engine->play3D(findPatch("antimatter"), vec3df(0, 0, 0), false, false, true);
 	_music->setMinDistance(10.0f);
-	_engine->setListenerPosition(vec3df(cameraPosition.x, 0, cameraPosition.z), vec3df(-cameraDirection.x, -cameraDirection.y, -cameraDirection.z));
+	//_engine->setListenerPosition(vec3df(cameraPosition.x, 0, cameraPosition.z), vec3df(-cameraDirection.x, -cameraDirection.y, -cameraDirection.z));
 	_music->setPosition(vec3df(position.x, position.y, position.z));
 }
 
@@ -108,9 +111,16 @@ void AudioSystem::playVictory()
 	_engine->play2D(findPatch("victory"));
 }
 
-void  AudioSystem::playReload()
+void AudioSystem::playReload()
 {
 	_engine->play2D(findPatch("reload"));
+}
+
+void AudioSystem::playMusic(vec3 position)
+{
+	_music = _engine->play3D(findPatch("music"), vec3df(0, 0, 0), true, false, true);
+	_music->setMinDistance(5.0f);
+	_music->setPosition(vec3df(position.x, position.y, position.z));
 }
 
 void AudioSystem::stopAllSounds()
@@ -127,6 +137,11 @@ void AudioSystem::play2DAudio()
 void AudioSystem::play3DAudio()
 {
 	//
+}
+
+void AudioSystem::updateListenerPosition(vec3 cameraPosition, vec3 cameraDirection)
+{
+	_engine->setListenerPosition(vec3df(cameraPosition.x, 0, cameraPosition.z), vec3df(-cameraDirection.x, -cameraDirection.y, -cameraDirection.z));
 }
 
 char* AudioSystem::findPatch(string audioName)
