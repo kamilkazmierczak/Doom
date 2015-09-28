@@ -185,7 +185,12 @@ void RenderSystem::render(vector<Entity*> *entityArray)
 									real[1] = &realCurrentVertices->at(k).b;
 									real[2] = &realCurrentVertices->at(k).c;
 
-									bool bCollided = SpherePolygonCollision(*real, sphereCentreReal, 3, sphereObj->getRadius());
+									vec3 _Real[3];
+									_Real[0] = *real[0];
+									_Real[1] = *real[1];
+									_Real[2] = *real[2];
+
+									bool bCollided = SpherePolygonCollision(_Real, sphereCentreReal, 3, sphereObj->getRadius());
 									if (bCollided)
 									{
 										sphereObj->destroy();

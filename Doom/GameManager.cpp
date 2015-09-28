@@ -203,11 +203,18 @@ GameManager& GameManager::getGameManager()
 		GLfloat centerX = monitorWidth / 2;
 		GLfloat centerY = monitorHeight / 2;
 
-		
-		system("cls");
 		char decision;
-		cout << "Fullscreen? (y/n)" << endl;
-		cin >> decision;
+	
+		do{
+			system("cls");
+			cout << "Mission: Kill 10 daleks" << endl;
+			cout << "Movement: WSAD + Mouse" << endl;
+			cout << "Shooting: Mouse or Space" << endl;
+			cout << "Restart: R" << endl;
+			cout << "Pause: P" << endl << endl;
+			cout << "Fullscreen? (y/n)" << endl;
+			cin >> decision;
+		} while ((decision != 'y') && (decision != 'n'));
 
 		if (decision == 'y')
 		{

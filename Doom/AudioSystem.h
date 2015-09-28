@@ -24,9 +24,6 @@ protected:
 	virtual ~AudioSystem();
 public:
 
-	void play2DAudio();
-	void play3DAudio();
-
 	void playShoot();
 	void playEnemyHit(vec3 position);
 	void playEnemyCreate(vec3 position);

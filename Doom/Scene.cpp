@@ -74,12 +74,12 @@ Scene::Scene()
 
 
 	//samolot (wczytuje sie 1,5min)
-	model = new ModelObject(new Model("Models/starcruiser/Starcruiser military.obj"), NULL);
+	/*model = new ModelObject(new Model("Models/starcruiser/Starcruiser military.obj"), NULL);
 	entity = new Entity(model, makeVector3(-10.0f, 4.0f, 0.0f), ENTITY_MAP);
 	entity->setRotation(makeVector3(0.0f, 135.0f, 17.0f));
 	entity->setScale(makeVector3(0.02f, 0.02f, 0.02f));
 	entity->setVelocity(makeVector3(0.003f, 0.0f, -0.003f));
-	_children->push_back(entity);
+	_children->push_back(entity);*/
 
 
 	//model - jukebox
