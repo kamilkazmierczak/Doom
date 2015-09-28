@@ -40,12 +40,12 @@ void TextureLoader::loadSkybox()
 {
 	vector<const GLchar*> faces;
 	
-	faces.push_back("skybox/endless_sky/endless_rt.jpg");
-	faces.push_back("skybox/endless_sky/endless_lf.jpg");
-	faces.push_back("skybox/endless_sky/endless_up.jpg");
-	faces.push_back("skybox/endless_sky/endless_dn.jpg");
-	faces.push_back("skybox/endless_sky/endless_bk.jpg");
-	faces.push_back("skybox/endless_sky/endless_ft.jpg");
+	faces.push_back("Textures/Skybox/endless_rt.jpg");
+	faces.push_back("Textures/Skybox/endless_lf.jpg");
+	faces.push_back("Textures/Skybox/endless_up.jpg");
+	faces.push_back("Textures/Skybox/endless_dn.jpg");
+	faces.push_back("Textures/Skybox/endless_bk.jpg");
+	faces.push_back("Textures/Skybox/endless_ft.jpg");
 	
 	_textureLoaderID = loadCubemap(faces);
 }

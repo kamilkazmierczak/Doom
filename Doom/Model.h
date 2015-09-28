@@ -31,7 +31,7 @@ class Model
 public:
 	Model(GLchar* path) :_firstMesh(true)
 	{
-		bbShader = new Shader("boundingbox.vs", "boundingbox.frag");
+		bbShader = new Shader("Shaders/Boundingbox.vs", "Shaders/Boundingbox.frag");
 		configcube();
 		this->loadModel(path);
 		

@@ -160,7 +160,7 @@ Scene::Scene()
 	
 
 	//beczka
-	model = new ModelObject(new Model("Models/b1/barrel.obj"), NULL);
+	model = new ModelObject(new Model("Models/barrel/barrel.obj"), NULL);
 	entity = new Entity(model, makeVector3(-8.7f, -1.5f, 1.5f), ENTITY_MAP);
 	entity->setScale(makeVector3(0.6f, 0.6f, 0.6f));
 	_children->push_back(entity);

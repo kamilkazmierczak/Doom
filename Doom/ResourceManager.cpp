@@ -50,16 +50,16 @@ ResourceManager::ResourceManager()
 
 	//Shaders
 	_shaderArray = new vector<ShaderInterface *>();
-	ShaderInterface *shader = new ShaderInterface("ColorShader.vs", "ColorShader.frag");
+	ShaderInterface *shader = new ShaderInterface("Shaders/ColorShader.vs", "Shaders/ColorShader.frag");
 	_shaderArray->push_back(shader);
 
-	ShaderInterface *lightShader = new ShaderInterface("SimpleLightShader.vs", "SimpleLightShader.frag");
+	ShaderInterface *lightShader = new ShaderInterface("Shaders/LightShader.vs", "Shaders/LightShader.frag");
 	_shaderArray->push_back(lightShader);
 
-	ShaderInterface *skyboxShader = new ShaderInterface("skybox.vs", "skybox.frag");
+	ShaderInterface *skyboxShader = new ShaderInterface("Shaders/Skybox.vs", "Shaders/Skybox.frag");
 	_shaderArray->push_back(skyboxShader);
 
-	ShaderInterface *lampShader = new ShaderInterface("lamp.vs", "lamp.frag");
+	ShaderInterface *lampShader = new ShaderInterface("Shaders/Lamp.vs", "Shaders/Lamp.frag");
 	_shaderArray->push_back(lampShader);
 												
 	Light light1;
@@ -107,7 +107,7 @@ ResourceManager::ResourceManager()
 	_vertexBufferArray->push_back(vertexBuffer);
 
 	//container
-	textureLoader = new TextureLoader("container.png",TX_TEXTURE);
+	textureLoader = new TextureLoader("Textures/container.png",TX_TEXTURE);
 	VertexBuffer *cubeVertexBuffer = new VertexBuffer(cubeVertices, 
 												  sizeof(cubeVertices), 
 												  GL_TRIANGLES, 
@@ -122,7 +122,7 @@ ResourceManager::ResourceManager()
 	_vertexBufferArray->push_back(cubeVertexBuffer);
 
 	//container2
-	    textureLoader = new TextureLoader("container2.jpg",TX_TEXTURE);
+	    textureLoader = new TextureLoader("Textures/container2.jpg",TX_TEXTURE);
 		VertexBuffer *cubeVertexBuffer2 = new VertexBuffer(cubeVertices, 
 												  sizeof(cubeVertices), 
 												  GL_TRIANGLES, 
@@ -229,7 +229,7 @@ ResourceManager::ResourceManager()
 
 
 		  //right blocker 
-	    textureLoader = new TextureLoader("container2.jpg",TX_TEXTURE);
+	    textureLoader = new TextureLoader("Textures/container2.jpg",TX_TEXTURE);
 		VertexBuffer *rightBlocker = new VertexBuffer(cubeVertices, 
 												  sizeof(cubeVertices), 
 												  GL_TRIANGLES, 
@@ -244,7 +244,7 @@ ResourceManager::ResourceManager()
 		_vertexBufferArray->push_back(rightBlocker);
 
 			//left blocker
-	    textureLoader = new TextureLoader("container2.jpg",TX_TEXTURE);
+	    textureLoader = new TextureLoader("Textures/container2.jpg",TX_TEXTURE);
 		VertexBuffer *leftBlocker = new VertexBuffer(cubeVertices, 
 												  sizeof(cubeVertices), 
 												  GL_TRIANGLES, 
@@ -259,7 +259,7 @@ ResourceManager::ResourceManager()
 		_vertexBufferArray->push_back(leftBlocker);
 
 			//front blocker
-	    textureLoader = new TextureLoader("container2.jpg",TX_TEXTURE);
+	    textureLoader = new TextureLoader("Textures/container2.jpg",TX_TEXTURE);
 		VertexBuffer *frontBlocker = new VertexBuffer(cubeVertices, 
 												  sizeof(cubeVertices), 
 												  GL_TRIANGLES, 
@@ -274,7 +274,7 @@ ResourceManager::ResourceManager()
 		_vertexBufferArray->push_back(frontBlocker);
 
 			//back blocker
-	    textureLoader = new TextureLoader("container2.jpg",TX_TEXTURE);
+	    textureLoader = new TextureLoader("Textures/container2.jpg",TX_TEXTURE);
 		VertexBuffer *backBlocker = new VertexBuffer(cubeVertices, 
 												  sizeof(cubeVertices), 
 												  GL_TRIANGLES, 

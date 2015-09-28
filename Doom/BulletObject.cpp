@@ -4,7 +4,7 @@
 BulletObject::BulletObject(Sphere *sphere, Bullet_Type type) :_sphere(sphere), _destroy(false), _bulletType(type)
 {
 	_typeOfObject = OB_SPHERE;
-	_shader = new ShaderInterface("sphere.vs", "sphere.frag");
+	_shader = new ShaderInterface("Shaders/Sphere.vs", "Shaders/Sphere.frag");
 	
 
 	GLuint VBO3, EBO3;

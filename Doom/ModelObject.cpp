@@ -8,7 +8,7 @@
 ModelObject::ModelObject(Model *model, IArtificialIntelligence *Ai) : _model(model), _health(100.0f)
 {
 	_typeOfObject = OB_MODEL;
-	_shader = new ShaderInterface("model_loading.vs", "model_loading.frag");
+	_shader = new ShaderInterface("Shaders/Model_loading.vs", "Shaders/Model_loading.frag");
 
 	_Ai = Ai;
 }
