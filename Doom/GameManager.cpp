@@ -207,7 +207,9 @@ GameManager& GameManager::getGameManager()
 	
 		do{
 			system("cls");
-			cout << "Mission: Kill 10 daleks" << endl;
+			cout << "Save R2D2 from army of Daleks" << endl;
+			cout << "In every level you have to kill 10 daleks" << endl;
+			cout << "There are 10 levels" << endl << endl;
 			cout << "Movement: WSAD + Mouse" << endl;
 			cout << "Shooting: Mouse or Space" << endl;
 			cout << "Restart: R" << endl;

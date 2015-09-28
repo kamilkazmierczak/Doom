@@ -4,6 +4,7 @@
 #include <algorithm>
 #include "BulletObject.h"
 #include "Player.h"
+#include "LevelSystem.h"
 
 
 
@@ -93,6 +94,11 @@ void PlayerInputSystem::keyCallback(GLFWwindow* window, int key, int scancode, i
 		gameManager->setPauseState(false);
 		AudioSystem *audioSystem = &AudioSystem::getAudioSystem();
 		audioSystem->playMusic(vec3(-9.2f, -1.5f, 5.5f));
+		LevelSystem* levelSystem = &LevelSystem::getLevelSystem();
+		if (levelSystem->getCurrentLevel() > 1)
+		{
+			gameManager->setRestartState(true);
+		}		
 	}
 
 	if (key == GLFW_KEY_R && action == GLFW_PRESS)

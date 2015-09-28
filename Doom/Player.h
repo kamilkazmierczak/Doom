@@ -20,7 +20,6 @@ public:
 	GLfloat getAmmo();
 	void setAmmo(GLfloat newAmmo);
 
-
 	Vector3 getPosition();
 	static Player& getPlayer();
 	static void destroyPlayer();

@@ -1,5 +1,5 @@
 #include "EnemyIntelligence.h"
-
+#include "LevelSystem.h"
 
 EnemyIntelligence::EnemyIntelligence() : _resetRotation(false)
 {
@@ -13,6 +13,8 @@ EnemyIntelligence::~EnemyIntelligence()
 
 void EnemyIntelligence::move(Entity* entity, GLfloat speed)
 {
+	LevelSystem *levelSystem = &LevelSystem::getLevelSystem();
+
 
 	if (_collisionTime + TimeToEscape < glfwGetTime())
 	{
@@ -25,7 +27,7 @@ void EnemyIntelligence::move(Entity* entity, GLfloat speed)
 		moveSomewhere(entity, speed);
 	}
 
-	if (rand() % 200 + 1 <ShootingConstant)
+	if (rand() % 200 + 1 < levelSystem->getShootingVariable())
 	{
 		shoot(entity);
 	} 

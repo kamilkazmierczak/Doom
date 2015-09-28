@@ -42,7 +42,7 @@ Scene::Scene()
 	entity = new Entity(resourceManager->getVertexBufferArray()->at(4), makeVector3(0.0f, -1.0f, 0.0f),ENTITY_MAP);
 	_children->push_back(entity);
 
-	////lamp	
+	//lamp	
 	Vector3 lightPosition1 = makeVector3(
 		resourceManager->getVertexBufferArray()->at(5)->getShaderData()->get_uLightArray()->at(0).position.x,
 		resourceManager->getVertexBufferArray()->at(5)->getShaderData()->get_uLightArray()->at(0).position.y,
@@ -74,12 +74,12 @@ Scene::Scene()
 
 
 	//samolot (wczytuje sie 1,5min)
-	/*model = new ModelObject(new Model("Models/starcruiser/Starcruiser military.obj"), NULL);
+	model = new ModelObject(new Model("Models/starcruiser/Starcruiser military.obj"), NULL);
 	entity = new Entity(model, makeVector3(-10.0f, 4.0f, 0.0f), ENTITY_MAP);
 	entity->setRotation(makeVector3(0.0f, 135.0f, 17.0f));
 	entity->setScale(makeVector3(0.02f, 0.02f, 0.02f));
 	entity->setVelocity(makeVector3(0.003f, 0.0f, -0.003f));
-	_children->push_back(entity);*/
+	_children->push_back(entity);
 
 
 	//model - jukebox
@@ -157,14 +157,11 @@ Scene::Scene()
 	entity->setScale(makeVector3(0.07f, 0.07f, 0.07f));
 	_children->push_back(entity);
 
-	
-
 	//beczka
 	model = new ModelObject(new Model("Models/barrel/barrel.obj"), NULL);
 	entity = new Entity(model, makeVector3(-8.7f, -1.5f, 1.5f), ENTITY_MAP);
 	entity->setScale(makeVector3(0.6f, 0.6f, 0.6f));
 	_children->push_back(entity);
-
 
 	//lampa 
 	model = new ModelObject(new Model("Models/lamp/little_brown_lamp.obj"), NULL);
@@ -233,9 +230,7 @@ Scene::Scene()
 	entity->setRotation(makeVector3(0.0f, 0.0f, 0.0f));
 	entity->setScale(makeVector3(20.0f, 0.1f, 0.1f));
 	_children->push_back(entity);
-	//WALLS END
-
-	////lamp2		
+	//WALLS END	
 
 	////lamp2  //SUN
 	Vector3 lightPosition2 = makeVector3(

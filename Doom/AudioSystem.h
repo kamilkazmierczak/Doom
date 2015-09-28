@@ -30,6 +30,7 @@ public:
 	void playPlayerHit();
 	void playGameOver();
 	void playVictory();
+	void playVictoryGameOver();
 	void playReload();
 	void playMusic(vec3 position);
 

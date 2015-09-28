@@ -37,6 +37,7 @@ AudioSystem& AudioSystem::getAudioSystem()
 		_audioFiles->insert(pair<string, string>("victory", "Audio/victory.mp3"));
 		_audioFiles->insert(pair<string, string>("reload", "Audio/reload.mp3"));
 		_audioFiles->insert(pair<string, string>("music", "Audio/Swashbuckler-Paul_Mottram.mp3"));
+		_audioFiles->insert(pair<string, string>("victorygameover", "Audio/Gladiator_Victory_Song.mp3"));
 
 
 
@@ -96,6 +97,11 @@ void AudioSystem::playGameOver()
 void AudioSystem::playVictory()
 {
 	_engine->play2D(findPatch("victory"));
+}
+
+void AudioSystem::playVictoryGameOver()
+{
+	_engine->play2D(findPatch("victorygameover"));
 }
 
 void AudioSystem::playReload()

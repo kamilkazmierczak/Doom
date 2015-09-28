@@ -87,6 +87,7 @@
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="IArtificialIntelligence.cpp" />
     <ClCompile Include="IObject.cpp" />
+    <ClCompile Include="LevelSystem.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ModelObject.cpp" />
     <ClCompile Include="MovementSystem.cpp" />
@@ -124,6 +125,7 @@
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="IArtificialIntelligence.h" />
     <ClInclude Include="IObject.h" />
+    <ClInclude Include="LevelSystem.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="ModelObject.h" />

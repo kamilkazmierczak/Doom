@@ -1,6 +1,7 @@
 #include "EnvironmentReactions.h"
 #include "EnemyAudio.h"
 #include "GameManager.h"
+#include "LevelSystem.h"
 
 
 EnvironmentReactions::EnvironmentReactions() :_deadDalekNumber(0), _allEnemyDead(false), _resetInformation(false), _gameOver(false),
@@ -25,7 +26,7 @@ void EnvironmentReactions::playSounds()
 {
 	Player *player = &Player::getPlayer();
 	CameraSystem *cameraSystem = &CameraSystem::getCameraSystem();
-
+	LevelSystem *levelSystem = &LevelSystem::getLevelSystem();
 
 	_audioSystem->updateListenerPosition(cameraSystem->getCurrentCamera()->getPosition(), cameraSystem->getCurrentCamera()->getCenter());
 
@@ -35,8 +36,15 @@ void EnvironmentReactions::playSounds()
 		if (_allEnemyDead == true)
 		{//Victory
 			_audioSystem->stopAllSounds();
-			_audioSystem->playVictory();
 			_gameOver = true;
+
+			levelSystem->setLevel(levelSystem->getCurrentLevel() + 1);
+
+			if (levelSystem->getFinalRoundStatus())		
+				_audioSystem->playVictoryGameOver();	
+			else
+				_audioSystem->playVictory();
+
 		}
 		else if (player->getHealth() <= 0.0f)
 		{//GameOver

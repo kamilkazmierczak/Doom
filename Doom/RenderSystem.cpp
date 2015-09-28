@@ -9,6 +9,7 @@
 #include "GameManager.h"
 #include "R2D2Audio.h"
 #include "EnemyAudio.h"
+#include "LevelSystem.h"
 #include <glm/gtx/vector_angle.hpp>
 #include <glm/gtx/string_cast.hpp>
 
@@ -524,6 +525,7 @@ void RenderSystem::renderTextInformation()
 {
 	TextRender *textRender = &TextRender::getTextRender();
 	AudioSystem *audioSystem = &AudioSystem::getAudioSystem();
+	LevelSystem *levelSystem = &LevelSystem::getLevelSystem();
 	Player *player = &Player::getPlayer();
 	GLuint WIDTH = GameManager::_Width;
 	GLuint HEIGHT = GameManager::_Height;
@@ -548,18 +550,35 @@ void RenderSystem::renderTextInformation()
 	textRender->renderText("Ammo: ", WIDTH - 223.0f, 25.0f, 1.0f, glm::vec3(0.0, 0.5f, 1.0f));
 	textRender->renderText(ammo, WIDTH - 68.0f, 25.0f, 1.0f, glm::vec3(0.0, 0.5f, 1.0f));
 
+	//level
+	textRender->renderText("LEVEL: ", 25.0f, HEIGHT - 60.0f, 1.0f, glm::vec3(0.6, 0.227f, 0.227f));
+	textRender->renderText(to_string(levelSystem->getCurrentLevel()), 168.0f, HEIGHT - 60.0f, 1.0f, glm::vec3(0.6, 0.227f, 0.227f));
 
+
+	
 	EnvironmentReactions *environment = &EnvironmentReactions::getEnvironmentReactions();
 	if (environment->getAllEnemyDeadStatus() == true)
 	{
-		textRender->renderText("VICTORY!", (WIDTH / 2) - 185.0f, HEIGHT / 2, 2.0f, glm::vec3(1.0, 0.5f, 0.0f));
+
+		if (levelSystem->getFinalRoundStatus())
+		{
+			textRender->renderText("VICTORY!", (WIDTH / 2) - 185.0f, HEIGHT / 2, 2.0f, glm::vec3(1.0, 0.5f, 0.0f));
+			textRender->renderText("You have saved R2D2 from army of daleks", (WIDTH / 2) - 310.0f, (HEIGHT / 2) - 50.0f, 0.6f, glm::vec3(1.0, 0.0f, 0.0f));
+		}
+		else if (levelSystem->getCurrentLevel() < levelSystem->getMaxLevel() +1)
+		{
+			textRender->renderText("VICTORY!", (WIDTH / 2) - 185.0f, HEIGHT / 2, 2.0f, glm::vec3(1.0, 0.5f, 0.0f));
+			textRender->renderText("Press \"enter\" to start new level", (WIDTH / 2) - 310.0f, (HEIGHT / 2) - 50.0f, 0.8f, glm::vec3(1.0, 0.0f, 0.0f));
+		}
+
 	}else if(healthf <= 0.0f)
 	{
 		textRender->renderText("GAME OVER", (WIDTH / 2) - 250.0f, HEIGHT / 2, 2.0f, glm::vec3(1.0, 0.0f, 0.0f));
+		textRender->renderText("Press \"R\" to restart", (WIDTH / 2) - 210.0f, (HEIGHT / 2) - 50.0f, 0.8f, glm::vec3(1.0, 0.0f, 0.0f));
 	}
 
-
-
+	
+	
 	
 
 
