@@ -128,9 +128,6 @@ void GameManager::runGameLoop()
 	GLfloat lastTime = glfwGetTime(); 
 	_deltaTime = 0.0f;
 
-
-
-
 	while (_running)
 	{	
 			GLfloat currentTime = glfwGetTime();
