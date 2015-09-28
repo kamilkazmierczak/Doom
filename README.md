@@ -1,5 +1,5 @@
 # Doom
-Doom in C++/OpenGl
+Doom in C++/OpenGL
 
 # Libraries (32bit)
 * Assimp 3.1.1 
